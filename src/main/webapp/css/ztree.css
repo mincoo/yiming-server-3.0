@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+.tree{
+    background: none repeat scroll 0 0 #F0F6E4;
+    border: 1px solid #617775;
+    height: 423px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    overflow-x: auto;
+    overflow-y: scroll;
+    width: 250px;
+}
+
+.dept_tree {
+     float: left;
+}
+
+.role_tree {
+     float: left;
+     margin-left: 10px;
+}
+
+.auth_tree{
+    background: none repeat scroll 0 0 #F0F6E4;
+    border: 1px solid #617775;
+    height: 423px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    overflow-x: auto;
+    overflow-y: scroll;
+    width: 300px;
+}

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uxiaoxi.ym.appserver.db.cluster.mapper.ClusterUserMapper">
+  <resultMap id="BaseResultMap" type="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="acc_id" jdbcType="BIGINT" property="accId" />
+    <result column="clu_id" jdbcType="BIGINT" property="cluId" />
+    <result column="acc_name" jdbcType="VARCHAR" property="accName" />
+    <result column="create_dt" jdbcType="TIMESTAMP" property="createDt" />
+    <result column="jpush_flg" jdbcType="BIGINT" property="jpushFlg" />
+    <result column="acc_type" jdbcType="INTEGER" property="accType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, acc_id, clu_id, acc_name, create_dt, jpush_flg, acc_type
+  </sql>
+  <select id="selectByExample" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cluster_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cluster_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cluster_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUserExample">
+    delete from cluster_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cluster_user (acc_id, clu_id, acc_name, 
+      create_dt, jpush_flg, acc_type
+      )
+    values (#{accId,jdbcType=BIGINT}, #{cluId,jdbcType=BIGINT}, #{accName,jdbcType=VARCHAR}, 
+      #{createDt,jdbcType=TIMESTAMP}, #{jpushFlg,jdbcType=BIGINT}, #{accType,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cluster_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accId != null">
+        acc_id,
+      </if>
+      <if test="cluId != null">
+        clu_id,
+      </if>
+      <if test="accName != null">
+        acc_name,
+      </if>
+      <if test="createDt != null">
+        create_dt,
+      </if>
+      <if test="jpushFlg != null">
+        jpush_flg,
+      </if>
+      <if test="accType != null">
+        acc_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accId != null">
+        #{accId,jdbcType=BIGINT},
+      </if>
+      <if test="cluId != null">
+        #{cluId,jdbcType=BIGINT},
+      </if>
+      <if test="accName != null">
+        #{accName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDt != null">
+        #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jpushFlg != null">
+        #{jpushFlg,jdbcType=BIGINT},
+      </if>
+      <if test="accType != null">
+        #{accType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUserExample" resultType="java.lang.Integer">
+    select count(*) from cluster_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cluster_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.accId != null">
+        acc_id = #{record.accId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cluId != null">
+        clu_id = #{record.cluId,jdbcType=BIGINT},
+      </if>
+      <if test="record.accName != null">
+        acc_name = #{record.accName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDt != null">
+        create_dt = #{record.createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jpushFlg != null">
+        jpush_flg = #{record.jpushFlg,jdbcType=BIGINT},
+      </if>
+      <if test="record.accType != null">
+        acc_type = #{record.accType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cluster_user
+    set id = #{record.id,jdbcType=BIGINT},
+      acc_id = #{record.accId,jdbcType=BIGINT},
+      clu_id = #{record.cluId,jdbcType=BIGINT},
+      acc_name = #{record.accName,jdbcType=VARCHAR},
+      create_dt = #{record.createDt,jdbcType=TIMESTAMP},
+      jpush_flg = #{record.jpushFlg,jdbcType=BIGINT},
+      acc_type = #{record.accType,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser">
+    update cluster_user
+    <set>
+      <if test="accId != null">
+        acc_id = #{accId,jdbcType=BIGINT},
+      </if>
+      <if test="cluId != null">
+        clu_id = #{cluId,jdbcType=BIGINT},
+      </if>
+      <if test="accName != null">
+        acc_name = #{accName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDt != null">
+        create_dt = #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jpushFlg != null">
+        jpush_flg = #{jpushFlg,jdbcType=BIGINT},
+      </if>
+      <if test="accType != null">
+        acc_type = #{accType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser">
+    update cluster_user
+    set acc_id = #{accId,jdbcType=BIGINT},
+      clu_id = #{cluId,jdbcType=BIGINT},
+      acc_name = #{accName,jdbcType=VARCHAR},
+      create_dt = #{createDt,jdbcType=TIMESTAMP},
+      jpush_flg = #{jpushFlg,jdbcType=BIGINT},
+      acc_type = #{accType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 自己定义方法 -->
+  <select id="searchByUid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchForm" resultMap="VOResultMap">
+        SELECT t.id as id,
+               c.`id` AS gid,
+               c.`create_by` AS uid,
+               c.`title` AS `name`,
+               c.`sn`,
+               c.`school`,
+               c.`province`,
+               c.`city`,
+               c.`district`,
+               c.`face`,
+               IFNULL(t.`jpush_flg`,"0") AS jpushflg 
+          FROM `cluster_user` t,`cluster` c 
+         WHERE t.`clu_id` = c.`id`
+         <if test="start != null and start !=0 " >
+         <![CDATA[ 
+           AND t.id < #{start,jdbcType=BIGINT}
+         ]]>
+         </if>
+           AND t.`acc_id` = #{uid,jdbcType=BIGINT}
+         ORDER BY t.`id` DESC
+         <!-- LIMIT 0,10-->
+
+  </select>
+
+  <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gid" jdbcType="BIGINT" property="gid" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="face" jdbcType="VARCHAR" property="face" />
+    <result column="jpushflg" jdbcType="VARCHAR" property="jpushflg" />
+  </resultMap>
+  
+  
+  <!-- 自己定义方法 -->
+  <select id="searchByGid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMap">
+    <![CDATA[
+        SELECT t.id AS id,
+               c.`id` AS uid,
+               c.`type`,
+               c.`face`,
+               c.`name`
+        FROM `cluster_user` t,`account` c 
+        WHERE t.`acc_id` = c.`id`
+           AND t.id > #{start,jdbcType=BIGINT}
+           AND t.`clu_id` = #{gid,jdbcType=BIGINT}
+        ORDER BY t.`id`
+        LIMIT 0,10
+    ]]>
+  </select>
+
+  <resultMap id="ResultMap" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="BIGINT" property="type" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="face" jdbcType="VARCHAR" property="face" />
+  </resultMap>
+  
+    <!-- 自己定义方法 -->
+  <select id="searchByGidT" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMapT">
+        SELECT t.id AS id,
+               c.`id` AS uid,
+               c.`type`,
+               c.`face`,
+               c.`phone`,
+               c.`name`
+        FROM `cluster_user` t,`account` c 
+        WHERE t.`acc_id` = c.`id`
+        <if test="start != null and start !=0 " >
+        <![CDATA[ 
+           AND t.id > #{start,jdbcType=BIGINT}
+        ]]>
+        </if>
+           AND CASE WHEN t.`acc_type` IS NULL THEN c.`type` ELSE t.`acc_type` END = 1
+           AND t.`clu_id` = #{gid,jdbcType=BIGINT}
+        ORDER BY t.`id`
+        <!--LIMIT 0,10-->
+  </select>
+
+  <resultMap id="ResultMapT" type="com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListTVO">
+    <result column="uid" jdbcType="INTEGER" property="tid" />
+    <result column="name" jdbcType="VARCHAR" property="tname" />
+    <result column="face" jdbcType="VARCHAR" property="tface" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  
+    <!-- 自己定义方法 -->
+  <select id="searchByGidP" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMapP">
+        SELECT t.id AS id,
+               c.`id` AS uid,
+               c.`type`,
+               c.`phone`,
+               c.`face`,
+               c.`name`
+        FROM `cluster_user` t,`account` c 
+        WHERE t.`acc_id` = c.`id`
+        <if test="start != null and start !=0 " >
+        <![CDATA[ 
+           AND t.id > #{start,jdbcType=BIGINT}
+        ]]>
+        </if>
+           AND CASE WHEN t.`acc_type` IS NULL THEN c.`type` ELSE t.`acc_type` END = 2
+           AND t.`clu_id` = #{gid,jdbcType=BIGINT}
+        ORDER BY t.`id`
+        <!--LIMIT 0,10-->
+  </select>
+
+  <resultMap id="ResultMapP" type="com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListPVO">
+    <result column="uid" jdbcType="INTEGER" property="pid" />
+    <result column="name" jdbcType="VARCHAR" property="pname" />
+    <result column="face" jdbcType="VARCHAR" property="pface" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  
+    <!-- 自己定义方法 -->
+  <select id="getAllByUid" parameterType="java.lang.Long" resultMap="GetAllResultMap">
+   <![CDATA[ 
+        SELECT t.`clu_id` AS cluId,
+               t.`acc_id` AS accId
+          FROM `cluster_user` t 
+         WHERE (t.`jpush_flg` = 0 OR t.`jpush_flg` IS NULL)
+           AND t.`acc_id` = #{id,jdbcType=BIGINT}
+         ORDER BY t.`id` DESC
+   ]]>
+  </select>
+  
+    <resultMap id="GetAllResultMap" type="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser">
+	    <result column="cluId" jdbcType="INTEGER" property="cluId" />
+	    <result column="accId" jdbcType="INTEGER" property="accId" />
+    </resultMap>
+</mapper>

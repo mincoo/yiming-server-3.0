@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uxiaoxi.ym.appserver.db.verification.mapper.VerificationCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCode" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="v_code" property="vCode" jdbcType="INTEGER" />
+    <result column="v_content" property="vContent" jdbcType="VARCHAR" />
+    <result column="v_type" property="vType" jdbcType="INTEGER" />
+    <result column="create_dt" property="createDt" jdbcType="TIMESTAMP" />
+    <result column="used" property="used" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, v_code, v_content, v_type, create_dt, used
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from verification_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from verification_code
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from verification_code
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCodeExample" >
+    delete from verification_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCode" >
+    insert into verification_code (id, v_code, v_content, 
+      v_type, create_dt, used
+      )
+    values (#{id,jdbcType=BIGINT}, #{vCode,jdbcType=INTEGER}, #{vContent,jdbcType=VARCHAR}, 
+      #{vType,jdbcType=INTEGER}, #{createDt,jdbcType=TIMESTAMP}, #{used,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCode" >
+    insert into verification_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="vCode != null" >
+        v_code,
+      </if>
+      <if test="vContent != null" >
+        v_content,
+      </if>
+      <if test="vType != null" >
+        v_type,
+      </if>
+      <if test="createDt != null" >
+        create_dt,
+      </if>
+      <if test="used != null" >
+        used,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vCode != null" >
+        #{vCode,jdbcType=INTEGER},
+      </if>
+      <if test="vContent != null" >
+        #{vContent,jdbcType=VARCHAR},
+      </if>
+      <if test="vType != null" >
+        #{vType,jdbcType=INTEGER},
+      </if>
+      <if test="createDt != null" >
+        #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="used != null" >
+        #{used,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCodeExample" resultType="java.lang.Integer" >
+    select count(*) from verification_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update verification_code
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.vCode != null" >
+        v_code = #{record.vCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.vContent != null" >
+        v_content = #{record.vContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vType != null" >
+        v_type = #{record.vType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDt != null" >
+        create_dt = #{record.createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.used != null" >
+        used = #{record.used,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update verification_code
+    set id = #{record.id,jdbcType=BIGINT},
+      v_code = #{record.vCode,jdbcType=INTEGER},
+      v_content = #{record.vContent,jdbcType=VARCHAR},
+      v_type = #{record.vType,jdbcType=INTEGER},
+      create_dt = #{record.createDt,jdbcType=TIMESTAMP},
+      used = #{record.used,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCode" >
+    update verification_code
+    <set >
+      <if test="vCode != null" >
+        v_code = #{vCode,jdbcType=INTEGER},
+      </if>
+      <if test="vContent != null" >
+        v_content = #{vContent,jdbcType=VARCHAR},
+      </if>
+      <if test="vType != null" >
+        v_type = #{vType,jdbcType=INTEGER},
+      </if>
+      <if test="createDt != null" >
+        create_dt = #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="used != null" >
+        used = #{used,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uxiaoxi.ym.appserver.db.verification.dto.VerificationCode" >
+    update verification_code
+    set v_code = #{vCode,jdbcType=INTEGER},
+      v_content = #{vContent,jdbcType=VARCHAR},
+      v_type = #{vType,jdbcType=INTEGER},
+      create_dt = #{createDt,jdbcType=TIMESTAMP},
+      used = #{used,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

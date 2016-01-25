@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-2.5.xsd 
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" >
+
+    <!-- jdbc.properties文件路径 -->
+    <bean
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!-- <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" 
+            /> -->
+        <!-- <property name="ignoreResourceNotFound" value="true" /> -->
+        <property name="locations">
+            <list>
+                <value>classpath:/jdbc.properties</value>
+                <!-- <value>classpath:/redis.properties</value> -->
+                <value>classpath:/config.properties</value>
+            </list>
+        </property>
+    </bean>
+
+<!--     <bean id="connectionFactory"
+        class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+        p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"/>
+
+    <context:annotation-config />
+    <bean class="com.uxiaoxi.ym.session.Config" /> -->
+    
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+      <property name="templateLoaderPath" value="classpath:/freemarker/"/>
+      <property name="freemarkerSettings">
+            <props>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="template_update_delay">0</prop>
+                <prop key="number_format">#</prop>
+            </props>
+        </property>
+    </bean>
+    
+    
+    <!--将@Controller的注解排除掉 -->
+    <context:component-scan base-package="com.uxiaoxi.ym.appserver">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    
+    <!-- 数据源的配置 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${user}" />
+        <property name="password" value="${password}" />
+        <property name="initialSize" value="200" /><!-- initial connections -->
+        <!-- 处理mysql 8小时自动断开连接的问题 -->
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="validationQuery" value="select 1" />
+        <property name="timeBetweenEvictionRunsMillis" value="20000" />
+        <property name="numTestsPerEvictionRun" value="100" />
+    </bean>
+    <!--====事务相关控制== -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!-- 注解式事务管理 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- MyBatis sqlSessionFactory 配置 mybatis -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:/mybatis/mybatisConfig.xml" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath*:mybatis/mappers/**/*.xml" />
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+        scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+    
+    <!-- aliyun 初始化 -->
+    <bean class="com.uxiaoxi.ym.aliyun.bean.AliyunConfig"></bean>
+    <!-- 初始化生产者 -->
+    <bean class="com.uxiaoxi.ym.aliyun.producer.MsgProducer" init-method="init" ></bean>
+    <!-- 初始化消费者 -->
+    <bean class="com.uxiaoxi.ym.aliyun.consumer.MsgConsumer" init-method="init" ></bean>
+    <bean class="com.uxiaoxi.ym.aliyun.consumer.TDMsgConsumer" init-method="init" ></bean>
+    
+</beans>

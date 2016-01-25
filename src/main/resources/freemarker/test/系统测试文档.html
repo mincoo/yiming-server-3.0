@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>系统接口测试</title>
+</head>
+<body>
+
+<a href="http://localhost:8080/user/vcode?phone=18310833278&type=1&sign=c60f9e5a9a752119a72b61fd37786d88" target="_blank">获取验证码</a>
+<br>
+<a href="http://localhost:8080/user/regist?passwd=123456&phone=18310830000&type=1&vcode=123456&sign=6a55c71928047091b976ad01251944a9" target="_blank">注册账户</a>
+<br>
+<a href="http://localhost:8080/user/login?passwd=123456&phone=18310830000&sign=85d60865fb8e77e942dd49b4b528bc55" target="_blank">用户登录</a>
+<br>
+<a href="http://localhost:8080/user/getinfo?uid=2&token=9bcdbdf6e5b605b3d0f53676ea05e15c&sign=1e86001b1f422822bb5b9dcd9dafabe3" target="_blank">获取用户信息</a>
+<br>
+<a href="http://localhost:8080/user/update?name=zcm&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=f82fad1efdaa8dcc7d44603e49489063" target="_blank">修改用户信息</a>
+<br>
+<a href="http://localhost:8080/user/chpwd?uid=2&token=9bcdbdf6e5b605b3d0f53676ea05e15c&oldpwd=123456&newpwd=654321&sign=42d8ea06fb4a891018e56c0c5b9420ce" target="_blank">修改密码</a>
+<br>
+<a href="http://localhost:8080/user/search?name=赵春明&start=0&sign=8b4f4c7c852679eba8cb651059bae029" target="_blank">搜索用户</a>
+<br>
+<a href="http://localhost:8080/group/getlist?start=0&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=839cdaae683d790d1f11fcc092f27e16" target="_blank">获取群组列表</a>
+<br>
+<a href="http://localhost:8080/group/build?name=测试群组&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=bd327f2c1c7c3f89f0937b0c2e038522" target="_blank">创建群组</a>
+<br>
+<a href="http://localhost:8080/group/search?name=测试群组&start=0&sign=2fc16a05cc6aa8ceab72288211efe8dc" target="_blank">搜索群组</a>
+<br>
+<a href="http://localhost:8080/group/join?gid=3&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=97c8a38e898fc2965f2812b790049ed7" target="_blank">加入群组</a>
+<br>
+<a href="http://localhost:8080/group/adduser?gid=3&nid=3&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=7cae418d103fe4cabbb33e1c5dc76068" target="_blank">添加成员</a>
+<br>
+<a href="http://localhost:8080/group/deluser?gid=3&nid=3&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=7cae418d103fe4cabbb33e1c5dc76068" target="_blank">删除成员</a>
+<br>
+<a href="http://localhost:8080/group/userlist?gid=2&start=0&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=ed325649dc95ba01b334c9d7cdc5c7fb" target="_blank">群组成员列表</a>
+<br>
+<a href="http://localhost:8080/msg/send?content=小兄弟们收到的-one&gid=3&nid=3&title=群发消息给小兄弟们-one&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=dafdd2ed5799e0f8946d76c67d596fde" target="_blank">发送消息-存在:没有添加组</a>
+<br>
+<a href="http://localhost:8080/msg/getlist?start=0&token=a88c7410d84c857439276275cce56d02&uid=3&sign=c54dbd40a0366fe5059c7fa344182d81" target="_blank">消息列表</a>
+<br>
+<a href="http://localhost:8080/msg/getdata?mid=6&token=a88c7410d84c857439276275cce56d02&uid=3&sign=5fac46d015140dffa595699c3ee65585" target="_blank">消息内容</a>
+<br>
+<a href="http://localhost:8080/msg/delete?mid=6&token=a88c7410d84c857439276275cce56d02&uid=3&sign=5fac46d015140dffa595699c3ee65585" target="_blank">删除消息</a>
+<br>
+<a href="http://localhost:8080/msg/gsend?content=小兄弟们收到的&gid=2&title=群发消息给小兄弟们&token=9bcdbdf6e5b605b3d0f53676ea05e15c&uid=2&sign=4ce1ab83f301ccf144b6dd882f13f577" target="_blank">群发消息</a>
+</body>
+</html>

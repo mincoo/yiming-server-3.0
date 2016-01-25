@@ -1,0 +1,72 @@
+<html lang="zh-cn"><head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <link href="/css/styles.css?=120" rel="stylesheet">
+    <script type="text/javascript" src="/js/framework/jquery/jquery-1.11.0.min.js"></script> 
+</head>
+<body class="focusedform">
+ 
+<div class="verticalcenter">
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <h4 style="margin-bottom: 25px;" class="text-center">Do something to change</h4>
+                <form class="form-horizontal" action="/user/search" method="post" id="loginform">
+                    <div class="form-group">
+                        <label style="text-align: left;" class="control-label col-sm-4" for="email">name</label>
+                        <div class="col-sm-8">
+                            <input type="text" placeholder="name" id="email" class="form-control" id="account" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="text-align: left;" class="control-label col-sm-4" for="password">start</label>
+                        <div class="col-sm-8">
+                            <input type="password" placeholder="start" id="password" class="form-control" name="start">
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="sign" name="sign" value="b43b2c4885dc44b7fe62d1765ff8872f">
+                    
+                    <div class="clearfix">
+                        <!-- <div class="pull-right"><label><input type="checkbox" checked=""> Remember Me</label></div> -->
+                    </div>
+                    <a class="btn btn-primary btn-block" href="javascript:;" id="loginbtn">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+                </form>
+        </div>
+        <div class="panel-footer">
+            <!-- <a style="padding-left:0" class="pull-left btn btn-link" href="extras-forgotpassword.html">Forgot password?</a>
+             -->
+            <div class="pull-right">
+                <!-- <a class="btn btn-default" href="#">重置</a> -->
+            </div>
+        </div>
+    </div>
+ </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $("#loginbtn").click(function(){
+        login();
+    });
+
+    $("#account").focus();
+
+   function login(){
+       var data = $("#loginform").serialize();
+       thisLogin();
+   }
+
+    function thisLogin(){
+        
+        $("#loginform").submit();
+    }
+    
+});
+</script>
+
+</body></html>
+
+

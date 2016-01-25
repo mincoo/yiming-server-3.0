@@ -1,0 +1,59 @@
+<#import "/lib/html.html" as mind> 
+<#assign loadcss=["/css/zTreeStyle/zTreeStyle.css","/css/ztree.css"]> 
+<#assign loadscript=["/js/framework/ztree/jquery.ztree.core-3.5.min.js","/js/framework/ztree/jquery.ztree.excheck-3.5.min.js","/js/account/users.js","/js/tools/utils.js"]>
+<@mind.html csslist=loadcss scriptlist=loadscript menu="sys" submenu="account">
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active"><a href="/account">帐号管理</a></li>
+    </ol>
+    <h1>帐号管理</h1>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6">
+            <table id="list"></table>
+            <div id="pager"></div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="dept_tree">
+                <div>
+                    <label>部门</label>
+                </div>
+                <div class="tree">
+                    <ul id="dept_tree" class="ztree"></ul>
+                </div>
+                <form id="dept_form">
+                    <input type="hidden" id="dept_user_id" value=""
+                        name="id"> <input type="hidden"
+                        id="dept_ids" value="" name="dept_ids">
+                </form>
+                <input type="button" id="setUserDept" value="保存"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="role_tree">
+                <div>
+                    <label>角色</label>
+                </div>
+                <div class="tree">
+                    <ul id="role_tree" class="ztree"></ul>
+                </div>
+                <form id="role_form">
+                    <input type="hidden" id="user_id" value="" name="id">
+                    <input type="hidden" id="role_ids" value=""
+                        name="role_ids">
+                </form>
+                <input type="button" id="setUserRole" value="保存"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- container -->
+</@mind.html>

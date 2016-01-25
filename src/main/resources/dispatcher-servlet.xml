@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <!-- 把标记了@Controller注解的类转换为bean -->
+    <context:component-scan base-package="com.uxiaoxi.ym.appserver" >  
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>  
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+    </context:component-scan>
+    
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" /> 
+
+    <bean id="contentNegotiationManager"
+        class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="false" />
+        <!-- <property name="defaultContentType" value="text/html"/> -->
+    </bean>
+
+    <bean id="webBindingInitializer"
+        class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+        <property name="validator" ref="validator" />
+    </bean>
+
+    <!-- freemarker config -->
+<!--     <bean id="freemarkerConfig"
+        class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="classpath:/freemarker/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="template_update_delay">0</prop>
+                <prop key="number_format">#</prop>
+            </props>
+        </property>
+    </bean> -->
+
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager" ref="contentNegotiationManager" />
+        <property name="viewResolvers"><!-- 针对freemarker的视图配置 -->
+            <list>
+                <bean
+                    class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+                    <property name="cache" value="false" />
+                    <property name="prefix" value="" />
+                    <property name="suffix" value=".html" />
+                    <property name="contentType" value="text/html;charset=UTF-8" />
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                    <property name="extractValueFromSingleKeyModel" value="true" />
+                    <property name="modelKeys">
+                        <set>
+                            <value>resResult</value>
+                        </set>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- validator config -->
+    <bean id="validator"
+        class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass"
+            value="org.hibernate.validator.HibernateValidator" />
+        <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+        <!-- <property name="validationMessageSource" ref="messageSource" 
+            /> -->
+    </bean>
+
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+        <!-- 多个拦截器,顺序执行 -->
+        <bean class="com.uxiaoxi.ym.appserver.framework.security.interceptor.CheckAuthorityInterceptor"></bean>
+        <!-- <mvc:interceptor> -->
+        <!-- 如果不配置或/*,将拦截所有的Controller -->
+        <!-- <mvc:mapping path="/entryOrJsonController/*" /> -->
+        <!-- <bean class="com.wy.interceptor.CommonInterceptor"></bean> -->
+        <!-- </mvc:interceptor> -->
+    </mvc:interceptors>
+    
+    <!-- config.properties文件路径 -->
+<!--     <bean
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />  
+        <property name="ignoreResourceNotFound" value="true" />  
+        <property name="locations">  
+            <list>  
+                <value>classpath:/config.properties</value>  
+            </list>  
+        </property>
+    </bean> -->
+
+</beans>

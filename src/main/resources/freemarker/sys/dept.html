@@ -1,0 +1,24 @@
+<#import "/lib/html.html" as mind> 
+<#assign loadcss=[] > 
+<#assign loadscript=["/js/sys/dept.js"] >
+<@mind.html csslist=loadcss scriptlist=loadscript menu="sys" submenu="dept">
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active"><a href="/sys/dept">部门管理</a></li>
+    </ol>
+    <h1>部门管理</h1>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="list"></table>
+            <div id="pager"></div>
+        </div>
+        
+    </div>
+
+</div> <!-- container -->
+</@mind.html>

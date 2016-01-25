@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uxiaoxi.ym.appserver.db.cluster.mapper.ClusterMapper" >
+  <resultMap id="BaseResultMap" type="com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="create_dt" property="createDt" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="face" property="face" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, create_dt, create_by, face, school, province, city, district, sn, longitude, 
+    latitude
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cluster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cluster
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cluster
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterExample" >
+    delete from cluster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cluster (title, create_dt, create_by, 
+      face, school, province, 
+      city, district, sn, 
+      longitude, latitude)
+    values (#{title,jdbcType=VARCHAR}, #{createDt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, 
+      #{face,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cluster
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="createDt != null" >
+        create_dt,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="face != null" >
+        face,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="sn != null" >
+        sn,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createDt != null" >
+        #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="face != null" >
+        #{face,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterExample" resultType="java.lang.Integer" >
+    select count(*) from cluster
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cluster
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDt != null" >
+        create_dt = #{record.createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.face != null" >
+        face = #{record.face,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null" >
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.district != null" >
+        district = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sn != null" >
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cluster
+    set id = #{record.id,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      create_dt = #{record.createDt,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=BIGINT},
+      face = #{record.face,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      district = #{record.district,jdbcType=VARCHAR},
+      sn = #{record.sn,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster" >
+    update cluster
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createDt != null" >
+        create_dt = #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="face != null" >
+        face = #{face,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null" >
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster" >
+    update cluster
+    set title = #{title,jdbcType=VARCHAR},
+      create_dt = #{createDt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=BIGINT},
+      face = #{face,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      sn = #{sn,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+   <!-- 自己定义方法 -->
+  <!-- 
+  <select id= "searchByName" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterSearchForm" resultMap="VOResultMap" >
+    <![CDATA[
+        SELECT t.id AS gid,
+               t.`create_by` AS uid,
+               t.`title` AS `name`
+          FROM `cluster` t 
+         WHERE t.id > #{start,jdbcType=BIGINT}
+           AND t.`title` LIKE  CONCAT('%',#{name,jdbcType=VARCHAR},'%') 
+         ORDER BY t.`id`
+         LIMIT 0,10
+    ]]>
+  </select>
+  
+  <resultMap id="VOResultMap" type ="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterVO" >
+    <id column="gid" property="gid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+   -->
+      <!-- 自己定义方法 -->
+      <!--
+  <select id= "searchByGid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterSearchForm" resultMap="VOResultMap" >
+    <![CDATA[
+        SELECT t.id AS gid,
+               t.`create_by` AS uid,
+               t.`title` AS `name`,
+               t.`sn` AS `sn`,
+               t.`school` AS `school`,
+               t.`province` AS `province`,
+               t.`city` AS `city`,
+               t.`district` AS `district`,
+               t.`face` AS `face`
+          FROM `cluster` t 
+         WHERE t.`id` = #{gid,jdbcType=BIGINT} 
+    ]]>
+  </select>
+  
+  <resultMap id="VOResultMap" type ="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterByGidVO" >
+    <id column="gid" property="gid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sn" property="sn" jdbcType="BIGINT" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="face" property="face" jdbcType="VARCHAR" />
+  </resultMap>
+   -->
+        <!-- 自己定义方法 -->
+  <select id= "countUserByType" parameterType="map" resultType="java.lang.Integer"  >
+    <![CDATA[
+        SELECT count(*)
+          FROM `cluster_user` t, account c
+         WHERE t.`clu_id` = #{gid,jdbcType=BIGINT} 
+         AND t.`acc_id` = c.`id`
+         AND CASE WHEN t.`acc_type` IS NULL THEN c.`type` ELSE t.`acc_type` END = #{type,jdbcType=BIGINT}
+    ]]>
+  </select>
+  
+    <!-- 自己定义方法 -->
+  <select id= "searchBySn" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterSearchBySnForm" resultMap="VOResultBySnMap" >
+      <![CDATA[ 
+        SELECT c.`id` AS gid,
+               c.`create_by` AS uid,
+               c.`sn` AS sn,
+               c.`title` AS `name`,
+               c.`face` AS `face`,
+               c.`province` AS `province`,
+               c.`city` AS `city`,
+               c.`district` AS `district`,
+               c.`school` AS `school`,
+               t.`acc_name` AS `unamef`,
+               m.`name` AS `unames`
+          FROM `cluster_user` t,`cluster` c, account m
+         WHERE t.`clu_id` = c.`id`
+           AND t.`acc_id` = m.`id`
+           AND c.`sn` =  #{sn,jdbcType=VARCHAR}
+           AND t.`acc_id` = c.`create_by`
+       ]]>
+  </select>
+ 
+  <resultMap id="VOResultBySnMap" type ="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult" >
+    <result column="gid" property="gid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="face" property="face" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="unamef" property="unamef" jdbcType="VARCHAR" />
+    <result column="unames" property="unames" jdbcType="VARCHAR" />
+  </resultMap>
+  
+      <!-- 自己定义方法 -->
+  <select id= "searchMaxSn" resultType="java.lang.Integer" >
+        SELECT IFNULL(MAX(`sn`),0)
+          FROM `cluster` 
+  </select>
+</mapper>

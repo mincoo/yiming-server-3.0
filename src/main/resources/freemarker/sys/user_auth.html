@@ -1,0 +1,35 @@
+<#import "/lib/html.html" as mind> 
+<#assign loadcss=["/css/zTreeStyle/zTreeStyle.css","/css/ztree.css"] > 
+<#assign loadscript=["/js/framework/ztree/jquery.ztree.core-3.5.min.js","/js/framework/ztree/jquery.ztree.excheck-3.5.min.js","/js/sys/user_auth.js"] >
+<@mind.html csslist=loadcss scriptlist=loadscript menu="sys" submenu="auth">
+
+<div id="page-heading">
+    <ol class="breadcrumb">
+        <li class="active"><a href="/sys/auth">角色管理</a></li>
+    </ol>
+    <h1>角色管理</h1>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8">
+            <table id="list"></table>
+            <div id="pager"></div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="auth_tree">
+                <ul id="ztree" class="ztree"></ul>
+            </div>
+            <form id="auth_form">
+                <input type="hidden" id="role_id" value="" name="id">
+                <input type="hidden" id="role_name" value=""  name="name">
+                <input type="hidden" id="role_uriIds" value=""  name="uriIds">
+            </form>
+            <input type="button" id="setUserAuth" value="保存" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        </div>
+    </div>
+
+</div>
+</@mind.html>
