@@ -28,15 +28,6 @@ public class VersionMngController {
     @ResponseBody
     @RequestMapping
     public ResResult getdataJson(VersionMngForm form) {
-        return this.getVersion(form);
-    }
-
-    @RequestMapping(params = "callback")
-    public ResResult  getdataJsonp(VersionMngForm form) {
-        return this.getVersion(form);
-    }
-    
-    private ResResult getVersion(VersionMngForm form) {
-        return versionMngService.getVersion(form);
+    	return versionMngService.getVersion(form);
     }
 }
