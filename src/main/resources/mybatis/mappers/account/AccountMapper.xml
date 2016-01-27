@@ -418,7 +418,7 @@
   
   
     <!-- 自己定义方法 -->
-  <select id="searchUser" parameterType="com.uxiaoxi.ym.appserver.web.account.vo.SearchForm" resultMap="VOResultMap">
+<!--   <select id="searchUser" parameterType="com.uxiaoxi.ym.appserver.web.account.vo.SearchForm" resultMap="VOResultMap">
     <![CDATA[
         SELECT t.id,
                t.`type`,
@@ -430,7 +430,7 @@
          ORDER BY t.`id`
          LIMIT 0,10
     ]]>
-  </select>
+  </select> -->
  
   <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO">
     <id column="id" jdbcType="BIGINT" property="uid" />
@@ -440,7 +440,7 @@
   </resultMap>
   
     <!-- 自己定义方法 -->
-  <select id="searchUserByPhone" parameterType="com.uxiaoxi.ym.appserver.web.account.vo.SearchByPhoneForm" resultMap="VOResultByPhoneMap">
+<!--   <select id="searchUserByPhone" parameterType="com.uxiaoxi.ym.appserver.web.account.vo.SearchByPhoneForm" resultMap="VOResultByPhoneMap">
         SELECT t.id,
                t.`type`,
                t.`name`,
@@ -451,7 +451,7 @@
            AND t.`type` = #{type,jdbcType=INTEGER}
         </if>
          
-  </select>
+  </select> -->
  
   <resultMap id="VOResultByPhoneMap" type="com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO">
     <id column="id" jdbcType="BIGINT" property="uid" />

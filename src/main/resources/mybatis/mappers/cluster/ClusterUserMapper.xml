@@ -324,7 +324,7 @@
   </cache>
   
     <!-- 自己定义方法 -->
-  <select id="searchByUid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchForm" resultMap="VOResultMap">
+<!--   <select id="searchByUid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchForm" resultMap="VOResultMap">
         SELECT t.id as id,
                c.`id` AS gid,
                c.`create_by` AS uid,
@@ -345,9 +345,9 @@
          </if>
            AND t.`acc_id` = #{uid,jdbcType=BIGINT}
          ORDER BY t.`id` DESC
-         <!-- LIMIT 0,10-->
+         LIMIT 0,10
 
-  </select>
+  </select> -->
 
   <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO">
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -365,7 +365,7 @@
   
   
   <!-- 自己定义方法 -->
-  <select id="searchByGid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMap">
+<!--   <select id="searchByGid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMap">
     <![CDATA[
         SELECT t.id AS id,
                c.`id` AS uid,
@@ -379,7 +379,7 @@
         ORDER BY t.`id`
         LIMIT 0,10
     ]]>
-  </select>
+  </select> -->
 
   <resultMap id="ResultMap" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO">
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -390,7 +390,7 @@
   </resultMap>
   
     <!-- 自己定义方法 -->
-  <select id="searchByGidT" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMapT">
+<!--   <select id="searchByGidT" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMapT">
         SELECT t.id AS id,
                c.`id` AS uid,
                c.`type`,
@@ -407,18 +407,18 @@
            AND CASE WHEN t.`acc_type` IS NULL THEN c.`type` ELSE t.`acc_type` END = 1
            AND t.`clu_id` = #{gid,jdbcType=BIGINT}
         ORDER BY t.`id`
-        <!--LIMIT 0,10-->
-  </select>
+        LIMIT 0,10
+  </select> -->
 
-  <resultMap id="ResultMapT" type="com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListTVO">
+<!--   <resultMap id="ResultMapT" type="com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListTVO">
     <result column="uid" jdbcType="INTEGER" property="tid" />
     <result column="name" jdbcType="VARCHAR" property="tname" />
     <result column="face" jdbcType="VARCHAR" property="tface" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-  </resultMap>
+  </resultMap> -->
   
     <!-- 自己定义方法 -->
-  <select id="searchByGidP" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMapP">
+<!--   <select id="searchByGidP" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm" resultMap="ResultMapP">
         SELECT t.id AS id,
                c.`id` AS uid,
                c.`type`,
@@ -435,15 +435,14 @@
            AND CASE WHEN t.`acc_type` IS NULL THEN c.`type` ELSE t.`acc_type` END = 2
            AND t.`clu_id` = #{gid,jdbcType=BIGINT}
         ORDER BY t.`id`
-        <!--LIMIT 0,10-->
-  </select>
+  </select> -->
 
-  <resultMap id="ResultMapP" type="com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListPVO">
+<!--   <resultMap id="ResultMapP" type="com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListPVO">
     <result column="uid" jdbcType="INTEGER" property="pid" />
     <result column="name" jdbcType="VARCHAR" property="pname" />
     <result column="face" jdbcType="VARCHAR" property="pface" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-  </resultMap>
+  </resultMap> -->
   
     <!-- 自己定义方法 -->
   <select id="getAllByUid" parameterType="java.lang.Long" resultMap="GetAllResultMap">
