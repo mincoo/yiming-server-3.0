@@ -43,19 +43,10 @@ public class RegisterController {
     @Autowired
     private IVerificationCodeService verificationCodeService;
     
+    
     @ResponseBody
     @RequestMapping(value="/vcode")
     public ResResult sendCodeJosn(String phone,int type){
-        return this.sendCode(phone,type);
-    }
-
-    @RequestMapping(value="/vcode", params="callback")
-    public ResResult sendCodeJosnp(String phone,int type){
-        return this.sendCode(phone,type);
-    }
-
-    private ResResult sendCode(String phone,int type){
-        
         ResResult rs = new ResResult();
         rs.setMsg("验证码发送失败，请重试");
         rs.setStatus(StatusConst.FAILURE);
@@ -73,7 +64,6 @@ public class RegisterController {
                 return rs;
             }
         }
-        
         
         // 生成code
         String code = StringUtil.getRandStr(6);
@@ -122,28 +112,12 @@ public class RegisterController {
     @ResponseBody
     @RequestMapping(value="/regist")
     public ResResult registJosn(@Valid RegisterForm registerForm,BindingResult errors){
-        return this.regist(registerForm,errors);
-    }
-
-    @RequestMapping(value="/regist", params="callback")
-    public ResResult registJosnp(@Valid RegisterForm registerForm,BindingResult errors,String code){
-        return this.regist(registerForm,errors);
-    }
-
-    private ResResult regist(RegisterForm registerForm,BindingResult errors){
-        
-        ResResult rs = new ResResult();
-        rs.setMsg("注册失败");
-        rs.setStatus(StatusConst.FAILURE);
         
         // 表单验证出错
-        if (errors.hasErrors()) {
-            
-            rs.setMsg("输入信息格式错误");
-            rs.setStatus(StatusConst.FAILURE);
-            rs.setData(errors.getAllErrors());
-            
-            return rs;
+        if (errors != null && errors.hasErrors()) {
+
+            return new ResResult(StatusConst.FAILURE, "输入信息格式错误",
+                    errors.getAllErrors());
         }
 
         return accountService.register(registerForm);
@@ -152,16 +126,6 @@ public class RegisterController {
     @ResponseBody
     @RequestMapping(value="/checkmobile")
     public ResResult checkMobileJosn(String mobile){
-        return this.checkMobile(mobile);
-    }
-
-    @RequestMapping(value="/checkmobile",params="callback")
-    public ResResult checkMobileJosnp(String mobile){
-        return this.checkMobile(mobile);
-    }
-
-    private ResResult checkMobile(String mobile){
-        
         ResResult rt = new ResResult();
         
         Account account = accountService.getAccountByMobile(mobile);
@@ -176,6 +140,5 @@ public class RegisterController {
             return rt;
         }
     }
-    
     
 }

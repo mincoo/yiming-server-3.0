@@ -72,22 +72,12 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public ResResult changePassword(ChangePWDForm form ,BindingResult errors) {
+    public ResResult changePassword(ChangePWDForm form) {
         
         ResResult rs = new ResResult();
         rs.setMsg(StatusConst.STRFAILURE);
         rs.setStatus(StatusConst.FAILURE);
         
-        // 表单验证出错则返回登录页面
-        if (errors !=null && errors.hasErrors()) {
-            
-            rs.setMsg("输入信息格式错误");
-            rs.setStatus(StatusConst.FAILURE);
-            rs.setData(errors.getAllErrors());
-            
-            return rs;
-        }
-
         rs = this.checkPassword(form.getUid(), form.getOldpwd());
         // 旧密码验证成功
         if(rs.getStatus() == StatusConst.SUCCESS) {
@@ -199,23 +189,13 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     @Transactional
-    public ResResult login(LoginForm loginForm,BindingResult errors){
+    public ResResult login(LoginForm loginForm){
         
         ResResult rs = new ResResult();
         rs.setMsg("登录失败");
         rs.setStatus(StatusConst.FAILURE);
         
         try {
-            // 表单验证出错则返回登录页面
-            if (errors !=null && errors.hasErrors()) {
-                
-                rs.setMsg("输入信息格式错误");
-                rs.setStatus(StatusConst.FAILURE);
-                rs.setData(errors.getAllErrors());
-                
-                return rs;
-            }
-
             // 取得用户
             Account account = accountDao.getAccountByMobile(loginForm.getPhone());
 
@@ -350,22 +330,12 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public ResResult resetPassword(ResetPWDForm form, BindingResult errors) {
+    public ResResult resetPassword(ResetPWDForm form) {
         
         ResResult rs = new ResResult();
         rs.setMsg(StatusConst.STRFAILURE);
         rs.setStatus(StatusConst.FAILURE);
 
-        // 表单验证出错
-        if (errors !=null && errors.hasErrors()) {
-            
-            rs.setMsg("输入信息格式错误");
-            rs.setStatus(StatusConst.FAILURE);
-            rs.setData(errors.getAllErrors());
-            
-            return rs;
-        }
-        
         // 验证验证码
         // 验证码有效性验证
         boolean rt = verificationCodeDao.checkCode(form.getVcode(), form.getPhone());
@@ -389,40 +359,5 @@ public class AccountServiceImpl implements IAccountService {
             return rs;
         }
     }
-
-    @Override
-    public ResResult searchByName(SearchForm form) {
-        List<SearchUserResultVO> list = accountDao.searchByName(form);
-        if(list == null) {
-            list = new ArrayList<SearchUserResultVO>();
-        }
-        ListResult<SearchUserResultVO> sr = new ListResult<SearchUserResultVO>();
-        if(list.size()>0) {
-            sr.setLast(list.get(list.size()-1).getUid());
-        } else {
-            sr.setLast(form.getStart());
-        }
-        sr.setList(list);
-        
-        return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,sr);
-    }
-    
-    @Override
-    public ResResult searchByPhone(SearchByPhoneForm form) {
-    	
-        SearchUserResultVO sr = accountDao.searchByPhone(form);
-        
-        if(sr != null) {
-        	
-			return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,sr);
-        }else{
-        	
-        	return new ResResult(StatusConst.FAILURE, "未找到用户",null);
-        }
-       
-    }
-    
-    
-     
     
 }

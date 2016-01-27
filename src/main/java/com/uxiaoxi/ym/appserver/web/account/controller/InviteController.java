@@ -26,15 +26,6 @@ public class InviteController {
     @ResponseBody
     @RequestMapping
     public ResResult inviteJson(Long userid, String mobile, Long cluid) {
-        return this.invite(userid,mobile,cluid);
-    }
-
-    @RequestMapping(params = "callback")
-    public ResResult inviteJsonp(Long userid, String mobile, Long cluid) {
-        return this.invite(userid,mobile,cluid);
-    }
-    
-    private ResResult invite(Long userid, String mobile, Long cluid){
         return inviteService.invite(userid,mobile,cluid);
     }
 }

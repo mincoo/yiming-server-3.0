@@ -1,5 +1,5 @@
 /**
- * AccountLoginController.java
+ * LoginController.java
  */
 package com.uxiaoxi.ym.appserver.web.account.controller;
 
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
 import com.uxiaoxi.ym.appserver.web.account.vo.LoginForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
+import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 
 /**
  * 
@@ -34,16 +35,15 @@ public class LoginController {
     @ResponseBody
     @RequestMapping
     public ResResult jsonLogin(@Valid LoginForm loginForm,BindingResult errors) {
-        return this.lgoin(loginForm, errors);
-    }
+        
+        // 表单验证出错则返回登录页面
+        if (errors != null && errors.hasErrors()) {
 
-    @RequestMapping(params="callback")
-    public ResResult jsonpLogin(@Valid LoginForm loginForm,BindingResult errors) {
-        return this.lgoin(loginForm, errors);
-    }
+            return new ResResult(StatusConst.FAILURE, "输入信息格式错误",
+                    errors.getAllErrors());
+        }
 
-    private ResResult lgoin(LoginForm loginForm,BindingResult errors){
-        return accountService.login(loginForm, errors);
+        return accountService.login(loginForm);
     }
 
 }

@@ -26,17 +26,7 @@ public class ApplyController {
     @ResponseBody
     @RequestMapping
     public ResResult applyJson(Long userid,Long cluid) {
-        return this.apply(userid,cluid);
-    }
-
-    @RequestMapping(params = "callback")
-    public ResResult applyJsonp(Long userid,Long cluid) {
-        return this.apply(userid,cluid);
-    }
-    
-    private ResResult apply(Long userid,Long cluid){
         return applyService.apply(userid,cluid);
     }
-    
     
 }

@@ -1,5 +1,5 @@
 /**
- * LoginResult.java
+ * ResResult.java
  */
 package com.uxiaoxi.ym.appserver.web.common.vo;
 
@@ -19,6 +19,13 @@ public class ResResult {
     private String msg;
     
     public ResResult(){};
+    
+    public ResResult(Object data){
+        this.status = StatusConst.SUCCESS;
+        this.msg = StatusConst.STRSUCCESS;
+        this.data = data;
+        
+    };
     
     public ResResult(int status,String msg,Object data){
         this.status = status;

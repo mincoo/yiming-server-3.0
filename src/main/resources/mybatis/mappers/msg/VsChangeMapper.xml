@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.uxiaoxi.ym.appserver.db.cluster.mapper.StudentMapper" >
-  <resultMap id="BaseResultMap" type="com.uxiaoxi.ym.appserver.db.cluster.dto.Student" >
+<mapper namespace="com.uxiaoxi.ym.appserver.db.msg.mapper.VsChangeMapper" >
+  <resultMap id="BaseResultMap" type="com.uxiaoxi.ym.appserver.db.msg.dto.VsChange" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="num" property="num" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="face" property="face" jdbcType="VARCHAR" />
-    <result column="clu_id" property="cluId" jdbcType="BIGINT" />
+    <result column="msg_vs" property="msgVs" jdbcType="BIGINT" />
+    <result column="mid" property="mid" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="create_dt" property="createDt" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -68,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, num, name, face, clu_id, create_dt
+    id, msg_vs, mid, type, create_dt
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.StudentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uxiaoxi.ym.appserver.db.msg.dto.VsChangeExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from student
+    from vs_change
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,91 +86,82 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from student
+    from vs_change
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from student
+    delete from vs_change
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.StudentExample" >
-    delete from student
+  <delete id="deleteByExample" parameterType="com.uxiaoxi.ym.appserver.db.msg.dto.VsChangeExample" >
+    delete from vs_change
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Student" >
+  <insert id="insert" parameterType="com.uxiaoxi.ym.appserver.db.msg.dto.VsChange" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into student (num, name, face, 
-      clu_id, create_dt)
-    values (#{num,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{face,jdbcType=VARCHAR}, 
-      #{cluId,jdbcType=BIGINT}, #{createDt,jdbcType=TIMESTAMP})
+    insert into vs_change (msg_vs, mid, type, 
+      create_dt)
+    values (#{msgVs,jdbcType=BIGINT}, #{mid,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{createDt,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Student" >
+  <insert id="insertSelective" parameterType="com.uxiaoxi.ym.appserver.db.msg.dto.VsChange" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into student
+    insert into vs_change
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="num != null" >
-        num,
+      <if test="msgVs != null" >
+        msg_vs,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="mid != null" >
+        mid,
       </if>
-      <if test="face != null" >
-        face,
-      </if>
-      <if test="cluId != null" >
-        clu_id,
+      <if test="type != null" >
+        type,
       </if>
       <if test="createDt != null" >
         create_dt,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="num != null" >
-        #{num,jdbcType=VARCHAR},
+      <if test="msgVs != null" >
+        #{msgVs,jdbcType=BIGINT},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="mid != null" >
+        #{mid,jdbcType=BIGINT},
       </if>
-      <if test="face != null" >
-        #{face,jdbcType=VARCHAR},
-      </if>
-      <if test="cluId != null" >
-        #{cluId,jdbcType=BIGINT},
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="createDt != null" >
         #{createDt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.StudentExample" resultType="java.lang.Integer" >
-    select count(*) from student
+  <select id="countByExample" parameterType="com.uxiaoxi.ym.appserver.db.msg.dto.VsChangeExample" resultType="java.lang.Integer" >
+    select count(*) from vs_change
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update student
+    update vs_change
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.num != null" >
-        num = #{record.num,jdbcType=VARCHAR},
+      <if test="record.msgVs != null" >
+        msg_vs = #{record.msgVs,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=BIGINT},
       </if>
-      <if test="record.face != null" >
-        face = #{record.face,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cluId != null" >
-        clu_id = #{record.cluId,jdbcType=BIGINT},
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.createDt != null" >
         create_dt = #{record.createDt,jdbcType=TIMESTAMP},
@@ -182,31 +172,27 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update student
+    update vs_change
     set id = #{record.id,jdbcType=BIGINT},
-      num = #{record.num,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      face = #{record.face,jdbcType=VARCHAR},
-      clu_id = #{record.cluId,jdbcType=BIGINT},
+      msg_vs = #{record.msgVs,jdbcType=BIGINT},
+      mid = #{record.mid,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=INTEGER},
       create_dt = #{record.createDt,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Student" >
-    update student
+  <update id="updateByPrimaryKeySelective" parameterType="com.uxiaoxi.ym.appserver.db.msg.dto.VsChange" >
+    update vs_change
     <set >
-      <if test="num != null" >
-        num = #{num,jdbcType=VARCHAR},
+      <if test="msgVs != null" >
+        msg_vs = #{msgVs,jdbcType=BIGINT},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=BIGINT},
       </if>
-      <if test="face != null" >
-        face = #{face,jdbcType=VARCHAR},
-      </if>
-      <if test="cluId != null" >
-        clu_id = #{cluId,jdbcType=BIGINT},
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="createDt != null" >
         create_dt = #{createDt,jdbcType=TIMESTAMP},
@@ -214,13 +200,13 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.Student" >
-    update student
-    set num = #{num,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      face = #{face,jdbcType=VARCHAR},
-      clu_id = #{cluId,jdbcType=BIGINT},
+  <update id="updateByPrimaryKey" parameterType="com.uxiaoxi.ym.appserver.db.msg.dto.VsChange" >
+    update vs_change
+    set msg_vs = #{msgVs,jdbcType=BIGINT},
+      mid = #{mid,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
       create_dt = #{createDt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <cache />
 </mapper>

@@ -18,8 +18,6 @@ import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.ChangePWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.ResetPWDForm;
-import com.uxiaoxi.ym.appserver.web.account.vo.SearchByPhoneForm;
-import com.uxiaoxi.ym.appserver.web.account.vo.SearchForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 
@@ -37,37 +35,48 @@ public class AccountController {
 
     /**
      * 
-     * 验证密码
-     * 
-     * @param userId
-     * @param password
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/ckpwd")
-    public ResResult checkPasswordJson(Long userId, String password) {
-    	return accountService.checkPassword(userId, password);
-
-    }
-    /**
-     * 
      * 修改密码
      * 
-     * @param userId
-     * @param newPassword
+     * @param form
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/chpwd")
-    public ResResult changePasswordJson(@Valid ChangePWDForm form ,BindingResult errors) {
-    	 return accountService.changePassword(form,errors);
+    public ResResult changePasswordJson(@Valid ChangePWDForm form,
+            BindingResult errors) {
+
+        // 表单验证出错则返回登录页面
+        if (errors != null && errors.hasErrors()) {
+
+            return new ResResult(StatusConst.FAILURE, "输入信息格式错误",
+                    errors.getAllErrors());
+        }
+
+        return accountService.changePassword(form);
     }
-    
+
+    /**
+     * 
+     * 重置密码
+     * 
+     * @param form
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/repwd")
-    public ResResult resetPasswordJson(@Valid ResetPWDForm form, BindingResult errors) {
-    	  return accountService.resetPassword(form, errors);
+    public ResResult resetPasswordJson(@Valid ResetPWDForm form,
+            BindingResult errors) {
+
+        // 表单验证出错
+        if (errors != null && errors.hasErrors()) {
+
+            return new ResResult(StatusConst.FAILURE, "输入信息格式错误",
+                    errors.getAllErrors());
+        }
+
+        return accountService.resetPassword(form);
     }
+
     /**
      * 
      * 更改手机号
@@ -79,62 +88,52 @@ public class AccountController {
     @ResponseBody
     @RequestMapping(value = "/cgmb")
     public ResResult changeMobileJson(Long userid, String mobile, String code) {
-    	  ResResult rs = new ResResult();
-          rs.setMsg("更换绑定手机失败");
-          rs.setStatus(StatusConst.FAILURE);
+        ResResult rs = new ResResult();
+        rs.setMsg("更换绑定手机失败");
+        rs.setStatus(StatusConst.FAILURE);
 
-          // 如果为空则直接失败
-          if (StringUtils.isBlank(mobile) || StringUtils.isBlank(code)) {
-              return rs;
-          } else {
-              return accountService.changeMobile(userid,mobile, code);
-          }
+        // 如果为空则直接失败
+        if (StringUtils.isBlank(mobile) || StringUtils.isBlank(code)) {
+            return rs;
+        } else {
+            return accountService.changeMobile(userid, mobile, code);
+        }
     }
-
-
+    
+    /**
+     * 
+     * 获取用户信息
+     * 
+     * @param uid
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/getinfo")
     public ResResult getInfoJson(Long uid) {
-    	 Account account = accountService.getAccountById(uid);
-         if(account != null) {
-             AccountVO avo = new AccountVO(account);
-             return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,avo);
-         } else {
-             return new ResResult(StatusConst.FAILURE,StatusConst.STRFAILURE,null);
-         }
-         
+        Account account = accountService.getAccountById(uid);
+        if (account != null) {
+            AccountVO avo = new AccountVO(account);
+            return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
+                    avo);
+        } else {
+            return new ResResult(StatusConst.FAILURE, StatusConst.STRFAILURE,
+                    null);
+        }
+
     }
     
+    /**
+     * 
+     * 修改用户信息
+     * 
+     * @param vo
+     * @param vcode
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/update")
-    public ResResult updateInfoJson(AccountUpdateVO vo,String vcode) {
-    	return accountService.updateInfo(vo, vcode);
+    public ResResult updateInfoJson(AccountUpdateVO vo, String vcode) {
+        return accountService.updateInfo(vo, vcode);
     }
-    /**
-     * 
-     * 通过姓名搜索用户
-     * 
-     * @param form
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/search")
-    public ResResult searchByNameJson(SearchForm form) {
-    	return accountService.searchByName(form);
-    }
-    /**
-     * 
-     * 通过手机号搜索用户
-     * 
-     * @param form
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/searchbyphone")
-    public ResResult searchByPhoneJson(SearchByPhoneForm form) {
-    	return accountService.searchByPhone(form);
-    }
-    
-  
-   
+
 }

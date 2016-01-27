@@ -24,26 +24,26 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
         <!-- Bean路径设置 -->
-        <javaModelGenerator targetPackage="com.uxiaoxi.ym.appserver.db.cluster.dto"
+        <javaModelGenerator targetPackage="com.uxiaoxi.ym.appserver.db.account.dto"
             targetProject="yiming-server-3.0\src\main\java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
         <!-- 映射文件XML路径设置 -->
-        <sqlMapGenerator targetPackage="mybatis.mappers.cluster"
+        <sqlMapGenerator targetPackage="mybatis.mappers.account"
             targetProject="yiming-server-3.0\src\main\resources">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
         <!-- 对应的Mapper路径设置 -->
         <javaClientGenerator type="XMLMAPPER"
-            targetPackage="com.uxiaoxi.ym.appserver.db.cluster.mapper" targetProject="yiming-server-3.0\src\main\java">
+            targetPackage="com.uxiaoxi.ym.appserver.db.account.mapper" targetProject="yiming-server-3.0\src\main\java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         <!-- 数据库表 与对应的Bean设置 -->
-        <!-- 以上已经生成 -->
-        <table tableName="cluster_user" domainObjectName="ClusterUser">
-            <generatedKey identity="true" column="ID"  sqlStatement="SELECT LAST_INSERT_ID()" />
+        
+        <table tableName="feedback" domainObjectName="Feedback">
+            <generatedKey identity="true" column="ID"  sqlStatement="SELECT LAST_INSERT_ID()" />  
         </table>
 
     </context>
