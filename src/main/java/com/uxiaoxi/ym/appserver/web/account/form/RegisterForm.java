@@ -38,10 +38,16 @@ public class RegisterForm {
      */
     @NotNull(message = "请输入昵称")
     private String name;
-    
     /**
+     * 性别
+     */
+    @NotNull(message = "性别")
+    private Integer sex;
+
+	/**
      * 密码
      */
+
     @Length(min=6, max=20, message="密码长度必须在6-20之间")
     private String passwd;
     
@@ -80,7 +86,18 @@ public class RegisterForm {
     public void setType(Integer type) {
         this.type = type;
     }
-
+    /**
+     * @return the sex
+     */
+    public Integer getSex() {
+		return sex;
+	}
+    /**
+     * @param type the sex to set
+     */
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
     /**
      * @return the passwd
      */

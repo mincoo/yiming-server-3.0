@@ -19,8 +19,12 @@ public class AccountUpdateVO {
     private String name;
     
     private String face;
+    
+    private Integer sex;
+    
+   
 
-    /**
+	/**
      * @return the uid
      */
     public Long getUid() {
@@ -75,7 +79,19 @@ public class AccountUpdateVO {
     public void setFace(String face) {
         this.face = face;
     }
-    
+    /**
+     * @return the sex
+     */
+
+    public Integer getSex() {
+		return sex;
+	}
+    /**
+     * @param uid the sex to set
+     */
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
     
     /**
      * 转化为Account
@@ -91,6 +107,7 @@ public class AccountUpdateVO {
         account.setPhone(this.phone);
         account.setName(this.name);
         account.setFace(this.face);
+        account.setSex(this.sex);
         return account;
     }
     

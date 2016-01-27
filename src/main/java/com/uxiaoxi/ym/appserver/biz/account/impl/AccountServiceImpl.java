@@ -137,7 +137,7 @@ public class AccountServiceImpl implements IAccountService {
                 newAccount.setPassword(CommonUtil.password(registerForm.getPasswd()));
                 newAccount.setType(registerForm.getType());
                 newAccount.setCreateDt(new Date());
-                
+                newAccount.setSex(registerForm.getSex());
                 accountDao.insert(newAccount);
                 
                 rs.setMsg(StatusConst.STRSUCCESS);

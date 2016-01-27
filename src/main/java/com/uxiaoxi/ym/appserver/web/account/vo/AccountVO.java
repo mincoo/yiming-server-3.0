@@ -20,7 +20,23 @@ public class AccountVO {
     
     private String name;
     
-    private String face;
+    private Integer sex;
+    
+    /**
+	 * @return the sex
+	 */
+	public Integer getSex() {
+		return sex;
+	}
+
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+
+	private String face;
     
     private String token;
     
@@ -33,6 +49,7 @@ public class AccountVO {
         this.phone = account.getPhone();
         this.type = account.getType();
         this.name = account.getName();
+        this.sex =account.getSex();
         this.face = account.getFace();
         this.token = account.getToken();
     }
@@ -137,6 +154,7 @@ public class AccountVO {
         account.setName(this.name);
         account.setFace(this.face);
         account.setToken(this.token);
+        account.setSex(this.sex);
         return account;
     }
     
