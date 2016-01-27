@@ -2,7 +2,13 @@ package com.uxiaoxi.ym.appserver.db.cluster.mapper;
 
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUserExample;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
+import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO;
+import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ClusterUserMapper {
@@ -74,4 +80,10 @@ public interface ClusterUserMapper {
      * @mbggenerated  Wed Jan 27 11:06:29 CST 2016
      */
     int updateByPrimaryKey(ClusterUser record);
+    
+    List<ClusterUserSearchResultVO> searchByUid(ClusterUserSearchForm form);
+    
+    List<ClusterUserListVO> searchByGid(ClusterUserListForm form);
+    
+    List<ClusterUser> getAllByUid(Long id);
 }

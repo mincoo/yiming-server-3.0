@@ -105,7 +105,7 @@ public class MsgServiceImpl implements IMsgService {
             // 更新为已读
             MsgAcc record = new MsgAcc();
             record.setMsgId(form.getMid());
-            record.setReaded(MsgStatusEnum.READ.getCode());
+//            record.setReaded(MsgStatusEnum.READ.getCode());
             record.setAccId(form.getUid());
             msgAccDao.updateReaded(record);
            
@@ -191,7 +191,7 @@ public class MsgServiceImpl implements IMsgService {
         ma.setCreateDt(new Date());
         ma.setMsgId(msg.getId());
         ma.setCluId(form.getGid());
-        ma.setReaded(MsgStatusEnum.UNREAD.getCode());
+//        ma.setReaded(MsgStatusEnum.UNREAD.getCode());
         ma.setUseYn(true);
         msgAccDao.insert(ma);
 
@@ -254,7 +254,7 @@ public class MsgServiceImpl implements IMsgService {
             ma.setCreateDt(new Date());
             ma.setMsgId(msg.getId());
             ma.setCluId(form.getGid());
-            ma.setReaded(MsgStatusEnum.UNREAD.getCode());
+//            ma.setReaded(MsgStatusEnum.UNREAD.getCode());
             ma.setUseYn(true);
             msgAccDao.insert(ma);
         }
@@ -297,7 +297,7 @@ public class MsgServiceImpl implements IMsgService {
             ma.setCreateDt(new Date());
             ma.setMsgId(msg.getId());
             ma.setCluId(0L);
-            ma.setReaded(MsgStatusEnum.UNREAD.getCode());
+//            ma.setReaded(MsgStatusEnum.UNREAD.getCode());
             ma.setUseYn(true);
             msgAccDao.insert(ma);
             

@@ -17,9 +17,6 @@ import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListPVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListSVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListTVO;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
 /**
@@ -67,24 +64,6 @@ public interface IClusterUserDao extends IBaseSupport<ClusterUser> {
      * @return
      */
     public ClusterUser searchByGidAndUid(Long gid, Long uid);
-    
-    /**
-     * @param form
-     * @return
-     */
-    public List<SearchUserListTVO> searchByGidT(ClusterUserListForm form);
-    
-    /**
-     * @param form
-     * @return
-     */
-    public List<SearchUserListPVO> searchByGidP(ClusterUserListForm form);
-    
-    /**
-     * @param form
-     * @return
-     */
-    public List<SearchUserListSVO> searchByGidS(ClusterUserListForm form);
     
     /**
      * @param from

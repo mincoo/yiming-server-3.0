@@ -3,9 +3,7 @@
  */
 package com.uxiaoxi.ym.appserver.biz.cluster;
 
-import com.uxiaoxi.ym.appserver.web.cluster.form.AddChildForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
-import com.uxiaoxi.ym.appserver.web.cluster.form.AddStudentForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
@@ -74,12 +72,6 @@ public interface IClusterService {
      * @param form
      * @return
      */
-    public ResResult delstudent(AddDelUserForm form);
-    
-    /**
-     * @param form
-     * @return
-     */
     public ResResult exitgroup(ExitForm form);
 
     /**
@@ -93,37 +85,5 @@ public interface IClusterService {
      * @return
      */
     public ResResult searchClusterBySn(ClusterSearchBySnForm form);
-    
-    /**
-     * @param form
-     * @return
-     */
-    public ResResult getUserListT(ClusterUserListForm form);
-    
-    /**
-     * @param form
-     * @return
-     */
-    public ResResult getUserListP(ClusterUserListForm form);
-    
-    /**
-     * @param form
-     * @return
-     */
-    public ResResult getUserListS(ClusterUserListForm form);
-    
-    /**
-     * @param form
-     * @return
-     */
-    public ResResult addStudent(AddStudentForm form);
-
-    /**
-     * @param form
-     * @return
-     */
-    public ResResult addChild(AddChildForm form);
-
-
     
 }

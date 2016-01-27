@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uxiaoxi.ym.appserver.biz.cluster.IClusterService;
-import com.uxiaoxi.ym.appserver.web.cluster.form.AddChildForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
@@ -78,11 +77,4 @@ public class ClusterController {
     public ResResult getListJsonBySn(ClusterSearchBySnForm form) {
         return clusterService.searchClusterBySn(form);
     }
-
-    @ResponseBody
-    @RequestMapping(value = "/addchild")
-    public ResResult addChildJson(AddChildForm form) {
-        return clusterService.addChild(form);
-    }
-
 }

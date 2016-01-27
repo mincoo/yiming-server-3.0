@@ -25,9 +25,6 @@ import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListPVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListSVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListTVO;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
 /**
@@ -109,32 +106,11 @@ public class ClusterUserDaoImpl extends
     }
     
     @Override
-    public List<SearchUserListTVO> searchByGidT(ClusterUserListForm form) {
-        
-        ClusterUserMapper mapper = this.getSqlSession().getMapper(ClusterUserMapper.class);
-        return mapper.searchByGidT(form);
-    }
-    
-    @Override
-    public List<SearchUserListPVO> searchByGidP(ClusterUserListForm form) {
-        
-        ClusterUserMapper mapper = this.getSqlSession().getMapper(ClusterUserMapper.class);
-        return mapper.searchByGidP(form);
-    }
-    
-    @Override
-    public List<SearchUserListSVO> searchByGidS(ClusterUserListForm form) {
-        
-        ClusterUserMapper mapper = this.getSqlSession().getMapper(ClusterUserMapper.class);
-        return mapper.searchByGidS(form);
-    }
-    
-    @Override
     public int updateJpushFlg(MsgTagChangeForm form) {
     	ClusterUser record = new ClusterUser();
     	record.setAccId(form.getUid());
     	record.setCluId(form.getGid());
-    	record.setJpushFlg(form.getStatus());
+    	record.setMsgFlg(form.getStatus());
     	record.setCreateDt(new Date());
     	
 		ClusterUserMapper mapper = this.getSqlSession().getMapper(ClusterUserMapper.class);

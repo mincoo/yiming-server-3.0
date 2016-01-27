@@ -2,7 +2,14 @@ package com.uxiaoxi.ym.appserver.db.cluster.mapper;
 
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterExample;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;
+import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterByGidVO;
+import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ClusterMapper {
@@ -74,4 +81,28 @@ public interface ClusterMapper {
      * @mbggenerated  Wed Jan 27 11:05:33 CST 2016
      */
     int updateByPrimaryKey(Cluster record);
+    
+    /**
+     * @param form
+     * @return
+     */
+    ClusterByGidVO searchByGid(ClusterSearchForm form);
+    
+    /**
+     * @param map
+     * @return
+     */
+    int countUserByType(Map<String,Object> map);
+    
+    /**
+     * @param form
+     * @return
+     */
+    ClusterBySnResult searchBySn(ClusterSearchBySnForm form);
+    
+    /**
+     * @param
+     * @return
+     */
+    int searchMaxSn();
 }

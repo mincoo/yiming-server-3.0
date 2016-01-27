@@ -2,7 +2,15 @@ package com.uxiaoxi.ym.appserver.db.msg.mapper;
 
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAccExample;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface MsgAccMapper {
@@ -74,4 +82,10 @@ public interface MsgAccMapper {
      * @mbggenerated  Wed Jan 27 11:11:31 CST 2016
      */
     int updateByPrimaryKey(MsgAcc record);
+    
+    List<MsgVO> getlist(MsgForm form);
+
+    MsgWithContentVO getdata(MsgDataForm form);
+    
+    List<MsgReadStateVO> getReadState(MsgReadStateForm form);
 }
