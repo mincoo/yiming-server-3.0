@@ -26,6 +26,8 @@ import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnVO;
 @Repository
 public class ClusterDaoImpl extends BaseSupport<Cluster, ClusterMapper>
         implements IClusterDao {
+    
+    
 
     
 //    @Override
