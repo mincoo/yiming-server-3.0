@@ -4,11 +4,11 @@
 package com.uxiaoxi.ym.appserver.biz.account;
 
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
+import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
+import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
+import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
+import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
-import com.uxiaoxi.ym.appserver.web.account.vo.ChangePWDForm;
-import com.uxiaoxi.ym.appserver.web.account.vo.LoginForm;
-import com.uxiaoxi.ym.appserver.web.account.vo.RegisterForm;
-import com.uxiaoxi.ym.appserver.web.account.vo.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 
 /**

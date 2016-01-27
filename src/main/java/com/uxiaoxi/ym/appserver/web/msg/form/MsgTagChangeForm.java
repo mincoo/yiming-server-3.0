@@ -1,24 +1,26 @@
 /**
- * ClusterUserListForm.java
+ * MsgTagChangeForm.java
  */
-package com.uxiaoxi.ym.appserver.web.cluster.vo;
+package com.uxiaoxi.ym.appserver.web.msg.form;
 
 import javax.validation.constraints.NotNull;
 
 /**
  * @author renhao
  *
- * 2015年3月10日
+ * 2015年3月11日
  */
-public class ClusterUserListForm {
-
+public class MsgTagChangeForm {
+    
+    @NotNull
     private Long uid;
     
     @NotNull
     private Long gid;
     
-    private Long start;
-
+    @NotNull
+    private Long status;
+    
     /**
      * @return the uid
      */
@@ -47,17 +49,19 @@ public class ClusterUserListForm {
         this.gid = gid;
     }
 
-    /**
-     * @return the start
-     */
-    public Long getStart() {
-        return start;
-    }
+	/**
+	 * @return the status
+	 */
+	public Long getStatus() {
+		return status;
+	}
 
-    /**
-     * @param start the start to set
-     */
-    public void setStart(Long start) {
-        this.start = start;
-    }
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Long status) {
+		this.status = status;
+	}
+
+
 }

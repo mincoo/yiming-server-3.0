@@ -6,7 +6,7 @@ package com.uxiaoxi.ym.aliyun.bean;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSON;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgSendForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgSendTypeEnum;
 
 /**

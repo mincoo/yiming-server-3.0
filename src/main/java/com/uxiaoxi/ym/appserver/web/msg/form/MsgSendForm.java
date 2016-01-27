@@ -1,7 +1,7 @@
 /**
  * MsgSendForm.java
  */
-package com.uxiaoxi.ym.appserver.web.msg.vo;
+package com.uxiaoxi.ym.appserver.web.msg.form;
 
 import javax.validation.constraints.NotNull;
 

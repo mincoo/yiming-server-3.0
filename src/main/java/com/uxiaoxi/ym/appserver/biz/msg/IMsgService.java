@@ -7,12 +7,12 @@ import org.springframework.validation.BindingResult;
 
 import com.uxiaoxi.ym.aliyun.bean.TDMsgOnsDTO;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgGSendForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgSendForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTagChangeForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
 /**
  * @author renhao

@@ -7,9 +7,9 @@ import java.util.List;
 
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO;

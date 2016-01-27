@@ -1,7 +1,7 @@
 /**
  * ResetPWDForm.java
  */
-package com.uxiaoxi.ym.appserver.web.account.vo;
+package com.uxiaoxi.ym.appserver.web.account.form;
 
 import javax.validation.constraints.NotNull;
 

@@ -1,7 +1,7 @@
 /**
- * AddChildForm.java
+ * JoinClusterForm.java
  */
-package com.uxiaoxi.ym.appserver.web.cluster.vo;
+package com.uxiaoxi.ym.appserver.web.cluster.form;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  *
  * 2015年3月10日
  */
-public class AddChildForm {
+public class JoinClusterForm {
 
     @NotNull
     private Long uid;
@@ -18,9 +18,7 @@ public class AddChildForm {
     @NotNull
     private Long gid;
     
-    @NotNull
-    private String sid;
-    
+    private Integer type;
 
     /**
      * @return the uid
@@ -51,16 +49,17 @@ public class AddChildForm {
     }
 
 	/**
-	 * @return the sid
+	 * @return the type
 	 */
-	public String getSid() {
-		return sid;
+	public Integer getType() {
+		return type;
 	}
 
 	/**
-	 * @param sid the sid to set
+	 * @param type the type to set
 	 */
-	public void setSid(String sid) {
-		this.sid = sid;
+	public void setType(Integer type) {
+		this.type = type;
 	}
+
 }

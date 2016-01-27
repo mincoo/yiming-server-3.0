@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
+import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
+import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
-import com.uxiaoxi.ym.appserver.web.account.vo.ChangePWDForm;
-import com.uxiaoxi.ym.appserver.web.account.vo.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 

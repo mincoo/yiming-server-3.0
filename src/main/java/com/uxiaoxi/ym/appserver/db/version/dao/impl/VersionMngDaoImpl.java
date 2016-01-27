@@ -12,7 +12,7 @@ import com.uxiaoxi.ym.appserver.db.version.dto.VersionMng;
 import com.uxiaoxi.ym.appserver.db.version.dto.VersionMngExample;
 import com.uxiaoxi.ym.appserver.db.version.mapper.VersionMngMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
-import com.uxiaoxi.ym.appserver.web.version.vo.VersionMngForm;
+import com.uxiaoxi.ym.appserver.web.version.form.VersionMngForm;
 
 /**
  * @author renhao

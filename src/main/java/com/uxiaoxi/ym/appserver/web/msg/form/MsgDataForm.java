@@ -1,7 +1,7 @@
 /**
  * MsgDataForm.java
  */
-package com.uxiaoxi.ym.appserver.web.msg.vo;
+package com.uxiaoxi.ym.appserver.web.msg.form;
 
 /**
  * @author renhao

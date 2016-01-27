@@ -1,11 +1,13 @@
 /**
  * MsgGSendForm.java
  */
-package com.uxiaoxi.ym.appserver.web.msg.vo;
+package com.uxiaoxi.ym.appserver.web.msg.form;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTypeEnum;
 
 /**
  * @author renhao

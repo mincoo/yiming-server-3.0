@@ -3,16 +3,16 @@
  */
 package com.uxiaoxi.ym.appserver.biz.cluster;
 
-import com.uxiaoxi.ym.appserver.web.cluster.vo.AddChildForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.AddDelUserForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.AddStudentForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterSearchBySnForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterSearchForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.CreateClusterForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ExitForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.JoinClusterForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.AddChildForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.AddStudentForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.CreateClusterForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.JoinClusterForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 
 /**

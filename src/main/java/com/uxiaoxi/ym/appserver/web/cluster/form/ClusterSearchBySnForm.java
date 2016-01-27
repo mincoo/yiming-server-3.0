@@ -1,7 +1,7 @@
 /**
  * ClusterSearchForm.java
  */
-package com.uxiaoxi.ym.appserver.web.cluster.vo;
+package com.uxiaoxi.ym.appserver.web.cluster.form;
 
 /**
  * @author zoujy

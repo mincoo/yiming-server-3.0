@@ -16,7 +16,7 @@ import com.uxiaoxi.ym.appserver.db.cluster.mapper.ClusterUserMapper;
 import com.uxiaoxi.ym.appserver.db.cluster.mapper.StudentMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
 import com.uxiaoxi.ym.appserver.framework.page.model.Page;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.AddDelUserForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.SqlBean;
 /**
  * @author mbg

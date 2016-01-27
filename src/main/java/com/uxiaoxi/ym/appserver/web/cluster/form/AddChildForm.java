@@ -1,7 +1,7 @@
 /**
- * ExitForm.java
+ * AddChildForm.java
  */
-package com.uxiaoxi.ym.appserver.web.cluster.vo;
+package com.uxiaoxi.ym.appserver.web.cluster.form;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  *
  * 2015年3月10日
  */
-public class ExitForm {
+public class AddChildForm {
 
     @NotNull
     private Long uid;
@@ -18,6 +18,10 @@ public class ExitForm {
     @NotNull
     private Long gid;
     
+    @NotNull
+    private String sid;
+    
+
     /**
      * @return the uid
      */
@@ -45,4 +49,18 @@ public class ExitForm {
     public void setGid(Long gid) {
         this.gid = gid;
     }
+
+	/**
+	 * @return the sid
+	 */
+	public String getSid() {
+		return sid;
+	}
+
+	/**
+	 * @param sid the sid to set
+	 */
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
 }

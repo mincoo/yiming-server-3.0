@@ -1,7 +1,7 @@
 /**
- * JoinClusterForm.java
+ * AddUserForm.java
  */
-package com.uxiaoxi.ym.appserver.web.cluster.vo;
+package com.uxiaoxi.ym.appserver.web.cluster.form;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,13 +10,16 @@ import javax.validation.constraints.NotNull;
  *
  * 2015年3月10日
  */
-public class JoinClusterForm {
+public class AddDelUserForm {
 
     @NotNull
     private Long uid;
     
     @NotNull
     private Long gid;
+    
+    @NotNull
+    private Long nid;
     
     private Integer type;
 
@@ -46,6 +49,20 @@ public class JoinClusterForm {
      */
     public void setGid(Long gid) {
         this.gid = gid;
+    }
+
+    /**
+     * @return the nid
+     */
+    public Long getNid() {
+        return nid;
+    }
+
+    /**
+     * @param nid the nid to set
+     */
+    public void setNid(Long nid) {
+        this.nid = nid;
     }
 
 	/**

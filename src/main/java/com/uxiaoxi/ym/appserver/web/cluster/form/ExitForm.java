@@ -1,7 +1,7 @@
 /**
- * AddUserForm.java
+ * ExitForm.java
  */
-package com.uxiaoxi.ym.appserver.web.cluster.vo;
+package com.uxiaoxi.ym.appserver.web.cluster.form;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  *
  * 2015年3月10日
  */
-public class AddDelUserForm {
+public class ExitForm {
 
     @NotNull
     private Long uid;
@@ -18,11 +18,6 @@ public class AddDelUserForm {
     @NotNull
     private Long gid;
     
-    @NotNull
-    private Long nid;
-    
-    private Integer type;
-
     /**
      * @return the uid
      */
@@ -50,33 +45,4 @@ public class AddDelUserForm {
     public void setGid(Long gid) {
         this.gid = gid;
     }
-
-    /**
-     * @return the nid
-     */
-    public Long getNid() {
-        return nid;
-    }
-
-    /**
-     * @param nid the nid to set
-     */
-    public void setNid(Long nid) {
-        this.nid = nid;
-    }
-
-	/**
-	 * @return the type
-	 */
-	public Integer getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
 }

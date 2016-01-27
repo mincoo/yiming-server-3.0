@@ -1,7 +1,7 @@
 /**
  * SearchByPhoneForm.java
  */
-package com.uxiaoxi.ym.appserver.web.account.vo;
+package com.uxiaoxi.ym.appserver.web.account.form;
 
 /**
  * @author renhao

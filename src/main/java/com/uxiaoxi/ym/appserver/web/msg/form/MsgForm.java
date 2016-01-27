@@ -1,18 +1,18 @@
 /**
- * MsgReadStateForm.java
+ * MsgListForm.java
  */
-package com.uxiaoxi.ym.appserver.web.msg.vo;
+package com.uxiaoxi.ym.appserver.web.msg.form;
 
 /**
  * @author renhao
  *
- * 2015年5月30日
+ * 2015年3月11日
  */
-public class MsgReadStateForm {
+public class MsgForm {
 
     private Long uid;
     
-    private Long mid;
+    private Long start;
 
     /**
      * @return the uid
@@ -29,16 +29,16 @@ public class MsgReadStateForm {
     }
 
     /**
-     * @return the mid
+     * @return the start
      */
-    public Long getMid() {
-        return mid;
+    public Long getStart() {
+        return start;
     }
 
     /**
-     * @param mid the mid to set
+     * @param start the start to set
      */
-    public void setMid(Long mid) {
-        this.mid = mid;
+    public void setStart(Long start) {
+        this.start = start;
     }
 }

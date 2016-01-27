@@ -18,7 +18,7 @@ import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import com.aliyun.openservices.ons.api.SendResult;
 import com.uxiaoxi.ym.aliyun.bean.AliyunConfig;
 import com.uxiaoxi.ym.aliyun.bean.MsgOnsDTO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgGSendForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 
 /**
  * @author renhao

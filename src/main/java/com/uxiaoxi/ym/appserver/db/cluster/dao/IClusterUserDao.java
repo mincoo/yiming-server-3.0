@@ -11,16 +11,16 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAccExample;
 import com.uxiaoxi.ym.appserver.db.msg.mapper.MsgAccMapper;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
 import com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.AddDelUserForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListPVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListSVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListTVO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTagChangeForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
 /**
  * @author renhao

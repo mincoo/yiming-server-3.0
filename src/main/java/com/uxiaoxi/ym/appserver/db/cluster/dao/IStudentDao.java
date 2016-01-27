@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Student;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.AddDelUserForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
 
 /**
  * @author mbg

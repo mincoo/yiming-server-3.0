@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
-import com.uxiaoxi.ym.appserver.web.account.vo.LoginForm;
+import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 

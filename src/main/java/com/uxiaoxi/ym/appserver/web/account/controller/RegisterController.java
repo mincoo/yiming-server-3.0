@@ -20,7 +20,7 @@ import com.uxiaoxi.ym.appserver.biz.verification.IVerificationCodeService;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.framework.sms.Sms;
 import com.uxiaoxi.ym.appserver.framework.util.StringUtil;
-import com.uxiaoxi.ym.appserver.web.account.vo.RegisterForm;
+import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;

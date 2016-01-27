@@ -1,7 +1,7 @@
 /**
  * VersionMngForm.java
  */
-package com.uxiaoxi.ym.appserver.web.version.vo;
+package com.uxiaoxi.ym.appserver.web.version.form;
 
 /**
  * @author renhao

@@ -8,8 +8,8 @@ import java.util.Map;
 
 import com.uxiaoxi.ym.appserver.db.cluster.dto.StudentFollow;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.AddChildForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.AddChildForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListPSub;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListSSub;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchUserListSVO;

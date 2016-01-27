@@ -11,7 +11,7 @@ import com.uxiaoxi.ym.appserver.db.version.dao.IVersionMngDao;
 import com.uxiaoxi.ym.appserver.db.version.dto.VersionMng;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
-import com.uxiaoxi.ym.appserver.web.version.vo.VersionMngForm;
+import com.uxiaoxi.ym.appserver.web.version.form.VersionMngForm;
 import com.uxiaoxi.ym.appserver.web.version.vo.VersionVO;
 
 /**
