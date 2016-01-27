@@ -366,7 +366,7 @@
            AND m.`acc_id` = a.`id`
   </sql>
   
-  <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgForm" resultMap="VOResultMap">
+<!--   <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgForm" resultMap="VOResultMap">
         SELECT 
         <include refid="Base_Msg_List" />
         <include refid="Base_Msg_condition" />
@@ -380,7 +380,7 @@
          ORDER BY m.`id` DESC
          LIMIT 0,10
    
-  </select>
+  </select> -->
   
   <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO">
     <id column="mid" jdbcType="BIGINT" property="mid" />
@@ -397,7 +397,7 @@
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   
-    <select id="getdata" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataForm" resultMap="ResultMap">
+<!--     <select id="getdata" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataForm" resultMap="ResultMap">
         SELECT 
         <include refid="Base_Msg_List" /> ,
                m.`content` as content
@@ -405,14 +405,14 @@
            AND m.`id` = #{mid,jdbcType=BIGINT}
            AND t.`acc_id` = #{uid,jdbcType=BIGINT}
          ORDER BY t.`id` ASC
-  </select>
+  </select> -->
   
   <resultMap extends="VOResultMap" id="ResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO">
     <result column="content" jdbcType="INTEGER" property="content" />
   </resultMap>
   
   
-  <select id="getReadState" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateForm" resultMap="ReadResultMap">
+<!--   <select id="getReadState" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateForm" resultMap="ReadResultMap">
       SELECT ma.`acc_id` AS `uid`, 
              a.`type` AS `type` ,
              a.name AS `name`, 
@@ -424,7 +424,7 @@
         LEFT JOIN msg  m ON m.`id` = ma.`msg_id`
        WHERE m.`id` = #{mid,jdbcType=BIGINT}
          AND m.`acc_id` = #{uid,jdbcType=BIGINT}
-  </select>
+  </select> -->
   
   <resultMap id="ReadResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO">
     <result column="uid" jdbcType="BIGINT" property="uid" />
