@@ -43,18 +43,6 @@ public class AccountDaoImpl extends BaseSupport<Account, AccountMapper> implemen
     }
     
     @Override
-    public List<SearchUserResultVO> searchByName(SearchForm form){
-        AccountMapper mapper = this.getSqlSession().getMapper(AccountMapper.class);
-        return mapper.searchUser(form);
-    }
-    
-    @Override
-    public SearchUserResultVO searchByPhone(SearchByPhoneForm form){
-        AccountMapper mapper = this.getSqlSession().getMapper(AccountMapper.class);
-        return mapper.searchUserByPhone(form);
-    }
-    
-    @Override
     public String getName(Long uid){
         AccountMapper mapper = this.getSqlSession().getMapper(AccountMapper.class);
         Account account = mapper.selectByPrimaryKey(uid);

@@ -11,6 +11,7 @@ import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.CreateClusterForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.JoinClusterForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.UpdateRemarkForm;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 
 /**
@@ -85,5 +86,17 @@ public interface IClusterService {
      * @return
      */
     public ResResult searchClusterBySn(ClusterSearchBySnForm form);
+    
+    /**
+     * @param form
+     * @return
+     */
+    public ResResult updateRemark(UpdateRemarkForm form);
+    
+    /**
+     * @param uid
+     * @return
+     */
+    public ResResult searchcname(Long uid);
     
 }

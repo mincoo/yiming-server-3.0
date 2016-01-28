@@ -5,6 +5,7 @@ package com.uxiaoxi.ym.appserver.biz.account;
 
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
+import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
 import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
 import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
@@ -87,10 +88,19 @@ public interface IAccountService {
     public ResResult checkPassword(Long uid, String pwd);
 
     /**
+     * 重置密码
+     * 
      * @param form
-     * @param errors
      * @return
      */
     public ResResult resetPassword(ResetPWDForm form);
+    
+    /**
+     * 提交反馈信息
+     * 
+     * @param form
+     * @return
+     */
+    public ResResult feedback(FeedbackForm form);
 
 }

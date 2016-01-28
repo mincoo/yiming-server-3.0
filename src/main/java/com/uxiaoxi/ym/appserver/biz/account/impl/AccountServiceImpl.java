@@ -19,12 +19,15 @@ import org.springframework.validation.BindingResult;
 
 import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
 import com.uxiaoxi.ym.appserver.db.account.dao.IAccountDao;
+import com.uxiaoxi.ym.appserver.db.account.dao.IFeedbackDao;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
+import com.uxiaoxi.ym.appserver.db.account.dto.Feedback;
 import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterUserDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.verification.dao.IVerificationCodeDao;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
+import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
 import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
 import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
@@ -53,6 +56,9 @@ public class AccountServiceImpl implements IAccountService {
     
     @Autowired
     private IAccountDao accountDao;
+    
+    @Autowired
+    private IFeedbackDao feedbackDao;
     
     @Autowired
     private IClusterUserDao cluserUserDao;
@@ -358,6 +364,19 @@ public class AccountServiceImpl implements IAccountService {
             rs.setMsg("验证码无效");
             return rs;
         }
+    }
+    
+    @Override
+    public ResResult feedback(FeedbackForm form) {
+        
+        Feedback record = new Feedback();
+        record.setAccId(form.getUid());
+        record.setContent(form.getContent());
+        record.setCreateDt(new Date());
+        
+        feedbackDao.insert(record);
+        
+        return new ResResult(null);
     }
     
 }

@@ -23,8 +23,10 @@ import com.uxiaoxi.ym.appserver.db.account.dao.IAccountDao;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterUserDao;
+import com.uxiaoxi.ym.appserver.db.cluster.dao.IRemarkDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
+import com.uxiaoxi.ym.appserver.db.cluster.dto.Remark;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO;
 import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
@@ -35,13 +37,16 @@ import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.CreateClusterForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.JoinClusterForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.UpdateRemarkForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterByGidVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnVO;
+import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListResultVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResult;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterVO;
+import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchCNameVO;
 import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
@@ -66,6 +71,9 @@ public class ClusterServiceImpl implements IClusterService {
 
     @Autowired
     private IClusterUserDao clusterUserDao;
+    
+    @Autowired
+    private IRemarkDao remarkDao;
 
     @Override
     @Transactional
@@ -221,10 +229,12 @@ public class ClusterServiceImpl implements IClusterService {
         ClusterUser record = new ClusterUser();
         record.setAccId(form.getUid());
         record.setCluId(form.getGid());
+        record.setChildName(form.getCname());
         record.setCreateDt(new Date());
         if (form.getType() != null) {
             record.setAccType(form.getType());
         }
+        
         // 别名不存在时，设置用户真实姓名
         record.setAccName(accountDao.getName(form.getUid()));
 
@@ -303,25 +313,40 @@ public class ClusterServiceImpl implements IClusterService {
     @Override
     public ResResult getUserList(ClusterUserListForm form) {
 
-        List<ClusterUserListVO> list = clusterUserDao.searchByGid(form);
-        if (list == null) {
-            list = new ArrayList<ClusterUserListVO>();
+        List<ClusterUserListVO> tlist = clusterUserDao.searchByGidT(form);
+        List<ClusterUserListVO> plist = clusterUserDao.searchByGidP(form);
+        
+        if (tlist == null) {
+            tlist = new ArrayList<ClusterUserListVO>();
         }
-        ListResult<SearchUserResultVO> sr = new ListResult<SearchUserResultVO>();
-
-        if (list.size() > 0) {
-            sr.setLast(list.get(list.size() - 1).getId());
-        } else {
-            sr.setLast(form.getStart());
+        if (plist == null) {
+            plist = new ArrayList<ClusterUserListVO>();
         }
-
-        List<SearchUserResultVO> l = new ArrayList<SearchUserResultVO>();
-        for (ClusterUserListVO vo : list) {
-            l.add(vo.toSearchUserResultVO());
+        
+        ClusterUserListResultVO<ClusterUserListVO> sr = new ClusterUserListResultVO<ClusterUserListVO>();
+        
+        List<ClusterUserListVO> lt = new ArrayList<ClusterUserListVO>();
+        for (ClusterUserListVO vo : tlist) {
+            String remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            vo.setRemark(remark);
+            lt.add(vo); 
         }
-
-        sr.setList(l);
-
+        
+        List<ClusterUserListVO> lp = new ArrayList<ClusterUserListVO>();
+        for (ClusterUserListVO vo : plist) {
+            String remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            String childname = clusterUserDao.selectChildName(vo.getUid(),form.getGid()); 
+            vo.setRemark(remark);
+            vo.setChildname(childname);
+            lp.add(vo); 
+        }
+        
+        
+        sr.setTlist(lt);
+        sr.setTsize(new Long(lt.size()));
+        sr.setPlist(lp);
+        sr.setPsize(new Long(lp.size()));
+        
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
 
     }
@@ -345,6 +370,41 @@ public class ClusterServiceImpl implements IClusterService {
         } else {
             return new ResResult(StatusConst.FAILURE, "不存在班级", null);
         }
+    }
+
+    @Override
+    public ResResult updateRemark(UpdateRemarkForm form) {
+        
+        Remark record = new Remark();
+        record.setAccId(form.getUid());
+        record.setAccIdObj(form.getNid());
+        record.setCluId(form.getGid());
+        record.setRemark(form.getRemark());
+        record.setCreateDt(new Date());
+        
+        remarkDao.insert(record);
+
+        return new ResResult(null);
+    }
+    
+    @Override
+    public ResResult searchcname(Long uid) {
+        
+        String cname = null;
+        List<ClusterUser>  culist = clusterUserDao.getAllByUid(uid);
+        
+        for(ClusterUser cu : culist) {
+            if(cu.getChildName()!=null && !"".equals(cu.getChildName())){
+                cname = cu.getChildName();
+                break;
+            };
+        }
+        
+        SearchCNameVO vo = new SearchCNameVO();
+        vo.setUid(uid);
+        vo.setCname(cname);
+        
+        return new ResResult(vo);
     }
 
 }

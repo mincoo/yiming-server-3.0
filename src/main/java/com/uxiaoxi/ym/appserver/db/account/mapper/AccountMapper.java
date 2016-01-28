@@ -2,12 +2,7 @@ package com.uxiaoxi.ym.appserver.db.account.mapper;
 
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.db.account.dto.AccountExample;
-import com.uxiaoxi.ym.appserver.web.account.form.SearchByPhoneForm;
-import com.uxiaoxi.ym.appserver.web.account.form.SearchForm;
-import com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface AccountMapper {
@@ -80,7 +75,5 @@ public interface AccountMapper {
      */
     int updateByPrimaryKey(Account record);
     
-    List<SearchUserResultVO> searchUser(SearchForm form);
     
-    SearchUserResultVO searchUserByPhone(SearchByPhoneForm form);
 }

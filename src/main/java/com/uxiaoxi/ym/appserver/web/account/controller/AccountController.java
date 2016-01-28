@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
+import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
@@ -134,6 +135,19 @@ public class AccountController {
     @RequestMapping(value = "/update")
     public ResResult updateInfoJson(AccountUpdateVO vo, String vcode) {
         return accountService.updateInfo(vo, vcode);
+    }
+    
+    /**
+     * 
+     * 提交反馈信息
+     * 
+     * @param form
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/feedback")
+    public ResResult feedbackJson(FeedbackForm form) {
+        return accountService.feedback(form);
     }
 
 }

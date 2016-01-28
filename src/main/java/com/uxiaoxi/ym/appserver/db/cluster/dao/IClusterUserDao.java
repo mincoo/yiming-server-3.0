@@ -6,11 +6,7 @@ package com.uxiaoxi.ym.appserver.db.cluster.dao;
 import java.util.List;
 
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
-import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
-import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAccExample;
-import com.uxiaoxi.ym.appserver.db.msg.mapper.MsgAccMapper;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
-import com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO;
 import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
@@ -46,7 +42,13 @@ public interface IClusterUserDao extends IBaseSupport<ClusterUser> {
      * @param form
      * @return
      */
-    public List<ClusterUserListVO> searchByGid(ClusterUserListForm form);
+    public List<ClusterUserListVO> searchByGidP(ClusterUserListForm form);
+    
+    /**
+     * @param form
+     * @return
+     */
+    public List<ClusterUserListVO> searchByGidT(ClusterUserListForm form);
 
     /**
      * @param gid
@@ -70,5 +72,12 @@ public interface IClusterUserDao extends IBaseSupport<ClusterUser> {
      * @return
      */
     public int updateJpushFlg(MsgTagChangeForm from);
+    
+    /**
+     * @param gid
+     * @param uid
+     * @return
+     */
+    public String selectChildName(Long uid, Long gid);
 
 }

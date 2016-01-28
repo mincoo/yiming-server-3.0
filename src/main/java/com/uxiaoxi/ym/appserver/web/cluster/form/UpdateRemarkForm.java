@@ -1,5 +1,5 @@
 /**
- * JoinClusterForm.java
+ * UpdateRemarkForm.java
  */
 package com.uxiaoxi.ym.appserver.web.cluster.form;
 
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  *
  * 2015年3月10日
  */
-public class JoinClusterForm {
+public class UpdateRemarkForm {
 
     @NotNull
     private Long uid;
@@ -18,22 +18,23 @@ public class JoinClusterForm {
     @NotNull
     private Long gid;
     
-    private Integer type;
+    @NotNull
+    private Long nid;
     
-    private String cname;
+    private String remark;
 
     /**
-     * @return the cname
+     * @return the remark
      */
-    public String getCname() {
-        return cname;
+    public String getRemark() {
+        return remark;
     }
 
     /**
-     * @param cname the cname to set
+     * @param remark the remark to set
      */
-    public void setCname(String cname) {
-        this.cname = cname;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     /**
@@ -64,18 +65,17 @@ public class JoinClusterForm {
         this.gid = gid;
     }
 
-	/**
-	 * @return the type
-	 */
-	public Integer getType() {
-		return type;
-	}
+    /**
+     * @return the nid
+     */
+    public Long getNid() {
+        return nid;
+    }
 
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
+    /**
+     * @param nid the nid to set
+     */
+    public void setNid(Long nid) {
+        this.nid = nid;
+    }
 }
