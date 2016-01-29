@@ -25,7 +25,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
  *         2015年2月28日
  */
 @Controller
-@RequestMapping("/msg")
+@RequestMapping("/v3/msg")
 public class MsgController {
 
     @Autowired

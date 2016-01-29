@@ -15,7 +15,7 @@ import org.springframework.web.bind.support.SessionStatus;
  * 2013-4-24
  */
 @Controller
-@RequestMapping("/logout")
+@RequestMapping("/v3/logout")
 public class LogoutController {
     @RequestMapping
     public String logout(SessionStatus status,HttpSession session){

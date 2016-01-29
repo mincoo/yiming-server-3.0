@@ -23,7 +23,7 @@ import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
  * 2015-1-28
  */
 @Controller
-@RequestMapping("/user/login")
+@RequestMapping("/v3/user/login")
 public class LoginController {
     
     // loger

@@ -25,7 +25,7 @@ import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
  *         2015年3月3日
  */
 @Controller
-@RequestMapping("/group")
+@RequestMapping("/v3/group")
 public class ClusterController {
 
     @Autowired

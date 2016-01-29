@@ -32,7 +32,7 @@ import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
  * 2015-1-30
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/v3/user")
 public class RegisterController {
     // loger
     private static final Logger log = LoggerFactory.getLogger(RegisterController.class);

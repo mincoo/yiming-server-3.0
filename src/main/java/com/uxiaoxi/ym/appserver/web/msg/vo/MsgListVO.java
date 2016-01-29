@@ -1,5 +1,5 @@
 /**
- * MsgVO.java
+ * MsgListVO.java
  */
 package com.uxiaoxi.ym.appserver.web.msg.vo;
 
@@ -10,7 +10,7 @@ import java.util.List;
  *
  *         2015年3月11日
  */
-public class MsgVO {
+public class MsgListVO {
 
     private Long mid;
 

@@ -73,16 +73,13 @@ public class MsgServiceImpl implements IMsgService {
     public ResResult getlist(MsgForm form) {
         
         List<MsgVO> list = msgAccDao.getlist(form);
+        
         if(list == null) {
             list = new ArrayList<MsgVO>();
         }
+        
         ListResult<MsgVO> sr = new ListResult<MsgVO>();
         
-        if(list.size() > 0) {
-            sr.setLast(list.get(list.size()-1).getMid());
-        } else {
-//            sr.setLast(form.getStart());
-        }
         sr.setList(list);
         
         return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,sr);
@@ -90,7 +87,6 @@ public class MsgServiceImpl implements IMsgService {
     }
 
     @Override
-    @Transactional
     public ResResult getdata(MsgDataForm form) {
         
         // 取数据
@@ -124,10 +120,11 @@ public class MsgServiceImpl implements IMsgService {
 //            msgAccDao.updateReaded(record);
 //           
 //        }
-        return  new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,vo);
+        return  new ResResult(vo);
     }
 
     @Override
+    @Transactional
     public ResResult delMsg(MsgDataForm form) {
         
         // 不做真删除,只更新use_yn

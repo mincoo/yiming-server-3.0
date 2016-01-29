@@ -28,7 +28,7 @@ import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
  *         2015年2月9日
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/v3/user")
 public class AccountController {
 
     @Autowired

@@ -18,7 +18,7 @@ import com.uxiaoxi.ym.appserver.web.version.form.VersionMngForm;
  * 2015年3月27日
  */
 @Controller
-@RequestMapping("/version")
+@RequestMapping("/v3/version")
 public class VersionMngController {
     
     
