@@ -3,8 +3,6 @@
  */
 package com.uxiaoxi.ym.appserver.web.msg.vo;
 
-import java.util.List;
-
 /**
  * @author renhao
  *
@@ -41,12 +39,27 @@ public class MsgListVO {
     private Long sum1;
 
     private Long sum2;
+    
+    private Long sum0;
 
     private Integer selected;
+    
+    private String option;
 
-    private Long size;
 
-    private List<MsgDataPatInfo> list;
+    /**
+     * @return the option
+     */
+    public String getOption() {
+        return option;
+    }
+
+    /**
+     * @param option the option to set
+     */
+    public void setOption(String option) {
+        this.option = option;
+    }
 
     /**
      * @return the mid
@@ -266,34 +279,6 @@ public class MsgListVO {
     }
 
     /**
-     * @return the size
-     */
-    public Long getSize() {
-        return size;
-    }
-
-    /**
-     * @param size the size to set
-     */
-    public void setSize(Long size) {
-        this.size = size;
-    }
-
-    /**
-     * @return the list
-     */
-    public List<MsgDataPatInfo> getList() {
-        return list;
-    }
-
-    /**
-     * @param list the list to set
-     */
-    public void setList(List<MsgDataPatInfo> list) {
-        this.list = list;
-    }
-
-    /**
      * @return the content
      */
     public String getContent() {
@@ -305,6 +290,20 @@ public class MsgListVO {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * @return the sum0
+     */
+    public Long getSum0() {
+        return sum0;
+    }
+
+    /**
+     * @param sum0 the sum0 to set
+     */
+    public void setSum0(Long sum0) {
+        this.sum0 = sum0;
     }
 
 }

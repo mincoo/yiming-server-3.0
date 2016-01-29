@@ -71,7 +71,7 @@ public interface IClusterUserDao extends IBaseSupport<ClusterUser> {
      * @param from
      * @return
      */
-    public int updateJpushFlg(MsgTagChangeForm from);
+    public int updateMsgFlg(MsgTagChangeForm from);
     
     /**
      * @param gid

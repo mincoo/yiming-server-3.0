@@ -28,7 +28,6 @@ import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Remark;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
-import com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO;
 import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;

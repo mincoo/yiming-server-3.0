@@ -374,21 +374,32 @@
            AND m.`acc_id` = a.`id`
   </sql>
   
-<!--   <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgForm" resultMap="VOResultMap">
+   <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
         SELECT 
+            DISTINCT(ol.`data_id`) AS `msgid`,
         <include refid="Base_Msg_List" />
-        <include refid="Base_Msg_condition" />
-        <if test="start != null and start !=0 ">
-           <![CDATA[      
-           AND m.`id` < #{start,jdbcType=BIGINT}
-           ]]>
-        </if>
-           AND t.`acc_id` = #{uid,jdbcType=BIGINT}
+        FROM option_log ol ,msg_acc t, msg m , cluster c, `account` a
+         WHERE t.`msg_id` = m.`id`
+           AND t.`clu_id` = c.`id`
+           AND m.`acc_id` = a.`id`
+           AND t.`msg_id` = #{mid,jdbcType=BIGINT}
            AND t.`use_yn` = 1
-         ORDER BY m.`id` DESC
-         LIMIT 0,10
-   
-  </select> -->
+           AND ol.`id` > #{version,jdbcType=BIGINT}
+  </select> 
+  
+    <select id="getSum" parameterType="java.util.Map" resultType="java.lang.Long">
+       SELECT 
+            count(*)
+          FROM msg_acc t
+         WHERE t.`msg_id` = #{mid,jdbcType=BIGINT} 
+         AND t.`selected` = #{selected,jdbcType=BIGINT} 
+  </select> 
+<!--      <select id="getChangeMsgId" parameterType="java.lang.Long" resultType="java.util.List">
+        SELECT 
+            DISTINCT(ol.`data_id`) AS `mid`
+        FROM option_log ol
+        WHERE ol.`id` > #{version,jdbcType=BIGINT}
+  </select>  -->
   
 <!--   <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO">
     <id column="mid" jdbcType="BIGINT" property="mid" />

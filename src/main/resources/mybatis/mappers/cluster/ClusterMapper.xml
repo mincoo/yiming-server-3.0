@@ -464,7 +464,7 @@
   </select> -->
   
     <!-- 自己定义方法 -->
-<!--   <select id="searchBySn" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterSearchBySnForm" resultMap="VOResultBySnMap">
+   <select id="searchBySn" parameterType="com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm" resultMap="VOResultBySnMap">
       <![CDATA[ 
         SELECT c.`id` AS gid,
                c.`create_by` AS uid,
@@ -483,7 +483,7 @@
            AND c.`sn` =  #{sn,jdbcType=VARCHAR}
            AND t.`acc_id` = c.`create_by`
        ]]>
-  </select> -->
+  </select> 
  
   <resultMap id="VOResultBySnMap" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult">
     <result column="gid" jdbcType="BIGINT" property="gid" />

@@ -3,14 +3,14 @@ package com.uxiaoxi.ym.appserver.db.msg.mapper;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAccExample;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -84,11 +84,13 @@ public interface MsgAccMapper {
      */
     int updateByPrimaryKey(MsgAcc record);
     
-    List<MsgVO> getlist(MsgForm form);
+    List<MsgListVO> getlist(MsgListForm form);
 
     MsgVO getdata(MsgDataForm form);
     
     List<MsgDataPatInfo> getDataAcc(Long id);
     
     void msgAction(MsgActionForm form);
+    
+    Long getSum(Map<String,Object> map);
 }

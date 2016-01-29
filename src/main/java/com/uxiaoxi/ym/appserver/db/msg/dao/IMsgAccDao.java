@@ -8,8 +8,9 @@ import java.util.List;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
 
 /**
@@ -24,7 +25,7 @@ public interface IMsgAccDao extends IBaseSupport<MsgAcc>{
      * @param form
      * @return
      */
-    public List<MsgVO> getlist(MsgForm form);
+    public List<MsgListVO> getlist(MsgListForm form);
 
     /**
      * @param form
@@ -46,6 +47,12 @@ public interface IMsgAccDao extends IBaseSupport<MsgAcc>{
      * @param mid
      */
     public List<MsgDataPatInfo> getDataAcc(Long mid);
+    
+    /**
+     * @param mid
+     * @param type
+     */
+    public Long getSum(Long mid,Long type);
 
 
 }

@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import com.uxiaoxi.ym.aliyun.bean.TDMsgOnsDTO;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
@@ -25,7 +25,7 @@ public interface IMsgService {
      * @param form
      * @return
      */
-    public ResResult getlist(MsgForm form);
+    public ResResult getlist(MsgListForm form);
 
     /**
      * @param form

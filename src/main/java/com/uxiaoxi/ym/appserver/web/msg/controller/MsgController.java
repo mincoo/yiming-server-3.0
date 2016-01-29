@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.uxiaoxi.ym.appserver.biz.msg.IMsgService;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
@@ -33,7 +33,7 @@ public class MsgController {
 
     @ResponseBody
     @RequestMapping(value = "/getlist")
-    public ResResult getlistJson(MsgForm form) {
+    public ResResult getlistJson(MsgListForm form) {
         return msgService.getlist(form);
     }
 

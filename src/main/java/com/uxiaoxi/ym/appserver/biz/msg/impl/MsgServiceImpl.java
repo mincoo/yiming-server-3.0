@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,13 @@ import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTypeEnum;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
 import com.uxiaoxi.ym.jpush.JpushUtil;
@@ -70,15 +72,30 @@ public class MsgServiceImpl implements IMsgService {
     private MsgProducer producer;
 
     @Override
-    public ResResult getlist(MsgForm form) {
+    public ResResult getlist(MsgListForm form) {
         
-        List<MsgVO> list = msgAccDao.getlist(form);
+        List<MsgListVO> list = msgAccDao.getlist(form);
         
         if(list == null) {
-            list = new ArrayList<MsgVO>();
+            list = new ArrayList<MsgListVO>();
         }
         
-        ListResult<MsgVO> sr = new ListResult<MsgVO>();
+        List<MsgListVO> l = new ArrayList<MsgListVO>();
+        
+        //计算sum1、sum2
+        for (MsgListVO md : list) {
+            Long sum1 = msgAccDao.getSum(md.getMid(),Long.valueOf(1));
+            Long sum2 = msgAccDao.getSum(md.getMid(),Long.valueOf(2));
+            Long sum0 = msgAccDao.getSum(md.getMid(),Long.valueOf(0));
+            
+            md.setSum1(sum1);
+            md.setSum2(sum2);
+            md.setSum0(sum0);
+            l.add(md);
+        }
+        
+        
+        ListResult<MsgListVO> sr = new ListResult<MsgListVO>();
         
         sr.setList(list);
         
@@ -110,6 +127,7 @@ public class MsgServiceImpl implements IMsgService {
         vo.setList(list);
         vo.setSum1(Long.valueOf(sum1));
         vo.setSum2(Long.valueOf(sum2));
+        vo.setSum0(Long.valueOf(list.size()-sum1-sum2));
         
 //        if(vo != null) {
 //            // 更新为已读
@@ -349,7 +367,7 @@ public class MsgServiceImpl implements IMsgService {
 //        	return new ResResult(StatusConst.FAILURE,"请求不明",null);
 //        }
         
-        clusterUserDao.updateJpushFlg(form);
+        clusterUserDao.updateMsgFlg(form);
         
         JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
         

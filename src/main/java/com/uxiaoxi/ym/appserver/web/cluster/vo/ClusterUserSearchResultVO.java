@@ -41,7 +41,7 @@ public class ClusterUserSearchResultVO extends ClusterUserSearchResult{
         c.setPnum(this.getPnum());
         c.setTnum(this.getTnum());
         c.setSnum(this.getSnum());
-        c.setJpushflg(this.getJpushflg());
+        c.setMsgflg(this.getMsgflg());
         return c;
     }
 

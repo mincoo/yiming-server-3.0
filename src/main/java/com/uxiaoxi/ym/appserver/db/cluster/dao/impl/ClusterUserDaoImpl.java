@@ -122,7 +122,7 @@ public class ClusterUserDaoImpl extends
     }
 
     @Override
-    public int updateJpushFlg(MsgTagChangeForm form) {
+    public int updateMsgFlg(MsgTagChangeForm form) {
         ClusterUser record = new ClusterUser();
         record.setAccId(form.getUid());
         record.setCluId(form.getGid());

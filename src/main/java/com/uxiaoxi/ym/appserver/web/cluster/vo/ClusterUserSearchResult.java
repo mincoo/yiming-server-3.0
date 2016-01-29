@@ -34,7 +34,7 @@ public class ClusterUserSearchResult {
     
     private Long snum;
     
-    private Long jpushflg;
+    private Long msgflg;
 
     /**
      * @return the gid
@@ -188,17 +188,18 @@ public class ClusterUserSearchResult {
 		this.sn = sn;
 	}
 
-	/**
-	 * @return the jpushflg
-	 */
-	public Long getJpushflg() {
-		return jpushflg;
-	}
+    /**
+     * @return the msgflg
+     */
+    public Long getMsgflg() {
+        return msgflg;
+    }
 
-	/**
-	 * @param jpushflg the jpushflg to set
-	 */
-	public void setJpushflg(Long jpushflg) {
-		this.jpushflg = jpushflg;
-	}
+    /**
+     * @param msgflg the msgflg to set
+     */
+    public void setMsgflg(Long msgflg) {
+        this.msgflg = msgflg;
+    }
+	
 }

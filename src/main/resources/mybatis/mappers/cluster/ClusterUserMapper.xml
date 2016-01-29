@@ -339,7 +339,7 @@
   </cache>
   
     <!-- 自己定义方法 -->
-<!--   <select id="searchByUid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchForm" resultMap="VOResultMap">
+   <select id="searchByUid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm" resultMap="VOResultMap">
         SELECT t.id as id,
                c.`id` AS gid,
                c.`create_by` AS uid,
@@ -350,7 +350,7 @@
                c.`city`,
                c.`district`,
                c.`face`,
-               IFNULL(t.`jpush_flg`,"0") AS jpushflg 
+               IFNULL(t.`msg_flg`,"0") AS msgflg 
           FROM `cluster_user` t,`cluster` c 
          WHERE t.`clu_id` = c.`id`
          <if test="start != null and start !=0 ">
@@ -362,7 +362,7 @@
          ORDER BY t.`id` DESC
          LIMIT 0,10
 
-  </select> -->
+  </select> 
 
   <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO">
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -375,7 +375,7 @@
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="district" jdbcType="VARCHAR" property="district" />
     <result column="face" jdbcType="VARCHAR" property="face" />
-    <result column="jpushflg" jdbcType="VARCHAR" property="jpushflg" />
+    <result column="msgflg" jdbcType="VARCHAR" property="msgflg" />
   </resultMap>
   
   

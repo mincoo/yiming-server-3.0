@@ -41,6 +41,8 @@ public class MsgVO {
     private Long sum1;
 
     private Long sum2;
+    
+    private Long sum0;
 
     private Integer selected;
 
@@ -305,6 +307,20 @@ public class MsgVO {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * @return the sum0
+     */
+    public Long getSum0() {
+        return sum0;
+    }
+
+    /**
+     * @param sum0 the sum0 to set
+     */
+    public void setSum0(Long sum0) {
+        this.sum0 = sum0;
     }
 
 }

@@ -1,5 +1,5 @@
 /**
- * MsgForm.java
+ * MsgListForm.java
  */
 package com.uxiaoxi.ym.appserver.web.msg.form;
 
@@ -8,7 +8,7 @@ package com.uxiaoxi.ym.appserver.web.msg.form;
  *
  * 2015年3月11日
  */
-public class MsgForm {
+public class MsgListForm {
 
     private Long uid;
     
