@@ -1,5 +1,5 @@
 /**
- * MsgListForm.java
+ * MsgForm.java
  */
 package com.uxiaoxi.ym.appserver.web.msg.form;
 
@@ -12,7 +12,9 @@ public class MsgForm {
 
     private Long uid;
     
-    private Long start;
+    private Long  version;
+    
+    private Long  gid;
 
     /**
      * @return the uid
@@ -29,16 +31,31 @@ public class MsgForm {
     }
 
     /**
-     * @return the start
+     * @return the version
      */
-    public Long getStart() {
-        return start;
+    public Long getVersion() {
+        return version;
     }
 
     /**
-     * @param start the start to set
+     * @param version the version to set
      */
-    public void setStart(Long start) {
-        this.start = start;
+    public void setVersion(Long version) {
+        this.version = version;
     }
+
+    /**
+     * @return the gid
+     */
+    public Long getGid() {
+        return gid;
+    }
+
+    /**
+     * @param gid the gid to set
+     */
+    public void setGid(Long gid) {
+        this.gid = gid;
+    }
+
 }

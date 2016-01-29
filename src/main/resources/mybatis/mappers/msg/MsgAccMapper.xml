@@ -356,7 +356,15 @@
     <!-- 自己定义方法 -->
   
   <sql id="Base_Msg_List">
-     m.id AS `mid`,m.`acc_id` AS `sender_id` ,t.`clu_id` AS `gid`, m.`msg_type` AS `type`, m.`url` AS `url`, m.`title` AS `title`, c.`title` AS `gname`, a.`name` AS `uname`, a.`face` AS `uface`, CONCAT(c.`title`,' ' ,a.`name`) AS `sender`,DATE_FORMAT(m.`create_dt`,'%Y-%m-%d %k:%i') AS `stime`,t.`readed` AS `status`
+    m.id AS `mid`,m.`acc_id` AS `uid` ,t.`clu_id` AS `gid`,
+    m.`msg_type`
+    AS `type`, m.`url` AS `url`, c.`id` AS `gid`,
+    c.`title` AS `gname`,
+    a.`name` AS `uname`, a.`face` AS `face`,
+    DATE_FORMAT(m.`create_at`,'%Y-%m-%d %k:%i') AS
+    `stime`,m.`stype` AS
+    `stype`,m.`select1` AS `select1`,m.`select2` AS
+    `select2`,t.`selected` AS `selected`,m.`content` AS `content`
   </sql>
   
   <sql id="Base_Msg_condition">
@@ -382,7 +390,7 @@
    
   </select> -->
   
-  <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO">
+<!--   <resultMap id="VOResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO">
     <id column="mid" jdbcType="BIGINT" property="mid" />
     <result column="sender_id" jdbcType="INTEGER" property="senderId" />
     <result column="gid" jdbcType="INTEGER" property="gid" />
@@ -395,43 +403,24 @@
     <result column="sender" jdbcType="VARCHAR" property="sender" />
     <result column="stime" jdbcType="VARCHAR" property="stime" />
     <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
+  </resultMap> -->
   
-<!--     <select id="getdata" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataForm" resultMap="ResultMap">
+  <select id="getdata" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO">
         SELECT 
-        <include refid="Base_Msg_List" /> ,
-               m.`content` as content
+        <include refid="Base_Msg_List" />
         <include refid="Base_Msg_condition" />
            AND m.`id` = #{mid,jdbcType=BIGINT}
            AND t.`acc_id` = #{uid,jdbcType=BIGINT}
          ORDER BY t.`id` ASC
-  </select> -->
+  </select> 
   
-  <resultMap extends="VOResultMap" id="ResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO">
-    <result column="content" jdbcType="INTEGER" property="content" />
-  </resultMap>
-  
-  
-<!--   <select id="getReadState" parameterType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateForm" resultMap="ReadResultMap">
-      SELECT ma.`acc_id` AS `uid`, 
-             a.`type` AS `type` ,
-             a.name AS `name`, 
-             a.`face` AS `face`, 
-             DATE_FORMAT(ma.`create_dt`,'%Y-%m-%d %k:%i') AS `read_time` ,
-             ma.`readed` AS `status` 
-        FROM `msg_acc` ma 
+    <select id="getDataAcc" parameterType="java.lang.Long" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo">
+      SELECT ma.`acc_id` AS `sid`, 
+             a.name AS `sname`, 
+             ma.`selected` AS `selected` 
+        FROM `msg_acc` ma, 
         LEFT JOIN `account` a ON ma.`acc_id` = a.`id`
-        LEFT JOIN msg  m ON m.`id` = ma.`msg_id`
-       WHERE m.`id` = #{mid,jdbcType=BIGINT}
-         AND m.`acc_id` = #{uid,jdbcType=BIGINT}
-  </select> -->
+       WHERE ma.`msg_id` = #{mid,jdbcType=BIGINT}
+  </select> 
   
-  <resultMap id="ReadResultMap" type="com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO">
-    <result column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="face" jdbcType="VARCHAR" property="face" />
-    <result column="read_time" jdbcType="TIMESTAMP" property="readTime" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-  </resultMap>
 </mapper>

@@ -4,7 +4,8 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAccExample;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO;
@@ -85,7 +86,9 @@ public interface MsgAccMapper {
     
     List<MsgVO> getlist(MsgForm form);
 
-    MsgWithContentVO getdata(MsgDataForm form);
+    MsgVO getdata(MsgDataForm form);
     
-    List<MsgReadStateVO> getReadState(MsgReadStateForm form);
+    List<MsgDataPatInfo> getDataAcc(Long id);
+    
+    void msgAction(MsgActionForm form);
 }

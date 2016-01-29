@@ -3,36 +3,50 @@
  */
 package com.uxiaoxi.ym.appserver.web.msg.vo;
 
+import java.util.List;
+
 /**
  * @author renhao
  *
- * 2015年3月11日
+ *         2015年3月11日
  */
 public class MsgVO {
 
     private Long mid;
-    
+
     private Long gid;
-    
+
+    private Long uid;
+
     private Integer type;
-    
+
     private String url;
     
-    private String title;
-    
+    private String content;
+
     private String gname;
-    
+
     private String uname;
-    
-    private String sender;
-    
-    private Long senderId;
-    
+
     private String stime;
-    
-    private Integer status;
-    
-    private String uface;
+
+    private Integer stype;
+
+    private String face;
+
+    private String select1;
+
+    private String select2;
+
+    private Long sum1;
+
+    private Long sum2;
+
+    private Integer selected;
+
+    private Long size;
+
+    private List<MsgDataPatInfo> list;
 
     /**
      * @return the mid
@@ -42,7 +56,8 @@ public class MsgVO {
     }
 
     /**
-     * @param mid the mid to set
+     * @param mid
+     *            the mid to set
      */
     public void setMid(Long mid) {
         this.mid = mid;
@@ -56,7 +71,8 @@ public class MsgVO {
     }
 
     /**
-     * @param type the type to set
+     * @param type
+     *            the type to set
      */
     public void setType(Integer type) {
         this.type = type;
@@ -70,24 +86,11 @@ public class MsgVO {
     }
 
     /**
-     * @param url the url to set
+     * @param url
+     *            the url to set
      */
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    /**
-     * @return the title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     /**
@@ -98,7 +101,8 @@ public class MsgVO {
     }
 
     /**
-     * @param gname the gname to set
+     * @param gname
+     *            the gname to set
      */
     public void setGname(String gname) {
         this.gname = gname;
@@ -112,7 +116,8 @@ public class MsgVO {
     }
 
     /**
-     * @param uname the uname to set
+     * @param uname
+     *            the uname to set
      */
     public void setUname(String uname) {
         this.uname = uname;
@@ -126,81 +131,180 @@ public class MsgVO {
     }
 
     /**
-     * @param stime the stime to set
+     * @param stime
+     *            the stime to set
      */
     public void setStime(String stime) {
         this.stime = stime;
     }
 
     /**
-     * @return the status
+     * @return the gid
      */
-    public Integer getStatus() {
-        return status;
+    public Long getGid() {
+        return gid;
     }
 
     /**
-     * @param status the status to set
+     * @param gid
+     *            the gid to set
      */
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setGid(Long gid) {
+        this.gid = gid;
     }
 
     /**
-     * @return the sender
+     * @return the uid
      */
-    public String getSender() {
-        return sender;
+    public Long getUid() {
+        return uid;
     }
 
     /**
-     * @param sender the sender to set
+     * @param uid the uid to set
      */
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setUid(Long uid) {
+        this.uid = uid;
     }
 
-	/**
-	 * @return the uface
-	 */
-	public String getUface() {
-		return uface;
-	}
+    /**
+     * @return the stype
+     */
+    public Integer getStype() {
+        return stype;
+    }
 
-	/**
-	 * @param uface the uface to set
-	 */
-	public void setUface(String uface) {
-		this.uface = uface;
-	}
+    /**
+     * @param stype the stype to set
+     */
+    public void setStype(Integer stype) {
+        this.stype = stype;
+    }
 
-	/**
-	 * @return the senderId
-	 */
-	public Long getSenderId() {
-		return senderId;
-	}
+    /**
+     * @return the face
+     */
+    public String getFace() {
+        return face;
+    }
 
-	/**
-	 * @param senderId the senderId to set
-	 */
-	public void setSenderId(Long senderId) {
-		this.senderId = senderId;
-	}
+    /**
+     * @param face the face to set
+     */
+    public void setFace(String face) {
+        this.face = face;
+    }
 
-	/**
-	 * @return the gid
-	 */
-	public Long getGid() {
-		return gid;
-	}
+    /**
+     * @return the select1
+     */
+    public String getSelect1() {
+        return select1;
+    }
 
-	/**
-	 * @param gid the gid to set
-	 */
-	public void setGid(Long gid) {
-		this.gid = gid;
-	}
+    /**
+     * @param select1 the select1 to set
+     */
+    public void setSelect1(String select1) {
+        this.select1 = select1;
+    }
 
-    
+    /**
+     * @return the select2
+     */
+    public String getSelect2() {
+        return select2;
+    }
+
+    /**
+     * @param select2 the select2 to set
+     */
+    public void setSelect2(String select2) {
+        this.select2 = select2;
+    }
+
+    /**
+     * @return the sum1
+     */
+    public Long getSum1() {
+        return sum1;
+    }
+
+    /**
+     * @param sum1 the sum1 to set
+     */
+    public void setSum1(Long sum1) {
+        this.sum1 = sum1;
+    }
+
+    /**
+     * @return the sum2
+     */
+    public Long getSum2() {
+        return sum2;
+    }
+
+    /**
+     * @param sum2 the sum2 to set
+     */
+    public void setSum2(Long sum2) {
+        this.sum2 = sum2;
+    }
+
+    /**
+     * @return the selected
+     */
+    public Integer getSelected() {
+        return selected;
+    }
+
+    /**
+     * @param selected the selected to set
+     */
+    public void setSelected(Integer selected) {
+        this.selected = selected;
+    }
+
+    /**
+     * @return the size
+     */
+    public Long getSize() {
+        return size;
+    }
+
+    /**
+     * @param size the size to set
+     */
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    /**
+     * @return the list
+     */
+    public List<MsgDataPatInfo> getList() {
+        return list;
+    }
+
+    /**
+     * @param list the list to set
+     */
+    public void setList(List<MsgDataPatInfo> list) {
+        this.list = list;
+    }
+
+    /**
+     * @return the content
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * @param content the content to set
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 }

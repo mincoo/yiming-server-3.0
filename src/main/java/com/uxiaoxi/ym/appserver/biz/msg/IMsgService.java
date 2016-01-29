@@ -10,7 +10,7 @@ import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
@@ -55,17 +55,17 @@ public interface IMsgService {
      * @param form
      * @return
      */
-    public ResResult getReadState(MsgReadStateForm form);
+    public ResResult msgAction(MsgActionForm form);
 
     /**
      * @param form
      */
     public void gsendMsg(MsgGSendForm form);
 
-    /**
-     * @param form
-     */
-    public void sendMsg(MsgSendForm form);
+//    /**
+//     * @param form
+//     */
+//    public void sendMsg(MsgSendForm form);
 
     /**
      * @param od

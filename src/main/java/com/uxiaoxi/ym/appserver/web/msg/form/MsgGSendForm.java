@@ -33,6 +33,12 @@ public class MsgGSendForm {
     
     private Integer msgType;
     
+    private Integer retype;
+    
+    private String select1;
+    
+    private String select2;
+    
     public MsgGSendForm(){
         this.msgType = MsgTypeEnum.TXT.getCode();
         this.url = "";
@@ -120,6 +126,48 @@ public class MsgGSendForm {
      */
     public void setMsgType(Integer msgType) {
         this.msgType = msgType;
+    }
+
+    /**
+     * @return the retype
+     */
+    public Integer getRetype() {
+        return retype;
+    }
+
+    /**
+     * @param retype the retype to set
+     */
+    public void setRetype(Integer retype) {
+        this.retype = retype;
+    }
+
+    /**
+     * @return the select1
+     */
+    public String getSelect1() {
+        return select1;
+    }
+
+    /**
+     * @param select1 the select1 to set
+     */
+    public void setSelect1(String select1) {
+        this.select1 = select1;
+    }
+
+    /**
+     * @return the select2
+     */
+    public String getSelect2() {
+        return select2;
+    }
+
+    /**
+     * @param select2 the select2 to set
+     */
+    public void setSelect2(String select2) {
+        this.select2 = select2;
     }
 
 }

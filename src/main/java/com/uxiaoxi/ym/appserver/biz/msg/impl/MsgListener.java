@@ -46,13 +46,16 @@ public class MsgListener implements MessageListener{
         // 转为 对象
         MsgOnsDTO od = JSON.parseObject(message.getBody(), MsgOnsDTO.class);
         
-        if(od.getSendType().equals(MsgSendTypeEnum.GROUP)) {
-            MsgGSendForm form = JSON.parseObject(od.getForm(),MsgGSendForm.class);
-            msgService.gsendMsg(form);
-        } else {
-            MsgSendForm form = JSON.parseObject(od.getForm(),MsgSendForm.class);
-            msgService.sendMsg((MsgSendForm)form);
-        }
+//        if(od.getSendType().equals(MsgSendTypeEnum.GROUP)) {
+//            MsgGSendForm form = JSON.parseObject(od.getForm(),MsgGSendForm.class);
+//            msgService.gsendMsg(form);
+//        } 
+//        else {
+//            MsgSendForm form = JSON.parseObject(od.getForm(),MsgSendForm.class);
+//            msgService.sendMsg((MsgSendForm)form);
+//        }
+        MsgGSendForm form = JSON.parseObject(od.getForm(),MsgGSendForm.class);
+        msgService.gsendMsg(form);
 
         return Action.CommitMessage;
     }

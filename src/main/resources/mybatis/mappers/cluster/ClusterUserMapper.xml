@@ -424,11 +424,11 @@
   </select>
 
    <resultMap id="ResultMapT" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO">
-    <result column="uid" jdbcType="INTEGER" property="tid" />
+    <result column="uid" jdbcType="INTEGER" property="id" />
     <result column="type" jdbcType="BIGINT" property="type" />
-    <result column="name" jdbcType="VARCHAR" property="tname" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="face" jdbcType="VARCHAR" property="tface" />
+    <result column="face" jdbcType="VARCHAR" property="face" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
     

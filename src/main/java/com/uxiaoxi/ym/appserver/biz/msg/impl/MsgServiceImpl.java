@@ -3,16 +3,14 @@
  */
 package com.uxiaoxi.ym.appserver.biz.msg.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +27,6 @@ import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgAccDao;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgDao;
 import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
-import com.uxiaoxi.ym.appserver.framework.sms.Sms;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
@@ -37,14 +34,12 @@ import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgStatusEnum;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTypeEnum;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO;
 import com.uxiaoxi.ym.jpush.JpushUtil;
 import com.uxiaoxi.ym.jpush.PushParam;
 import com.uxiaoxi.ym.jpush.PushTypeEnum;
@@ -57,7 +52,7 @@ import com.uxiaoxi.ym.jpush.PushTypeEnum;
 @Service
 public class MsgServiceImpl implements IMsgService {
     
-    private Logger LOG = LoggerFactory.getLogger(MsgServiceImpl.class);
+//    private Logger LOG = LoggerFactory.getLogger(MsgServiceImpl.class);
     
     @Autowired
     private IMsgDao msgDao;
@@ -86,7 +81,7 @@ public class MsgServiceImpl implements IMsgService {
         if(list.size() > 0) {
             sr.setLast(list.get(list.size()-1).getMid());
         } else {
-            sr.setLast(form.getStart());
+//            sr.setLast(form.getStart());
         }
         sr.setList(list);
         
@@ -99,17 +94,36 @@ public class MsgServiceImpl implements IMsgService {
     public ResResult getdata(MsgDataForm form) {
         
         // 取数据
-        MsgWithContentVO vo = msgAccDao.getdata(form);
+        MsgVO vo = msgAccDao.getdata(form);
         
-        if(vo != null) {
-            // 更新为已读
-            MsgAcc record = new MsgAcc();
-            record.setMsgId(form.getMid());
-//            record.setReaded(MsgStatusEnum.READ.getCode());
-            record.setAccId(form.getUid());
-            msgAccDao.updateReaded(record);
-           
+        List<MsgDataPatInfo> list = msgAccDao.getDataAcc(form.getMid());
+        
+        int sum1 = 0;
+        int sum2 = 0;
+        //计算sum1、sum2
+        for (MsgDataPatInfo md : list) {
+            if(md.getSelected()==1){
+                sum1+=sum1;
+            }else if(md.getSelected()==2){
+                sum2+=sum2;
+            }else{
+                
+            }
         }
+        vo.setSize(Long.valueOf(list.size()));
+        vo.setList(list);
+        vo.setSum1(Long.valueOf(sum1));
+        vo.setSum2(Long.valueOf(sum2));
+        
+//        if(vo != null) {
+//            // 更新为已读
+//            MsgAcc record = new MsgAcc();
+//            record.setMsgId(form.getMid());
+//            record.setReaded(MsgStatusEnum.READ.getCode());
+//            record.setAccId(form.getUid());
+//            msgAccDao.updateReaded(record);
+//           
+//        }
         return  new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,vo);
     }
 
@@ -157,72 +171,65 @@ public class MsgServiceImpl implements IMsgService {
         return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,null);
     }
     
-    @Override
-    public ResResult getReadState(MsgReadStateForm form){
-        List<MsgReadStateVO> list = msgAccDao.getReadState(form);
-        return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,list);
-        
-    }
-    
 
-    /**
-     * 发送单人消息
-     * 不要直接调用,应通过ons调用
-     * 
-     * @param form
-     */
-    @Override
-    @Transactional
-    public void sendMsg(MsgSendForm form) {
-        
-        Msg msg = new Msg();
-        msg.setAccId(form.getUid());
-        msg.setContent(form.getContent());
-        msg.setCreateDt(new Date());
-        msg.setMsgType(Long.valueOf(form.getMsgType()));
-        msg.setTitle(form.getTitle());
-        msg.setCluId(form.getGid());
-        msg.setUrl(form.getUrl());
-        msgDao.insert(msg);
-
-        // 插入msg_acc表
-        MsgAcc ma = new MsgAcc();
-        ma.setAccId(form.getNid());
-        ma.setCreateDt(new Date());
-        ma.setMsgId(msg.getId());
-        ma.setCluId(form.getGid());
-//        ma.setReaded(MsgStatusEnum.UNREAD.getCode());
-        ma.setUseYn(true);
-        msgAccDao.insert(ma);
-
-        // 极光推送
-        PushParam param = new PushParam();
-        param.setAlias("u" + form.getNid());
-        
-        
-        Account account = accountDao.selectByKey(form.getNid());
-        
-        // TODO 唐山校长会后删除
-//        if(account!= null && StringUtils.isBlank(account.getRegid()) && "欢迎您参加“教育改革与创新”高级研修班".equals(form.getTitle())){
-//            // 发送短信
-//            try {
-//                Sms.tplSendSms(761809, "#name#="+account.getName(), account.getPhone());
-//            } catch (IOException e) {
-//                LOG.debug(e.getMessage());
-//            }
-//        }
-
-        // TODO 把title 换成 content,极光推送的长度限制
-        param.setContent(form.getTitle());
-        param.setMid(msg.getId());
-        param.setType(form.getMsgType());
-        param.setTypeEnum(PushTypeEnum.ALIAS);
-        param.setUrl(form.getUrl());
-        JpushUtil.SendPush(param, account.getVersion());
-        
-        
-
-    }
+//    /**
+//     * 发送单人消息
+//     * 不要直接调用,应通过ons调用
+//     * 
+//     * @param form
+//     */
+//    @Override
+//    @Transactional
+//    public void sendMsg(MsgSendForm form) {
+//        
+//        Msg msg = new Msg();
+//        msg.setAccId(form.getUid());
+//        msg.setContent(form.getContent());
+//        msg.setCreateDt(new Date());
+//        msg.setMsgType(Long.valueOf(form.getMsgType()));
+//        msg.setTitle(form.getTitle());
+//        msg.setCluId(form.getGid());
+//        msg.setUrl(form.getUrl());
+//        msgDao.insert(msg);
+//
+//        // 插入msg_acc表
+//        MsgAcc ma = new MsgAcc();
+//        ma.setAccId(form.getNid());
+//        ma.setCreateDt(new Date());
+//        ma.setMsgId(msg.getId());
+//        ma.setCluId(form.getGid());
+////        ma.setReaded(MsgStatusEnum.UNREAD.getCode());
+//        ma.setUseYn(true);
+//        msgAccDao.insert(ma);
+//
+//        // 极光推送
+//        PushParam param = new PushParam();
+//        param.setAlias("u" + form.getNid());
+//        
+//        
+//        Account account = accountDao.selectByKey(form.getNid());
+//        
+//        // TODO 唐山校长会后删除
+////        if(account!= null && StringUtils.isBlank(account.getRegid()) && "欢迎您参加“教育改革与创新”高级研修班".equals(form.getTitle())){
+////            // 发送短信
+////            try {
+////                Sms.tplSendSms(761809, "#name#="+account.getName(), account.getPhone());
+////            } catch (IOException e) {
+////                LOG.debug(e.getMessage());
+////            }
+////        }
+//
+//        // TODO 把title 换成 content,极光推送的长度限制
+//        param.setContent(form.getTitle());
+//        param.setMid(msg.getId());
+//        param.setType(form.getMsgType());
+//        param.setTypeEnum(PushTypeEnum.ALIAS);
+//        param.setUrl(form.getUrl());
+//        JpushUtil.SendPush(param, account.getVersion());
+//        
+//        
+//
+//    }
 
     /**
      * 发多人消息
@@ -235,13 +242,15 @@ public class MsgServiceImpl implements IMsgService {
     public void gsendMsg(MsgGSendForm form) {
         
         Msg msg = new Msg();
-        msg.setAccId(form.getUid());
+        msg.setSenderId(form.getUid());
         msg.setContent(form.getContent());
-        msg.setCreateDt(new Date());
+        msg.setCreateAt(new Date());
         msg.setMsgType(Long.valueOf(form.getMsgType()));
-        msg.setTitle(form.getTitle());
+        msg.setStype(form.getRetype());
         msg.setCluId(form.getGid());
         msg.setUrl(form.getUrl());
+        msg.setSelect1(form.getSelect1());
+        msg.setSelect2(form.getSelect2());
         msgDao.insert(msg);
 
         // 找出该群组的所有用户
@@ -260,15 +269,15 @@ public class MsgServiceImpl implements IMsgService {
         }
 
         // 极光推送
-        PushParam param = new PushParam();
-        param.setTag("g" + form.getGid());
-        // TODO 把title 换成 content ,极光推送的长度限制
-        param.setContent(form.getTitle());
-        param.setMid(msg.getId());
-        param.setType(form.getMsgType());
-        param.setTypeEnum(PushTypeEnum.TAG);
-        param.setUrl(msg.getUrl());
-        JpushUtil.gSendPush(param);
+//        PushParam param = new PushParam();
+//        param.setTag("g" + form.getGid());
+//        // TODO 把title 换成 content ,极光推送的长度限制
+//        param.setContent(form.getTitle());
+//        param.setMid(msg.getId());
+//        param.setType(form.getMsgType());
+//        param.setTypeEnum(PushTypeEnum.TAG);
+//        param.setUrl(msg.getUrl());
+//        JpushUtil.gSendPush(param);
     }
 
     @Override
@@ -281,11 +290,10 @@ public class MsgServiceImpl implements IMsgService {
             
             Msg msg = new Msg();
             // TODO 发送者设置为0了
-            msg.setAccId(0l);
+            msg.setSenderId(0l);
             msg.setContent(od.getMessage());
-            msg.setCreateDt(new Date());
+            msg.setCreateAt(new Date());
             msg.setMsgType(Long.valueOf(MsgTypeEnum.TXT.getCode()));
-            msg.setTitle(od.getMessage());
             // 获得学校的cluster
             msg.setCluId(0l);
             msg.setUrl(od.getImgUrl());
@@ -307,7 +315,6 @@ public class MsgServiceImpl implements IMsgService {
             param.setAlias("u" + account.getId());
             
             // TODO 把title 换成 content,极光推送的长度限制
-            param.setContent(msg.getTitle());
             param.setMid(msg.getId());
             param.setType(MsgTypeEnum.TXT.getCode());
             param.setTypeEnum(PushTypeEnum.ALIAS);
@@ -326,7 +333,7 @@ public class MsgServiceImpl implements IMsgService {
         // 取得用户
         Account account = accountDao.selectByKey(form.getUid());
         Set<String> tagsToAdd = new HashSet<String>();
-        Set<String> tagsToRemove = new HashSet<String>();
+//        Set<String> tagsToRemove = new HashSet<String>();
         
 //    	//请求恢复推送
 //        if(form.getStatus() == 0) {
@@ -356,6 +363,19 @@ public class MsgServiceImpl implements IMsgService {
         JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd, null, account.getVersion());
 
         return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,null);
+        
+    }
+    
+    @Override
+    public ResResult msgAction(MsgActionForm form){
+        
+        MsgAcc record = new MsgAcc();
+        
+        record.setSelected(form.getSelected());
+        
+        msgAccDao.updateByExample(record);
+        
+        return new ResResult(null);
         
     }
 }

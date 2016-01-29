@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         </javaClientGenerator>
         <!-- 数据库表 与对应的Bean设置 -->
         <!-- 以上已经生成 -->
-        <table tableName="vs_change" domainObjectName="VsChange">
+        <table tableName="option_log" domainObjectName="OptionLog">
             <generatedKey identity="true" column="ID"  sqlStatement="SELECT LAST_INSERT_ID()" />
         </table>
 

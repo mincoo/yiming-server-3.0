@@ -9,10 +9,8 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO;
 
 /**
  * @author renhao
@@ -32,7 +30,7 @@ public interface IMsgAccDao extends IBaseSupport<MsgAcc>{
      * @param form
      * @return
      */
-    public MsgWithContentVO getdata(MsgDataForm form);
+    public MsgVO getdata(MsgDataForm form);
 
     /**
      * @param record
@@ -43,11 +41,11 @@ public interface IMsgAccDao extends IBaseSupport<MsgAcc>{
      * @param record
      */
     public int updateReaded(MsgAcc record);
-
+    
     /**
-     * @param form
-     * @return
+     * @param mid
      */
-    public List<MsgReadStateVO> getReadState(MsgReadStateForm form);
+    public List<MsgDataPatInfo> getDataAcc(Long mid);
+
 
 }

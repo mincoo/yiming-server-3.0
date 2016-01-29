@@ -16,7 +16,7 @@ import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
 /**
@@ -62,8 +62,8 @@ public class MsgController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/readstate")
-    public ResResult getReadState(MsgReadStateForm form) {
-        return msgService.getReadState(form);
+    @RequestMapping(value = "/action")
+    public ResResult getReadState(MsgActionForm form) {
+        return msgService.msgAction(form);
     }
 }

@@ -14,10 +14,8 @@ import com.uxiaoxi.ym.appserver.db.msg.mapper.MsgAccMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgReadStateForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgReadStateVO;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgWithContentVO;
 
 /**
  * @author renhao
@@ -34,7 +32,7 @@ public class MsgAccDaoImpl extends BaseSupport<MsgAcc, MsgAccMapper> implements 
     }
 
     @Override
-    public MsgWithContentVO getdata(MsgDataForm form) {
+    public MsgVO getdata(MsgDataForm form) {
         MsgAccMapper mapper = this.getSqlSession().getMapper(MsgAccMapper.class);
         return mapper.getdata(form);
     }
@@ -56,8 +54,9 @@ public class MsgAccDaoImpl extends BaseSupport<MsgAcc, MsgAccMapper> implements 
     }
     
     @Override
-    public List<MsgReadStateVO> getReadState(MsgReadStateForm form) {
+    public List<MsgDataPatInfo> getDataAcc(Long mid){
         MsgAccMapper mapper = this.getSqlSession().getMapper(MsgAccMapper.class);
-        return mapper.getReadState(form);
-    }
+        return mapper.getDataAcc(mid);
+    };
+    
 }
