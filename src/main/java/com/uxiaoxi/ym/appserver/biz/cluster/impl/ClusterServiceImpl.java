@@ -166,20 +166,20 @@ public class ClusterServiceImpl implements IClusterService {
 
         // TODO 是否有必要去掉id
         for (ClusterUserSearchResultVO vo : list) {
-
-            // 老师数
-            Map<String, Object> param = new HashMap<String, Object>();
-            param.put("gid", vo.getGid());
-            param.put("type", new Long(StatusConst.TEACHER));
-            vo.setTnum(new Long(clusterDao.countUserByType(param)));
-
-            // 家长数
-            param.put("type", new Long(StatusConst.PATRIARCH));
-            vo.setPnum(new Long(clusterDao.countUserByType(param)));
-
-            // 学生数
-            // vo.setSnum(new Long(studentDao.countByGid(vo.getGid())));
-
+//
+//            // 老师数
+//            Map<String, Object> param = new HashMap<String, Object>();
+//            param.put("gid", vo.getGid());
+//            param.put("type", new Long(StatusConst.TEACHER));
+//            vo.setTnum(new Long(clusterDao.countUserByType(param)));
+//
+//            // 家长数
+//            param.put("type", new Long(StatusConst.PATRIARCH));
+//            vo.setPnum(new Long(clusterDao.countUserByType(param)));
+//
+//            // 学生数
+//            // vo.setSnum(new Long(studentDao.countByGid(vo.getGid())));
+//
             l.add(vo.toClusterUserSearchResult());
         }
         sr.setList(l);
@@ -187,32 +187,32 @@ public class ClusterServiceImpl implements IClusterService {
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
     }
 
-    @Override
-    public ResResult searchClusterByGid(ClusterSearchForm form) {
-
-        ClusterByGidVO clusterByGidVO = clusterDao.searchByGid(form);
-        if (clusterByGidVO != null) {
-            // 老师数
-            Map<String, Object> param = new HashMap<String, Object>();
-            param.put("gid", form.getGid());
-            param.put("type", new Long(StatusConst.TEACHER));
-            clusterByGidVO.setTnum(new Long(clusterDao.countUserByType(param)));
-
-            // 家长数
-            param.put("type", new Long(StatusConst.PATRIARCH));
-            clusterByGidVO.setPnum(new Long(clusterDao.countUserByType(param)));
-
-            // 学生数
-            param.put("type", new Long(StatusConst.STUDENT));
-            clusterByGidVO.setSnum(new Long(clusterDao.countUserByType(param)));
-
-            return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
-                    clusterByGidVO);
-        } else {
-            return new ResResult(StatusConst.FAILURE, "不存在班级", null);
-        }
-
-    }
+//    @Override
+//    public ResResult searchClusterByGid(ClusterSearchForm form) {
+//
+//        ClusterByGidVO clusterByGidVO = clusterDao.searchByGid(form);
+//        if (clusterByGidVO != null) {
+//            // 老师数
+//            Map<String, Object> param = new HashMap<String, Object>();
+//            param.put("gid", form.getGid());
+//            param.put("type", new Long(StatusConst.TEACHER));
+//            clusterByGidVO.setTnum(new Long(clusterDao.countUserByType(param)));
+//
+//            // 家长数
+//            param.put("type", new Long(StatusConst.PATRIARCH));
+//            clusterByGidVO.setPnum(new Long(clusterDao.countUserByType(param)));
+//
+//            // 学生数
+//            param.put("type", new Long(StatusConst.STUDENT));
+//            clusterByGidVO.setSnum(new Long(clusterDao.countUserByType(param)));
+//
+//            return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
+//                    clusterByGidVO);
+//        } else {
+//            return new ResResult(StatusConst.FAILURE, "不存在班级", null);
+//        }
+//
+//    }
 
     @Override
     @Transactional
@@ -326,7 +326,10 @@ public class ClusterServiceImpl implements IClusterService {
         
         List<ClusterUserListVO> lt = new ArrayList<ClusterUserListVO>();
         for (ClusterUserListVO vo : tlist) {
-            String remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            String remark = "";
+            if(vo.getUid()!=null){
+                remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            }
             vo.setRemark(remark);
             lt.add(vo); 
         }

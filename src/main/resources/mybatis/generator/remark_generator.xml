@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         <plugin type ="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-            connectionURL="jdbc:mysql://103.10.87.178:3306/uxiaoxi3"
+            connectionURL="jdbc:mysql://123.57.19.82:3306/uxiaoxi3"
             userId="root" password="sjmd">
         </jdbcConnection>
 

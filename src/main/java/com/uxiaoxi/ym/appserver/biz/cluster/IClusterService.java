@@ -39,11 +39,11 @@ public interface IClusterService {
      */
     public ResResult updateCluster(CreateClusterForm form);
 
-    /**
-     * @param form
-     * @return
-     */
-    public ResResult searchClusterByGid(ClusterSearchForm form);
+//    /**
+//     * @param form
+//     * @return
+//     */
+//    public ResResult searchClusterByGid(ClusterSearchForm form);
     
 //    /**
 //     * @param form

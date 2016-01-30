@@ -280,7 +280,7 @@ public class MsgServiceImpl implements IMsgService {
         for (ClusterUser cu : userlist) {
             MsgAcc ma = new MsgAcc();
             ma.setAccId(cu.getAccId());
-            ma.setCreateDt(new Date());
+            ma.setCreateAt(new Date());
             ma.setMsgId(msg.getId());
             ma.setCluId(form.getGid());
             // ma.setReaded(MsgStatusEnum.UNREAD.getCode());
@@ -322,7 +322,7 @@ public class MsgServiceImpl implements IMsgService {
             // 插入msg_acc表
             MsgAcc ma = new MsgAcc();
             ma.setAccId(account.getId());
-            ma.setCreateDt(new Date());
+            ma.setCreateAt(new Date());
             ma.setMsgId(msg.getId());
             ma.setCluId(0L);
             // ma.setReaded(MsgStatusEnum.UNREAD.getCode());
