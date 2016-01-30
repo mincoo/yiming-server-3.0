@@ -342,11 +342,11 @@
                 <configuration>
                     <container>
                         <containerId>tomcat8x</containerId>
-                        <home>D:\tomcat\yiming-server3</home>
+                        <home>/mincoo/soft/tomcat_ym</home>
                     </container>
                     <configuration>
                         <type>standalone</type>
-                        <home>D:\project\yiming-server3</home>
+                        <home>/mincoo/project/yiming-server3</home>
                         <properties>
                             <cargo.servlet.port>8301</cargo.servlet.port>
                             <cargo.tomcat.ajp.port>7301</cargo.tomcat.ajp.port>
