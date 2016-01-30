@@ -3,12 +3,19 @@
  */
 package com.uxiaoxi.ym.appserver.web.cluster.vo;
 
+import java.io.Serializable;
+
 /**
  * @author renhao
  *
  *         2015年3月10日
  */
-public class ClusterBySnVO {
+public class ClusterBySnVO implements Serializable{
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6995426224790477262L;
 
     private Long gid;
 

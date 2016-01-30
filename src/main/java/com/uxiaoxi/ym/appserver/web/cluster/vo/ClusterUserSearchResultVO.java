@@ -3,18 +3,21 @@
  */
 package com.uxiaoxi.ym.appserver.web.cluster.vo;
 
+import java.io.Serializable;
+
 
 /**
  * @author renhao
  *
  * 2015年3月10日
  */
-public class ClusterUserSearchResultVO extends ClusterUserSearchResult{
+public class ClusterUserSearchResultVO extends ClusterUserSearchResult implements Serializable{
     
+
     /**
      * 
      */
-    private static final long serialVersionUID = 1731409657184008318L;
+    private static final long serialVersionUID = 3983184983612380269L;
     private Long id;
 
     /**

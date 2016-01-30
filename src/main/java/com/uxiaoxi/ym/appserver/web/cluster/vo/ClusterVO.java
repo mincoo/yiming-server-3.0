@@ -3,6 +3,7 @@
  */
 package com.uxiaoxi.ym.appserver.web.cluster.vo;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
@@ -12,7 +13,12 @@ import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
  *
  * 2015年3月10日
  */
-public class ClusterVO {
+public class ClusterVO implements Serializable{
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6800902660399537088L;
 
     private Long gid;
     
