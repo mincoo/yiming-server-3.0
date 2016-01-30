@@ -431,7 +431,7 @@
         SELECT t.`clu_id` AS cluId,
                t.`acc_id` AS accId
           FROM `cluster_user` t 
-         WHERE (t.`jpush_flg` = 0 OR t.`jpush_flg` IS NULL)
+         WHERE (t.`msg_flg` = 0 OR t.`msg_flg` IS NULL)
            AND t.`acc_id` = #{id,jdbcType=BIGINT}
          ORDER BY t.`id` DESC
    ]]>

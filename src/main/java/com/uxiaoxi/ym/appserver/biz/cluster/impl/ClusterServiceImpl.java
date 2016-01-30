@@ -356,16 +356,15 @@ public class ClusterServiceImpl implements IClusterService {
         ClusterBySnResult clusterBySnResult = clusterDao.searchBySn(form);
         if (clusterBySnResult != null) {
             clusterBySnVO = new ClusterBySnVO(clusterBySnResult);
-//TODO
-//            if (clusterBySnResult.getUnamef() != null
-//                    && "".equals(clusterBySnResult.getUnamef())) {
-//                clusterBySnVO.setUname(clusterBySnResult.getUnamef());
-//            } else {
-//                clusterBySnVO.setUname(clusterBySnResult.getUnames());
-//            }
 
-            return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
-                    clusterBySnVO);
+            if (clusterBySnResult.getUnamef() != null
+                    && "".equals(clusterBySnResult.getUnamef())) {
+                clusterBySnVO.setUname(clusterBySnResult.getUnamef());
+            } else {
+                clusterBySnVO.setUname(clusterBySnResult.getUnames());
+            }
+
+            return new ResResult(clusterBySnVO);
         } else {
             return new ResResult(StatusConst.FAILURE, "不存在班级", null);
         }
@@ -381,7 +380,12 @@ public class ClusterServiceImpl implements IClusterService {
         record.setRemark(form.getRemark());
         record.setCreateDt(new Date());
         
-        remarkDao.insert(record);
+        String remark = remarkDao.selectRemark(form.getUid(), form.getNid(), form.getGid());
+        if(remark !=null){
+            remarkDao.updateByPrimaryKeySelective(record);
+        }else{
+            remarkDao.insert(record); 
+        }
 
         return new ResResult(null);
     }

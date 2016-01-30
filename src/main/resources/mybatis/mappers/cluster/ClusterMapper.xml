@@ -484,8 +484,8 @@
            AND t.`acc_id` = c.`create_by`
        ]]>
   </select> 
- 
   <resultMap id="VOResultBySnMap" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult">
+ 
     <result column="gid" jdbcType="BIGINT" property="gid" />
     <result column="uid" jdbcType="BIGINT" property="uid" />
     <result column="sn" jdbcType="VARCHAR" property="sn" />
