@@ -5,7 +5,7 @@
     <groupId>com.uxiaoxi.ym.appserver</groupId>
     <artifactId>yiming-server</artifactId>
     <packaging>war</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
     <name>yiming-server</name>
     <url>http://maven.apache.org</url>
 
@@ -342,15 +342,15 @@
                 <configuration>
                     <container>
                         <containerId>tomcat8x</containerId>
-                        <home>D:\tomcat\yiming-server</home>
+                        <home>D:\tomcat\yiming-server3</home>
                     </container>
                     <configuration>
                         <type>standalone</type>
-                        <home>D:\project\yiming-server</home>
+                        <home>D:\project\yiming-server3</home>
                         <properties>
-                            <cargo.servlet.port>8000</cargo.servlet.port>
-                            <cargo.tomcat.ajp.port>7000</cargo.tomcat.ajp.port>
-                            <cargo.rmi.port>9000</cargo.rmi.port>
+                            <cargo.servlet.port>8301</cargo.servlet.port>
+                            <cargo.tomcat.ajp.port>7301</cargo.tomcat.ajp.port>
+                            <cargo.rmi.port>9301</cargo.rmi.port>
                             <cargo.servlet.uriencoding>UTF-8</cargo.servlet.uriencoding>
                         </properties>
                     </configuration>
