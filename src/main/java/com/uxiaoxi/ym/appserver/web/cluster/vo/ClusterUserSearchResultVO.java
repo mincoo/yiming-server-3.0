@@ -11,6 +11,10 @@ package com.uxiaoxi.ym.appserver.web.cluster.vo;
  */
 public class ClusterUserSearchResultVO extends ClusterUserSearchResult{
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1731409657184008318L;
     private Long id;
 
     /**

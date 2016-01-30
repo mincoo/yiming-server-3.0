@@ -3,6 +3,7 @@
  */
 package com.uxiaoxi.ym.appserver.web.cluster.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,8 +11,13 @@ import java.util.List;
  *
  * 2015年3月11日
  */
-public class ClusterUserListResultVO<T> {
+public class ClusterUserListResultVO<T> implements Serializable{
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1749412888949370339L;
+
     /**
      * 老师列表大小
      */
