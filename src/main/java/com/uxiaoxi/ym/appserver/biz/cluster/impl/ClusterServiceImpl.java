@@ -326,7 +326,10 @@ public class ClusterServiceImpl implements IClusterService {
         
         List<ClusterUserListVO> lt = new ArrayList<ClusterUserListVO>();
         for (ClusterUserListVO vo : tlist) {
-            String remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            String remark = "";
+            if(vo.getUid()!=null){
+                remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            }
             vo.setRemark(remark);
             lt.add(vo); 
         }
