@@ -18,8 +18,6 @@ import com.uxiaoxi.ym.aliyun.bean.MsgOnsDTO;
 import com.uxiaoxi.ym.appserver.biz.msg.IMsgService;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgDao;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgSendTypeEnum;
 
 /**
  * @author renhao

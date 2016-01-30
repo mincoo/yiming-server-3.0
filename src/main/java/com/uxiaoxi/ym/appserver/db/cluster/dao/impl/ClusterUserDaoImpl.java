@@ -6,11 +6,8 @@ package com.uxiaoxi.ym.appserver.db.cluster.dao.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.uxiaoxi.ym.appserver.biz.cluster.impl.ClusterServiceImpl;
 import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterUserDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUserExample;
@@ -33,8 +30,6 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 public class ClusterUserDaoImpl extends
         BaseSupport<ClusterUser, ClusterUserMapper> implements IClusterUserDao {
 
-    // private static final Logger log =
-    // LoggerFactory.getLogger(ClusterServiceImpl.class);
 
     @Override
     public List<ClusterUserSearchResultVO> searchByUid(

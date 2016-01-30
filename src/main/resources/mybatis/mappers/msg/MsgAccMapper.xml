@@ -356,7 +356,7 @@
     <!-- 自己定义方法 -->
   
   <sql id="Base_Msg_List">
-    m.id AS `mid`,m.`acc_id` AS `uid` ,t.`clu_id` AS `gid`,
+    m.id AS `mid`,m.`sender_id` AS `uid` ,t.`clu_id` AS `gid`,
     m.`msg_type`
     AS `type`, m.`url` AS `url`, c.`id` AS `gid`,
     c.`title` AS `gname`,
@@ -371,7 +371,7 @@
     FROM msg_acc t, msg m , cluster c, `account` a
          WHERE t.`msg_id` = m.`id`
            AND t.`clu_id` = c.`id`
-           AND m.`acc_id` = a.`id`
+           AND m.`sender_id` = a.`id`
   </sql>
   
    <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
@@ -381,8 +381,7 @@
         FROM option_log ol ,msg_acc t, msg m , cluster c, `account` a
          WHERE t.`msg_id` = m.`id`
            AND t.`clu_id` = c.`id`
-           AND m.`acc_id` = a.`id`
-           AND t.`msg_id` = #{mid,jdbcType=BIGINT}
+           AND m.`sender_id` = a.`id`
            AND t.`use_yn` = 1
            AND ol.`id` > #{version,jdbcType=BIGINT}
   </select> 

@@ -343,7 +343,6 @@
         SELECT t.id as id,
                c.`id` AS gid,
                c.`create_by` AS uid,
-               c.`title` AS `name`,
                c.`sn`,
                c.`school`,
                c.`province`,
@@ -353,14 +352,8 @@
                IFNULL(t.`msg_flg`,"0") AS msgflg 
           FROM `cluster_user` t,`cluster` c 
          WHERE t.`clu_id` = c.`id`
-         <if test="start != null and start !=0 ">
-         <![CDATA[ 
-           AND t.id < #{start,jdbcType=BIGINT}
-         ]]>
-         </if>
            AND t.`acc_id` = #{uid,jdbcType=BIGINT}
          ORDER BY t.`id` DESC
-         LIMIT 0,10
 
   </select> 
 

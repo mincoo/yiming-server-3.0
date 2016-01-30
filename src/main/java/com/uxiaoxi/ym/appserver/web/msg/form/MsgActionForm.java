@@ -14,8 +14,22 @@ public class MsgActionForm {
     
     private Long mid;
     
-    private Long retype;
+    private Long gid;
     
+    /**
+     * @return the gid
+     */
+    public Long getGid() {
+        return gid;
+    }
+
+    /**
+     * @param gid the gid to set
+     */
+    public void setGid(Long gid) {
+        this.gid = gid;
+    }
+
     private Integer selected;
 
     /**
@@ -44,20 +58,6 @@ public class MsgActionForm {
      */
     public void setMid(Long mid) {
         this.mid = mid;
-    }
-
-    /**
-     * @return the retype
-     */
-    public Long getRetype() {
-        return retype;
-    }
-
-    /**
-     * @param retype the retype to set
-     */
-    public void setRetype(Long retype) {
-        this.retype = retype;
     }
 
     /**

@@ -356,13 +356,13 @@ public class ClusterServiceImpl implements IClusterService {
         ClusterBySnResult clusterBySnResult = clusterDao.searchBySn(form);
         if (clusterBySnResult != null) {
             clusterBySnVO = new ClusterBySnVO(clusterBySnResult);
-
-            if (clusterBySnResult.getUnamef() != null
-                    && "".equals(clusterBySnResult.getUnamef())) {
-                clusterBySnVO.setUname(clusterBySnResult.getUnamef());
-            } else {
-                clusterBySnVO.setUname(clusterBySnResult.getUnames());
-            }
+//TODO
+//            if (clusterBySnResult.getUnamef() != null
+//                    && "".equals(clusterBySnResult.getUnamef())) {
+//                clusterBySnVO.setUname(clusterBySnResult.getUnamef());
+//            } else {
+//                clusterBySnVO.setUname(clusterBySnResult.getUnames());
+//            }
 
             return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
                     clusterBySnVO);

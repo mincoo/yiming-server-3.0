@@ -3,7 +3,6 @@
  */
 package com.uxiaoxi.ym.appserver.biz.account.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
 import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
 import com.uxiaoxi.ym.appserver.db.account.dao.IAccountDao;
@@ -31,13 +29,8 @@ import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
 import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
 import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
-import com.uxiaoxi.ym.appserver.web.account.form.SearchByPhoneForm;
-import com.uxiaoxi.ym.appserver.web.account.form.SearchForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
-import com.uxiaoxi.ym.appserver.web.account.vo.SearchUserResultVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnVO;
-import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
@@ -144,10 +137,12 @@ public class AccountServiceImpl implements IAccountService {
                 newAccount.setType(registerForm.getType());
                 newAccount.setCreateDt(new Date());
                 newAccount.setSex(registerForm.getSex());
-                accountDao.insert(newAccount);
+                ResultBean rb = accountDao.insert(newAccount);
                 
-                rs.setMsg(StatusConst.STRSUCCESS);
-                rs.setStatus(StatusConst.SUCCESS);
+                if(rb.getCode()==1){
+                    rs.setMsg(StatusConst.STRSUCCESS);
+                    rs.setStatus(StatusConst.SUCCESS);
+                }
 //                rs.setRo(newAccount);
                 
                 // TODO 自动登录
