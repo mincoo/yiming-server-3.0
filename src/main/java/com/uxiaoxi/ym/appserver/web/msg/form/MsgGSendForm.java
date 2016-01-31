@@ -22,10 +22,7 @@ public class MsgGSendForm {
     
     @NotNull
     private Long gid;
-    
-//    @NotBlank
-    private String title;
-    
+     
     @NotBlank
     private String content;
     
@@ -70,20 +67,6 @@ public class MsgGSendForm {
      */
     public void setGid(Long gid) {
         this.gid = gid;
-    }
-
-    /**
-     * @return the title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     /**

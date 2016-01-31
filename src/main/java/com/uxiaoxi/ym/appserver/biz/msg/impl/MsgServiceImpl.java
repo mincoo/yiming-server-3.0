@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Set;
 
 
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +38,7 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.OptionLog;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
+import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
@@ -56,7 +62,7 @@ import com.uxiaoxi.ym.jpush.PushTypeEnum;
 @Service
 public class MsgServiceImpl implements IMsgService {
 
-    // private Logger LOG = LoggerFactory.getLogger(MsgServiceImpl.class);
+//     private Logger LOG = LoggerFactory.getLogger(MsgServiceImpl.class);
 
     @Autowired
     private IMsgDao msgDao;
@@ -260,7 +266,7 @@ public class MsgServiceImpl implements IMsgService {
     @Override
     @Transactional
     public void gsendMsg(MsgGSendForm form) {
-
+        
         Msg msg = new Msg();
         msg.setSenderId(form.getUid());
         msg.setContent(form.getContent());
@@ -272,7 +278,15 @@ public class MsgServiceImpl implements IMsgService {
         msg.setSelect1(form.getSelect1());
         msg.setSelect2(form.getSelect2());
         msgDao.insert(msg);
-
+        
+        //消息总版本
+        OptionLog re = new OptionLog();
+        re.setOptionType("A");
+//        re.setDataAfter(msg.toString());
+        re.setDataId(msg.getId());
+        re.setCreateAt(new Date());
+        ResultBean rb = optionLogDao.insert(re);
+        
         // 找出该群组的所有用户
         List<ClusterUser> userlist = clusterUserDao.selectByGid(form.getGid());
 
@@ -282,6 +296,7 @@ public class MsgServiceImpl implements IMsgService {
             ma.setAccId(cu.getAccId());
             ma.setCreateAt(new Date());
             ma.setMsgId(msg.getId());
+            ma.setVersion(re.getId());
             ma.setCluId(form.getGid());
             // ma.setReaded(MsgStatusEnum.UNREAD.getCode());
             ma.setUseYn(true);
@@ -289,15 +304,15 @@ public class MsgServiceImpl implements IMsgService {
         }
 
         // 极光推送
-        // PushParam param = new PushParam();
-        // param.setTag("g" + form.getGid());
-        // // TODO 把title 换成 content ,极光推送的长度限制
-        // param.setContent(form.getTitle());
-        // param.setMid(msg.getId());
-        // param.setType(form.getMsgType());
-        // param.setTypeEnum(PushTypeEnum.TAG);
-        // param.setUrl(msg.getUrl());
-        // JpushUtil.gSendPush(param);
+         PushParam param = new PushParam();
+         param.setTag("g" + form.getGid());
+         // TODO 把title 换成 content ,极光推送的长度限制
+//         param.setContent(form.getTitle());
+         param.setMid(msg.getId());
+         param.setType(form.getMsgType());
+         param.setTypeEnum(PushTypeEnum.TAG);
+         param.setUrl(msg.getUrl());
+         JpushUtil.gSendPush(param);
     }
 
     @Override
@@ -410,7 +425,8 @@ public class MsgServiceImpl implements IMsgService {
             // 插入msg_acc表
             MsgAcc ma = new MsgAcc();
             ma.setAccId(cu.getAccId());
-            ma.setMsgId(re.getId());
+            ma.setMsgId(form.getMid());
+            ma.setVersion(re.getId());
             ma.setCluId(form.getGid());
             msgAccDao.updateByPrimaryKeySelective(ma);
         }
