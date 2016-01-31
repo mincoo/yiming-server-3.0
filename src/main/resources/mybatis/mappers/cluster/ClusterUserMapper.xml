@@ -342,6 +342,7 @@
    <select id="searchByUid" parameterType="com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm" resultMap="VOResultMap">
         SELECT t.id as id,
                c.`id` AS gid,
+               c.`title` AS name,
                c.`create_by` AS uid,
                c.`sn`,
                c.`school`,

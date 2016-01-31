@@ -45,9 +45,6 @@ public class ClusterUserSearchResultVO extends ClusterUserSearchResult implement
         c.setCity(this.getCity());
         c.setDistrict(this.getDistrict());
         c.setFace(this.getFace());
-        c.setPnum(this.getPnum());
-        c.setTnum(this.getTnum());
-        c.setSnum(this.getSnum());
         c.setMsgflg(this.getMsgflg());
         return c;
     }
