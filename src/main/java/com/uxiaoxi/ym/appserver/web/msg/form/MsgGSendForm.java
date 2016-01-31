@@ -21,7 +21,7 @@ public class MsgGSendForm {
     private Long uid;
     
     @NotNull
-    private Long gid;
+    private String gid;
      
     @NotBlank
     private String content;
@@ -58,14 +58,14 @@ public class MsgGSendForm {
     /**
      * @return the gid
      */
-    public Long getGid() {
+    public String getGid() {
         return gid;
     }
 
     /**
      * @param gid the gid to set
      */
-    public void setGid(Long gid) {
+    public void setGid(String gid) {
         this.gid = gid;
     }
 

@@ -53,6 +53,5 @@ public interface IMsgAccDao extends IBaseSupport<MsgAcc>{
      * @param type
      */
     public Long getSum(Long mid,Long type);
-
-
+    
 }

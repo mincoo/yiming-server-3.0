@@ -374,17 +374,35 @@
            AND m.`sender_id` = a.`id`
   </sql>
   
-   <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
-        SELECT 
-            DISTINCT(ol.`data_id`) AS `msgid`,
+    <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
+        SELECT DISTINCT
         <include refid="Base_Msg_List" />
-        FROM option_log ol ,msg_acc t, msg m , cluster c, `account` a
+        FROM msg_acc t, msg m , cluster c, `account` a
          WHERE t.`msg_id` = m.`id`
            AND t.`clu_id` = c.`id`
            AND m.`sender_id` = a.`id`
            AND t.`use_yn` = 1
-           AND ol.`id` &gt; #{version,jdbcType=BIGINT}
+           AND t.`acc_id` = #{uid,jdbcType=BIGINT}
+           AND t.`msg_id` IN (SELECT DISTINCT(ol.`data_id`) AS `msgid` FROM option_log ol WHERE ol.`id` > #{version,jdbcType=BIGINT})
   </select> 
+  
+<!--      <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
+        SELECT 
+        <include refid="Base_Msg_List" />
+        FROM msg_acc t, msg m , cluster c, `account` a
+         WHERE t.`msg_id` = m.`id`
+           AND t.`clu_id` = c.`id`
+           AND m.`sender_id` = a.`id`
+           AND t.`use_yn` = 1
+  </select>  -->
+  
+<!--      <select id="getmid" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
+        SELECT 
+            DISTINCT(ol.`data_id`) AS `msgid`
+        FROM option_log ol 
+         WHERE 
+           AND ol.`id` > #{version,jdbcType=BIGINT}
+  </select>  -->
   
     <select id="getSum" parameterType="java.util.Map" resultType="java.lang.Long">
        SELECT 
@@ -428,7 +446,7 @@
       SELECT ma.`acc_id` AS `sid`, 
              a.name AS `sname`, 
              ma.`selected` AS `selected` 
-        FROM `msg_acc` ma, 
+        FROM `msg_acc` ma 
         LEFT JOIN `account` a ON ma.`acc_id` = a.`id`
        WHERE ma.`msg_id` = #{mid,jdbcType=BIGINT}
   </select> 

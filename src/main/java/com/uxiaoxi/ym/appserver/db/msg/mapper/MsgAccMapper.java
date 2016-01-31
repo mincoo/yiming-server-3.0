@@ -85,7 +85,7 @@ public interface MsgAccMapper {
     int updateByPrimaryKey(MsgAcc record);
 
     List<MsgListVO> getlist(MsgListForm form);
-
+    
     MsgVO getdata(MsgDataForm form);
     
     List<MsgDataPatInfo> getDataAcc(Long id);

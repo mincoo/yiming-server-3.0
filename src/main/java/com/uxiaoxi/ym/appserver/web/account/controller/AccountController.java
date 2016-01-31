@@ -16,6 +16,7 @@ import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
 import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
+import com.uxiaoxi.ym.appserver.web.account.form.MsgSwitchForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
@@ -148,6 +149,19 @@ public class AccountController {
     @RequestMapping(value = "/feedback")
     public ResResult feedbackJson(FeedbackForm form) {
         return accountService.feedback(form);
+    }
+    
+    /**
+     * 
+     * 免打扰开关切换
+     * 
+     * @param form
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/switch")
+    public ResResult msgSwitchJson(MsgSwitchForm form) {
+        return accountService.msgSwitch(form);
     }
 
 }

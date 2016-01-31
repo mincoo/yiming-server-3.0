@@ -84,7 +84,7 @@ public class MsgServiceImpl implements IMsgService {
 
     @Override
     public ResResult getlist(MsgListForm form) {
-
+        
         List<MsgListVO> list = msgAccDao.getlist(form);
 
         if (list == null) {
@@ -121,14 +121,18 @@ public class MsgServiceImpl implements IMsgService {
 
         List<MsgDataPatInfo> list = msgAccDao.getDataAcc(form.getMid());
 
+        if(list==null || list.size()==0){
+            return new ResResult(vo);
+        }
+        
         int sum1 = 0;
         int sum2 = 0;
         // 计算sum1、sum2
         for (MsgDataPatInfo md : list) {
-            if (md.getSelected() == 1) {
-                sum1 += sum1;
-            } else if (md.getSelected() == 2) {
-                sum2 += sum2;
+            if (md.getSelected().intValue() == 1) {
+                sum1 ++;
+            } else if (md.getSelected().intValue() == 2) {
+                sum2 ++;
             } else {
 
             }
@@ -162,6 +166,28 @@ public class MsgServiceImpl implements IMsgService {
         record.setUseYn(false);
         record.setAccId(form.getUid());
         msgAccDao.updateByExample(record);
+        
+        
+        OptionLog re = new OptionLog();
+        re.setDataId(form.getMid());
+        re.setOptionType("D");
+        re.setDataAfter(record.toString());
+        re.setCreateAt(new Date());
+        optionLogDao.insert(re);
+        
+        // 找出该群组的所有用户
+        List<ClusterUser> userlist = clusterUserDao.selectByGid(form.getGid());
+
+        // 插入msg_acc表
+        for (ClusterUser cu : userlist) {
+            // 插入msg_acc表
+            MsgAcc ma = new MsgAcc();
+            ma.setAccId(cu.getAccId());
+            ma.setMsgId(form.getMid());
+            ma.setVersion(re.getId());
+            ma.setCluId(form.getGid());
+            msgAccDao.updateByExample(ma);
+        }
 
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
     }
@@ -267,52 +293,58 @@ public class MsgServiceImpl implements IMsgService {
     @Transactional
     public void gsendMsg(MsgGSendForm form) {
         
-        Msg msg = new Msg();
-        msg.setSenderId(form.getUid());
-        msg.setContent(form.getContent());
-        msg.setCreateAt(new Date());
-        msg.setMsgType(Long.valueOf(form.getMsgType()));
-        msg.setStype(form.getRetype());
-        msg.setCluId(form.getGid());
-        msg.setUrl(form.getUrl());
-        msg.setSelect1(form.getSelect1());
-        msg.setSelect2(form.getSelect2());
-        msgDao.insert(msg);
+        String gids = form.getGid();
+        String[] gidList = gids.split(",");
         
-        //消息总版本
-        OptionLog re = new OptionLog();
-        re.setOptionType("A");
-//        re.setDataAfter(msg.toString());
-        re.setDataId(msg.getId());
-        re.setCreateAt(new Date());
-        ResultBean rb = optionLogDao.insert(re);
-        
-        // 找出该群组的所有用户
-        List<ClusterUser> userlist = clusterUserDao.selectByGid(form.getGid());
-
-        // 插入msg_acc表
-        for (ClusterUser cu : userlist) {
-            MsgAcc ma = new MsgAcc();
-            ma.setAccId(cu.getAccId());
-            ma.setCreateAt(new Date());
-            ma.setMsgId(msg.getId());
-            ma.setVersion(re.getId());
-            ma.setCluId(form.getGid());
-            // ma.setReaded(MsgStatusEnum.UNREAD.getCode());
-            ma.setUseYn(true);
-            msgAccDao.insert(ma);
+        for(int i=0;i<gidList.length;i++){
+            Msg msg = new Msg();
+            msg.setSenderId(form.getUid());
+            msg.setContent(form.getContent());
+            msg.setCreateAt(new Date());
+            msg.setMsgType(Long.valueOf(form.getMsgType()));
+            msg.setStype(form.getRetype());
+            //msg.setCluId(Long.valueOf(form.getGid()));
+            msg.setCluId(Long.valueOf(gidList[i]));
+            msg.setUrl(form.getUrl());
+            msg.setSelect1(form.getSelect1());
+            msg.setSelect2(form.getSelect2());
+            msgDao.insert(msg);
+            
+            //消息总版本
+            OptionLog re = new OptionLog();
+            re.setOptionType("A");
+            re.setDataAfter(msg.toString());
+            re.setDataId(msg.getId());
+            re.setCreateAt(new Date());
+            optionLogDao.insert(re);
+            
+            // 找出该群组的所有用户
+            List<ClusterUser> userlist = clusterUserDao.selectByGid(Long.valueOf(gidList[i]));
+    
+            // 插入msg_acc表
+            for (ClusterUser cu : userlist) {
+                MsgAcc ma = new MsgAcc();
+                ma.setAccId(cu.getAccId());
+                ma.setCreateAt(new Date());
+                ma.setMsgId(msg.getId());
+                ma.setVersion(re.getId());
+                ma.setCluId(Long.valueOf(gidList[i]));
+                ma.setSelected(0);//未选择状态
+                ma.setUseYn(true);
+                msgAccDao.insert(ma);
+            }
+    
+            // 极光推送
+             PushParam param = new PushParam();
+             param.setTag("g" + Long.valueOf(gidList[i]));
+             // TODO 把title 换成 content ,极光推送的长度限制
+             param.setContent(form.getContent());
+             param.setMid(msg.getId());
+             param.setType(form.getMsgType());
+             param.setTypeEnum(PushTypeEnum.TAG);
+             param.setUrl(msg.getUrl());
+             JpushUtil.gSendPush(param);
         }
-
-        // 极光推送
-         PushParam param = new PushParam();
-         param.setTag("g" + form.getGid());
-         // TODO 把title 换成 content ,极光推送的长度限制
-//         param.setContent(form.getTitle());
-         param.setMid(msg.getId());
-         param.setType(form.getMsgType());
-         param.setTypeEnum(PushTypeEnum.TAG);
-         param.setUrl(msg.getUrl());
-         JpushUtil.gSendPush(param);
     }
 
     @Override
@@ -407,13 +439,17 @@ public class MsgServiceImpl implements IMsgService {
     public ResResult msgAction(MsgActionForm form) {
 
         MsgAcc record = new MsgAcc();
-
+        record.setAccId(form.getUid());
+        record.setCluId(form.getGid());
+        record.setMsgId(form.getMid());
         record.setSelected(form.getSelected());
 
         msgAccDao.updateByExample(record);
         
         OptionLog re = new OptionLog();
         re.setDataId(form.getMid());
+        re.setOptionType("U");
+        re.setDataAfter(record.toString());
         re.setCreateAt(new Date());
         optionLogDao.insert(re);
 
@@ -428,7 +464,7 @@ public class MsgServiceImpl implements IMsgService {
             ma.setMsgId(form.getMid());
             ma.setVersion(re.getId());
             ma.setCluId(form.getGid());
-            msgAccDao.updateByPrimaryKeySelective(ma);
+            msgAccDao.updateByExample(ma);
         }
 
         

@@ -7,6 +7,7 @@ import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
 import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
 import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
+import com.uxiaoxi.ym.appserver.web.account.form.MsgSwitchForm;
 import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
@@ -102,5 +103,15 @@ public interface IAccountService {
      * @return
      */
     public ResResult feedback(FeedbackForm form);
+    
+    /**
+     * 免打扰开关切换
+     * 
+     * @param form
+     * @return
+     */
+    public ResResult msgSwitch(MsgSwitchForm form);
+    
+    
 
 }

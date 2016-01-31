@@ -13,6 +13,22 @@ public class MsgDataForm {
     private Long uid;
     
     private Long mid;
+    
+    private Long gid;
+
+    /**
+     * @return the gid
+     */
+    public Long getGid() {
+        return gid;
+    }
+
+    /**
+     * @param gid the gid to set
+     */
+    public void setGid(Long gid) {
+        this.gid = gid;
+    }
 
     /**
      * @return the uid

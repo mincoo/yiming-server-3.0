@@ -27,6 +27,7 @@ import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
 import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
 import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
+import com.uxiaoxi.ym.appserver.web.account.form.MsgSwitchForm;
 import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
@@ -371,6 +372,35 @@ public class AccountServiceImpl implements IAccountService {
         
         feedbackDao.insert(record);
         
+        return new ResResult(null);
+    }
+    
+    @Override
+    public ResResult msgSwitch(MsgSwitchForm form) {
+        
+        Account record = new Account();
+        record.setId(form.getUid());
+        record.setMsgSwitch(form.getStatus());;
+        
+        accountDao.updateByPrimaryKeySelective(record);
+        
+        
+        // 取得用户
+        Account account = accountDao.selectByKey(form.getUid());
+        Set<String> tagsToAdd = new HashSet<String>();
+        
+        //Jpush推送
+        if(form.getStatus()==1){
+            JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
+        }else{
+
+            List<ClusterUser> culist = cluserUserDao.getAllByUid(account.getId());
+            for (ClusterUser cu : culist) {
+                tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
+            }
+            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
+                    null, account.getVersion());
+        }
         return new ResResult(null);
     }
     
