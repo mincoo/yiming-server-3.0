@@ -411,7 +411,7 @@
          WHERE t.`msg_id` = #{mid,jdbcType=BIGINT} 
          AND t.`selected` = #{selected,jdbcType=BIGINT} 
          AND cu.`clu_id` = t.`clu_id` 
-         AND cu.`acc_id` = a.`acc_id` 
+         AND cu.`acc_id` = a.`id` 
          AND cu.`acc_id` = t.`acc_id` 
          AND CASE WHEN cu.`acc_type` IS NULL THEN a.`type` ELSE cu.`acc_type` END = 2
   </select> 
