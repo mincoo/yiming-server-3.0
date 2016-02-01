@@ -5,7 +5,6 @@ package com.uxiaoxi.ym.appserver.biz.cluster;
 
 import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
-import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.CreateClusterForm;

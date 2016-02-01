@@ -5,10 +5,8 @@ package com.uxiaoxi.ym.appserver.biz.cluster.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,14 +28,12 @@ import com.uxiaoxi.ym.appserver.db.cluster.dto.Remark;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.cluster.form.AddDelUserForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
-import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserListForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterUserSearchForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.CreateClusterForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.JoinClusterForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.UpdateRemarkForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterByGidVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListResultVO;

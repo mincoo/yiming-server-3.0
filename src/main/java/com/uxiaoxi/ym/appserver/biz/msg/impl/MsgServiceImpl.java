@@ -13,10 +13,6 @@ import java.util.Set;
 
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -334,7 +330,7 @@ public class MsgServiceImpl implements IMsgService {
                 msgAccDao.insert(ma);
             }
     
-            // 极光推送
+          /*  // 极光推送
              PushParam param = new PushParam();
              param.setTag("g" + Long.valueOf(gidList[i]));
              // TODO 把title 换成 content ,极光推送的长度限制
@@ -343,7 +339,7 @@ public class MsgServiceImpl implements IMsgService {
              param.setType(form.getMsgType());
              param.setTypeEnum(PushTypeEnum.TAG);
              param.setUrl(msg.getUrl());
-             JpushUtil.gSendPush(param);
+             JpushUtil.gSendPush(param);*/
         }
     }
 
@@ -376,7 +372,7 @@ public class MsgServiceImpl implements IMsgService {
             ma.setUseYn(true);
             msgAccDao.insert(ma);
 
-            // 极光推送
+/*            // 极光推送
             PushParam param = new PushParam();
             param.setAlias("u" + account.getId());
 
@@ -385,7 +381,7 @@ public class MsgServiceImpl implements IMsgService {
             param.setType(MsgTypeEnum.TXT.getCode());
             param.setTypeEnum(PushTypeEnum.ALIAS);
             param.setUrl(msg.getUrl());
-            JpushUtil.SendPush(param, account.getVersion());
+            JpushUtil.SendPush(param, account.getVersion());*/
 
         } else {
             // TODO 发送短信
