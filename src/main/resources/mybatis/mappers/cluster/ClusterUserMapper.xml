@@ -418,7 +418,8 @@
   </select>
 
    <resultMap id="ResultMapT" type="com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO">
-    <result column="uid" jdbcType="INTEGER" property="id" />
+   <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="type" jdbcType="BIGINT" property="type" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="INTEGER" property="sex" />

@@ -407,9 +407,13 @@
     <select id="getSum" parameterType="java.util.Map" resultType="java.lang.Long">
        SELECT 
             count(*)
-          FROM msg_acc t
+          FROM msg_acc t,cluster_user cu,account a
          WHERE t.`msg_id` = #{mid,jdbcType=BIGINT} 
          AND t.`selected` = #{selected,jdbcType=BIGINT} 
+         AND cu.`clu_id` = t.`clu_id` 
+         AND cu.`acc_id` = a.`acc_id` 
+         AND cu.`acc_id` = t.`acc_id` 
+         AND CASE WHEN cu.`acc_type` IS NULL THEN a.`type` ELSE cu.`acc_type` END = 2
   </select> 
 <!--      <select id="getChangeMsgId" parameterType="java.lang.Long" resultType="java.util.List">
         SELECT 
@@ -448,7 +452,9 @@
              ma.`selected` AS `selected` 
         FROM `msg_acc` ma 
         LEFT JOIN `account` a ON ma.`acc_id` = a.`id`
+        LEFT JOIN `cluster_user` cu ON cu.`acc_id` = a.`id` AND cu.`clu_id` = ma.`clu_id`
        WHERE ma.`msg_id` = #{mid,jdbcType=BIGINT}
+       AND CASE WHEN cu.`acc_type` IS NULL THEN a.`type` ELSE cu.`acc_type` END = 2
   </select> 
   
 </mapper>

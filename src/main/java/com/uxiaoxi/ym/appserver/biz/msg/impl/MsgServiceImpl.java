@@ -139,15 +139,6 @@ public class MsgServiceImpl implements IMsgService {
         vo.setSum2(Long.valueOf(sum2));
         vo.setSum0(Long.valueOf(list.size() - sum1 - sum2));
 
-        // if(vo != null) {
-        // // 更新为已读
-        // MsgAcc record = new MsgAcc();
-        // record.setMsgId(form.getMid());
-        // record.setReaded(MsgStatusEnum.READ.getCode());
-        // record.setAccId(form.getUid());
-        // msgAccDao.updateReaded(record);
-        //
-        // }
         return new ResResult(vo);
     }
 
@@ -219,66 +210,6 @@ public class MsgServiceImpl implements IMsgService {
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
     }
 
-    // /**
-    // * 发送单人消息
-    // * 不要直接调用,应通过ons调用
-    // *
-    // * @param form
-    // */
-    // @Override
-    // @Transactional
-    // public void sendMsg(MsgSendForm form) {
-    //
-    // Msg msg = new Msg();
-    // msg.setAccId(form.getUid());
-    // msg.setContent(form.getContent());
-    // msg.setCreateDt(new Date());
-    // msg.setMsgType(Long.valueOf(form.getMsgType()));
-    // msg.setTitle(form.getTitle());
-    // msg.setCluId(form.getGid());
-    // msg.setUrl(form.getUrl());
-    // msgDao.insert(msg);
-    //
-    // // 插入msg_acc表
-    // MsgAcc ma = new MsgAcc();
-    // ma.setAccId(form.getNid());
-    // ma.setCreateDt(new Date());
-    // ma.setMsgId(msg.getId());
-    // ma.setCluId(form.getGid());
-    // // ma.setReaded(MsgStatusEnum.UNREAD.getCode());
-    // ma.setUseYn(true);
-    // msgAccDao.insert(ma);
-    //
-    // // 极光推送
-    // PushParam param = new PushParam();
-    // param.setAlias("u" + form.getNid());
-    //
-    //
-    // Account account = accountDao.selectByKey(form.getNid());
-    //
-    // // TODO 唐山校长会后删除
-    // // if(account!= null && StringUtils.isBlank(account.getRegid()) &&
-    // "欢迎您参加“教育改革与创新”高级研修班".equals(form.getTitle())){
-    // // // 发送短信
-    // // try {
-    // // Sms.tplSendSms(761809, "#name#="+account.getName(),
-    // account.getPhone());
-    // // } catch (IOException e) {
-    // // LOG.debug(e.getMessage());
-    // // }
-    // // }
-    //
-    // // TODO 把title 换成 content,极光推送的长度限制
-    // param.setContent(form.getTitle());
-    // param.setMid(msg.getId());
-    // param.setType(form.getMsgType());
-    // param.setTypeEnum(PushTypeEnum.ALIAS);
-    // param.setUrl(form.getUrl());
-    // JpushUtil.SendPush(param, account.getVersion());
-    //
-    //
-    //
-    // }
 
     /**
      * 发多人消息 不要直接调用,应通过ons调用

@@ -220,6 +220,14 @@ public class ClusterServiceImpl implements IClusterService {
         if (cu != null) {
             return new ResResult(StatusConst.SUCCESS, "已经在组里了", null);
         }
+        
+        //是否超班级人数上限
+        Cluster c =clusterDao.selectByKey(form.getGid());
+        
+        List<ClusterUser> lt = clusterUserDao.selectByGid(form.getGid());
+        if(lt.size()>=c.getMaxUser()){
+            return new ResResult(StatusConst.FAILURE, "人数超过班级上限，请联系管理员", null);
+        }
 
         ClusterUser record = new ClusterUser();
         record.setAccId(form.getUid());
