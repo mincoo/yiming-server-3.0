@@ -84,6 +84,7 @@ public class ClusterServiceImpl implements IClusterService {
         clu.setLongitude(form.getLongitude());
         clu.setLatitude(form.getLatitude());
         clu.setFace(form.getFace());
+        clu.setMaxUser(Long.valueOf(200));
         clu.setCreateDt(new Date());
 
         // 生成班号,从2046开始
