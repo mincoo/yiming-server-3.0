@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.glassfish.jersey.client.JerseyWebTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.uxiaoxi.ym.appserver.biz.account.IAccountService;
 import com.uxiaoxi.ym.appserver.db.account.dao.IAccountDao;
 import com.uxiaoxi.ym.appserver.db.account.dao.IFeedbackDao;
@@ -35,6 +38,13 @@ import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
+import com.uxiaoxi.ym.easemob.comm.Constants;
+import com.uxiaoxi.ym.easemob.comm.HTTPMethod;
+import com.uxiaoxi.ym.easemob.comm.Roles;
+import com.uxiaoxi.ym.easemob.utils.JerseyUtils;
+import com.uxiaoxi.ym.easemob.vo.ClientSecretCredential;
+import com.uxiaoxi.ym.easemob.vo.Credential;
+import com.uxiaoxi.ym.easemob.vo.EndPoints;
 import com.uxiaoxi.ym.jpush.JpushUtil;
 
 /**
@@ -46,6 +56,14 @@ import com.uxiaoxi.ym.jpush.JpushUtil;
 public class AccountServiceImpl implements IAccountService {
     
     private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
+    
+    private static final JsonNodeFactory factory = new JsonNodeFactory(false);
+    private static final String APPKEY = Constants.APPKEY;
+
+    // 通过app的client_id和client_secret来获取app管理员token
+    private static Credential credential = new ClientSecretCredential(
+            Constants.APP_CLIENT_ID, Constants.APP_CLIENT_SECRET,
+            Roles.USER_ROLE_APPADMIN);
     
     
     @Autowired
@@ -143,6 +161,12 @@ public class AccountServiceImpl implements IAccountService {
                 if(rb.getCode()==1){
                     rs.setMsg(StatusConst.STRSUCCESS);
                     rs.setStatus(StatusConst.SUCCESS);
+                    
+                    //环信注册IM用户[单个]
+                    ObjectNode datanode = JsonNodeFactory.instance.objectNode();
+                    datanode.put("username","u"+newAccount.getId());
+                    datanode.put("password", CommonUtil.password(Constants.DEFAULT_PASSWORD+String.valueOf(newAccount.getId())));
+                    createNewIMUserSingle(datanode);
                 }
 //                rs.setRo(newAccount);
                 
@@ -402,6 +426,61 @@ public class AccountServiceImpl implements IAccountService {
                     null, account.getVersion());
         }
         return new ResResult(null);
+    }
+    
+    /**
+     * 注册IM用户[单个]
+     * 
+     * 给指定AppKey创建一个新的用户
+     * 
+     * @param dataNode
+     * @return
+     */
+    public static ObjectNode createNewIMUserSingle(ObjectNode dataNode) {
+        
+        ObjectNode objectNode = factory.objectNode();
+
+        // check appKey format
+        if (!JerseyUtils.match("^(?!-)[0-9a-zA-Z\\-]+#[0-9a-zA-Z]+", APPKEY)) {
+            log.error("Bad format of Appkey: " + APPKEY);
+
+            objectNode.put("message", "Bad format of Appkey");
+
+            return objectNode;
+        }
+
+        objectNode.removeAll();
+
+        // check properties that must be provided
+        if (null != dataNode && !dataNode.has("username")) {
+            log.error("Property that named username must be provided .");
+
+            objectNode.put("message",
+                    "Property that named username must be provided .");
+
+            return objectNode;
+        }
+        if (null != dataNode && !dataNode.has("password")) {
+            log.error("Property that named password must be provided .");
+
+            objectNode.put("message",
+                    "Property that named password must be provided .");
+
+            return objectNode;
+        }
+
+        try {
+            JerseyWebTarget webTarget = EndPoints.USERS_TARGET.resolveTemplate("org_name",
+                    APPKEY.split("#")[0]).resolveTemplate("app_name",
+                    APPKEY.split("#")[1]);
+
+            objectNode = JerseyUtils.sendRequest(webTarget, dataNode, credential, HTTPMethod.METHOD_POST, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return objectNode;
     }
     
 }
