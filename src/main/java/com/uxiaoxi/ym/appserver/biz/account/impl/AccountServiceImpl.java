@@ -27,6 +27,7 @@ import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterUserDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.verification.dao.IVerificationCodeDao;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
+import com.uxiaoxi.ym.appserver.framework.util.StringUtil;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
 import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
 import com.uxiaoxi.ym.appserver.web.account.form.LoginForm;
@@ -165,7 +166,7 @@ public class AccountServiceImpl implements IAccountService {
                     //环信注册IM用户[单个]
                     ObjectNode datanode = JsonNodeFactory.instance.objectNode();
                     datanode.put("username","u"+newAccount.getId());
-                    datanode.put("password", CommonUtil.password(Constants.DEFAULT_PASSWORD+String.valueOf(newAccount.getId())));
+                    datanode.put("password", StringUtil.md5(Constants.DEFAULT_PASSWORD+String.valueOf(newAccount.getId())));
                     createNewIMUserSingle(datanode);
                 }
 //                rs.setRo(newAccount);
