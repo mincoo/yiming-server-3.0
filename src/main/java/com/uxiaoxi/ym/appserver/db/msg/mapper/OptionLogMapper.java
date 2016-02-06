@@ -93,4 +93,7 @@ public interface OptionLogMapper {
      * @mbggenerated  Sat Jan 30 20:32:53 CST 2016
      */
     int updateByPrimaryKey(OptionLog record);
+    
+    //自定义方法：取消息版本
+    Long getMsgVertion();
 }

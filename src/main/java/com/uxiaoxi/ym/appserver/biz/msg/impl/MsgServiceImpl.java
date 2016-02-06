@@ -9,17 +9,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-
-
-
+import org.glassfish.jersey.client.JerseyWebTarget;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.uxiaoxi.ym.aliyun.bean.TDMsgOnsDTO;
 import com.uxiaoxi.ym.aliyun.producer.MsgProducer;
+import com.uxiaoxi.ym.appserver.biz.cluster.impl.ClusterServiceImpl;
 import com.uxiaoxi.ym.appserver.biz.msg.IMsgService;
 import com.uxiaoxi.ym.appserver.db.account.dao.IAccountDao;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
@@ -34,21 +37,25 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.OptionLog;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
-import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
-import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTypeEnum;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
+import com.uxiaoxi.ym.easemob.comm.Constants;
+import com.uxiaoxi.ym.easemob.comm.HTTPMethod;
+import com.uxiaoxi.ym.easemob.comm.Roles;
+import com.uxiaoxi.ym.easemob.utils.JerseyUtils;
+import com.uxiaoxi.ym.easemob.vo.ClientSecretCredential;
+import com.uxiaoxi.ym.easemob.vo.Credential;
+import com.uxiaoxi.ym.easemob.vo.EndPoints;
 import com.uxiaoxi.ym.jpush.JpushUtil;
-import com.uxiaoxi.ym.jpush.PushParam;
-import com.uxiaoxi.ym.jpush.PushTypeEnum;
 
 /**
  * @author renhao
@@ -58,7 +65,16 @@ import com.uxiaoxi.ym.jpush.PushTypeEnum;
 @Service
 public class MsgServiceImpl implements IMsgService {
 
-//     private Logger LOG = LoggerFactory.getLogger(MsgServiceImpl.class);
+    private static final Logger log = LoggerFactory
+            .getLogger(ClusterServiceImpl.class);
+    
+    private static final JsonNodeFactory factory = new JsonNodeFactory(false);
+    private static final String APPKEY = Constants.APPKEY;
+
+    // 通过app的client_id和client_secret来获取app管理员token
+    private static Credential credential = new ClientSecretCredential(
+            Constants.APP_CLIENT_ID, Constants.APP_CLIENT_SECRET,
+            Roles.USER_ROLE_APPADMIN);
 
     @Autowired
     private IMsgDao msgDao;
@@ -175,6 +191,9 @@ public class MsgServiceImpl implements IMsgService {
             ma.setCluId(form.getGid());
             msgAccDao.updateByExample(ma);
         }
+        
+        //发送透传消息
+        sendMsgTraGroup(String.valueOf(form.getGid()));
 
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
     }
@@ -230,7 +249,6 @@ public class MsgServiceImpl implements IMsgService {
             msg.setCreateAt(new Date());
             msg.setMsgType(Long.valueOf(form.getMsgType()));
             msg.setStype(form.getRetype());
-            //msg.setCluId(Long.valueOf(form.getGid()));
             msg.setCluId(Long.valueOf(gidList[i]));
             msg.setUrl(form.getUrl());
             msg.setSelect1(form.getSelect1());
@@ -260,6 +278,9 @@ public class MsgServiceImpl implements IMsgService {
                 ma.setUseYn(true);
                 msgAccDao.insert(ma);
             }
+            
+            //发送透传消息
+            sendMsgTraGroup(gids);
     
           /*  // 极光推送
              PushParam param = new PushParam();
@@ -299,7 +320,6 @@ public class MsgServiceImpl implements IMsgService {
             ma.setCreateAt(new Date());
             ma.setMsgId(msg.getId());
             ma.setCluId(0L);
-            // ma.setReaded(MsgStatusEnum.UNREAD.getCode());
             ma.setUseYn(true);
             msgAccDao.insert(ma);
 
@@ -393,9 +413,102 @@ public class MsgServiceImpl implements IMsgService {
             ma.setCluId(form.getGid());
             msgAccDao.updateByExample(ma);
         }
-
         
+      //发送透传消息
+        sendMsgTraGroup(String.valueOf(form.getGid()));
+
         return new ResResult(null);
 
+    }
+    
+    /**
+     * 发送消息
+     * 
+     * @param targetType
+     *            消息投递者类型：users 用户, chatgroups 群组
+     * @param target
+     *            接收者ID 必须是数组,数组元素为用户ID或者群组ID
+     * @param msg
+     *            消息内容
+     * @param from
+     *            发送者
+     * @param ext
+     *            扩展字段
+     * 
+     * @return 请求响应
+     */
+    public static ObjectNode sendMessages(String targetType, ArrayNode target, ObjectNode msg,
+            ObjectNode ext) {
+
+        ObjectNode objectNode = factory.objectNode();
+
+        ObjectNode dataNode = factory.objectNode();
+
+        // check appKey format
+        if (!JerseyUtils.match("^(?!-)[0-9a-zA-Z\\-]+#[0-9a-zA-Z]+", APPKEY)) {
+            log.error("Bad format of Appkey: " + APPKEY);
+
+            objectNode.put("message", "Bad format of Appkey");
+
+            return objectNode;
+        }
+
+        // check properties that must be provided
+        if (!("users".equals(targetType) || "chatgroups".equals(targetType))) {
+            log.error("TargetType must be users or chatgroups .");
+
+            objectNode.put("message", "TargetType must be users or chatgroups .");
+
+            return objectNode;
+        }
+
+        try {
+            // 构造消息体
+            dataNode.put("target_type", targetType);
+            dataNode.put("target", target);
+            dataNode.put("msg", msg);
+//            dataNode.put("from", from);
+            dataNode.put("ext", ext);
+
+            JerseyWebTarget webTarget = EndPoints.MESSAGES_TARGET.resolveTemplate("org_name", APPKEY.split("#")[0]).resolveTemplate(
+                    "app_name", APPKEY.split("#")[1]);
+
+            objectNode = JerseyUtils.sendRequest(webTarget, dataNode, credential, HTTPMethod.METHOD_POST, null);
+
+            objectNode = (ObjectNode) objectNode.get("data");
+            for (int i = 0; i < target.size(); i++) {
+                String resultStr = objectNode.path(target.path(i).asText()).asText();
+                if ("success".equals(resultStr)) {
+                    log.error(String.format("Message has been send to user[%s] successfully .", target.path(i).asText()));
+                } else if (!"success".equals(resultStr)) {
+                    log.error(String.format("Message has been send to user[%s] failed .", target.path(i).asText()));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return objectNode;
+    }
+    
+    private void sendMsgTraGroup(String gids){
+        
+        Long vertion = optionLogDao.getMsgVertion();
+        
+        String targetTypeus = "chatgroups";
+        ObjectNode ext = factory.objectNode();
+        ArrayNode targetusers = factory.arrayNode();
+        
+        String[] gidList = gids.split(",");
+        for (int i = 0; i < gidList.length; i++) {
+            String gid = ClusterServiceImpl.getGroupId(Long.valueOf(gidList[i]));
+            targetusers.add(gid);
+        }
+     // 给群组发一条透传消息
+        ObjectNode cmdmsg = factory.objectNode();
+        cmdmsg.put("vertion", String.valueOf(vertion));
+        cmdmsg.put("type","cmd");
+        sendMessages(targetTypeus, targetusers, cmdmsg, ext);
     }
 }

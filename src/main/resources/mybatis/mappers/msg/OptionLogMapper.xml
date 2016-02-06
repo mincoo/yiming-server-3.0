@@ -355,4 +355,10 @@
       This element was generated on Sat Jan 30 20:32:53 CST 2016.
     -->
   </cache>
+  
+  <!-- 自定义方法 -->
+  <select id="getMsgVertion" resultType="java.lang.Long">
+      SELECT MAX(ol.ID) 
+        FROM `option_log` ol 
+  </select> 
 </mapper>
