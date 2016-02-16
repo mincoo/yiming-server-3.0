@@ -210,7 +210,7 @@ public class ClusterServiceImpl implements IClusterService {
 //            // 学生数
 //            // vo.setSnum(new Long(studentDao.countByGid(vo.getGid())));
 //
-            l.add(vo.toClusterUserSearchResult());
+            l.add(vo);
         }
         sr.setList(l);
 

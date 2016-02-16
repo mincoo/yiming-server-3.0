@@ -246,6 +246,7 @@ public class MsgServiceImpl implements IMsgService {
             Msg msg = new Msg();
             msg.setSenderId(form.getUid());
             msg.setContent(form.getContent());
+            msg.setContentType(new Long(0)); //0为班级消息
             msg.setCreateAt(new Date());
             msg.setMsgType(Long.valueOf(form.getMsgType()));
             msg.setStype(form.getRetype());
@@ -305,12 +306,13 @@ public class MsgServiceImpl implements IMsgService {
 
             Msg msg = new Msg();
             // TODO 发送者设置为0了
-            msg.setSenderId(0l);
+            //msg.setSenderId(0l);
             msg.setContent(od.getMessage());
+            msg.setContentType(new Long(1)); //1为校信消息
             msg.setCreateAt(new Date());
             msg.setMsgType(Long.valueOf(MsgTypeEnum.TXT.getCode()));
             // 获得学校的cluster
-            msg.setCluId(0l);
+            //msg.setCluId(0l);
             msg.setUrl(od.getImgUrl());
             msgDao.insert(msg);
 
@@ -319,7 +321,7 @@ public class MsgServiceImpl implements IMsgService {
             ma.setAccId(account.getId());
             ma.setCreateAt(new Date());
             ma.setMsgId(msg.getId());
-            ma.setCluId(0L);
+            //ma.setCluId(0L);
             ma.setUseYn(true);
             msgAccDao.insert(ma);
 

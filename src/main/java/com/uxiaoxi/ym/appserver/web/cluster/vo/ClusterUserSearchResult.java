@@ -20,6 +20,8 @@ public class ClusterUserSearchResult implements Serializable {
     private Long gid;
 
     private Long uid;
+    
+    private Long utype;
 
     private String sn;
 
@@ -185,6 +187,20 @@ public class ClusterUserSearchResult implements Serializable {
      */
     public void setMsgflg(Long msgflg) {
         this.msgflg = msgflg;
+    }
+
+    /**
+     * @return the utype
+     */
+    public Long getUtype() {
+        return utype;
+    }
+
+    /**
+     * @param utype the utype to set
+     */
+    public void setUtype(Long utype) {
+        this.utype = utype;
     }
 
 }

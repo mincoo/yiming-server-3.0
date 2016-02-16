@@ -34,19 +34,20 @@ public class ClusterUserSearchResultVO extends ClusterUserSearchResult implement
         this.id = id;
     }
     
-    public ClusterUserSearchResult toClusterUserSearchResult(){
-        ClusterUserSearchResult c = new ClusterUserSearchResult();
-        c.setGid(this.getGid());
-        c.setName(this.getName());
-        c.setUid(this.getUid());
-        c.setSn(this.getSn());
-        c.setSchool(this.getSchool());
-        c.setProvince(this.getProvince());
-        c.setCity(this.getCity());
-        c.setDistrict(this.getDistrict());
-        c.setFace(this.getFace());
-        c.setMsgflg(this.getMsgflg());
-        return c;
-    }
+//    public ClusterUserSearchResult toClusterUserSearchResult(){
+//        ClusterUserSearchResult c = new ClusterUserSearchResult();
+//        c.setGid(this.getGid());
+//        c.setName(this.getName());
+//        c.setUid(this.getUid());
+//        c.setUtype(this.getUtype());
+//        c.setSn(this.getSn());
+//        c.setSchool(this.getSchool());
+//        c.setProvince(this.getProvince());
+//        c.setCity(this.getCity());
+//        c.setDistrict(this.getDistrict());
+//        c.setFace(this.getFace());
+//        c.setMsgflg(this.getMsgflg());
+//        return c;
+//    }
 
 }

@@ -349,6 +349,7 @@
                c.`province`,
                c.`city`,
                c.`district`,
+               t.`acc_type` as `utype`,
                c.`face`,
                IFNULL(t.`msg_flg`,"0") AS msgflg 
           FROM `cluster_user` t,`cluster` c 
@@ -368,6 +369,7 @@
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="utype" jdbcType="BIGINT" property="utype" />
     <result column="face" jdbcType="VARCHAR" property="face" />
     <result column="msgflg" jdbcType="VARCHAR" property="msgflg" />
   </resultMap>
