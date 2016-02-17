@@ -3,6 +3,7 @@
  */
 package com.uxiaoxi.ym.appserver.biz.account.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -89,6 +90,25 @@ public class AccountServiceImpl implements IAccountService {
     public Account getAccountById(Long userId) {
         // TODO 做缓存策略
         return accountDao.selectByKey(userId);
+    }
+    
+    @Override
+    public List<AccountVO> getAccountByNId(String nids) {
+        
+        List<AccountVO> re = new ArrayList<AccountVO>();
+        
+        String[] nidList = nids.split(",");
+        
+        for(int i=0;i<nidList.length;i++){
+            Account account = accountDao.selectByKey(Long.valueOf(nidList[i]));
+            if (account != null) {
+                AccountVO vo = new AccountVO(account);
+                vo.setToken("");
+                re.add(vo);
+            }
+        }
+        
+        return re;
     }
 
     @Override

@@ -3,6 +3,8 @@
  */
 package com.uxiaoxi.ym.appserver.biz.account;
 
+import java.util.List;
+
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.web.account.form.ChangePWDForm;
 import com.uxiaoxi.ym.appserver.web.account.form.FeedbackForm;
@@ -11,6 +13,7 @@ import com.uxiaoxi.ym.appserver.web.account.form.MsgSwitchForm;
 import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
+import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 
 /**
@@ -41,6 +44,15 @@ public interface IAccountService {
      * @return Account
      */
     public Account getAccountById(Long userId);
+    
+    /**
+     * 查询指定用户信息
+     * 
+     * @param nids 
+     * @return List<Account>
+     */
+    public List<AccountVO> getAccountByNId(String nids);
+    
 
     /**
      * 

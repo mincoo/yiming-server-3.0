@@ -3,6 +3,8 @@
  */
 package com.uxiaoxi.ym.appserver.web.account.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
@@ -117,6 +119,27 @@ public class AccountController {
             AccountVO avo = new AccountVO(account);
             return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
                     avo);
+        } else {
+            return new ResResult(StatusConst.FAILURE, StatusConst.STRFAILURE,
+                    null);
+        }
+
+    }
+    
+    /**
+     * 
+     * 获取其他用户的信息
+     * 
+     * @param uid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getuserinfo")
+    public ResResult getUsersInfoJson(String nids) {
+        List<AccountVO> accounts = accountService.getAccountByNId(nids);
+        if (accounts != null) {
+            return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
+                    accounts);
         } else {
             return new ResResult(StatusConst.FAILURE, StatusConst.STRFAILURE,
                     null);
