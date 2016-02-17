@@ -51,7 +51,7 @@ public interface IAccountService {
      * @param nids 
      * @return List<Account>
      */
-    public List<AccountVO> getAccountByNId(String nids);
+    public ResResult getAccountByNId(String nids);
     
 
     /**

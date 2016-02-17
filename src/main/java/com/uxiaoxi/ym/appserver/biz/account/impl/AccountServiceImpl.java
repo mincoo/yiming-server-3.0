@@ -38,6 +38,7 @@ import com.uxiaoxi.ym.appserver.web.account.form.RegisterForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
+import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
@@ -93,7 +94,7 @@ public class AccountServiceImpl implements IAccountService {
     }
     
     @Override
-    public List<AccountVO> getAccountByNId(String nids) {
+    public ResResult getAccountByNId(String nids) {
         
         List<AccountVO> re = new ArrayList<AccountVO>();
         
@@ -108,7 +109,12 @@ public class AccountServiceImpl implements IAccountService {
             }
         }
         
-        return re;
+        ListResult<AccountVO> sr = new ListResult<AccountVO>();
+        sr.setList(re);
+        sr.setSize(Long.valueOf(re.size()));
+
+        return new ResResult(sr);
+        
     }
 
     @Override

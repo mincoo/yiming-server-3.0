@@ -22,6 +22,8 @@ import com.uxiaoxi.ym.appserver.web.account.form.MsgSwitchForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
+import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResult;
+import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 
@@ -136,15 +138,7 @@ public class AccountController {
     @ResponseBody
     @RequestMapping(value = "/getuserinfo")
     public ResResult getUsersInfoJson(String nids) {
-        List<AccountVO> accounts = accountService.getAccountByNId(nids);
-        if (accounts != null) {
-            return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
-                    accounts);
-        } else {
-            return new ResResult(StatusConst.FAILURE, StatusConst.STRFAILURE,
-                    null);
-        }
-
+        return accountService.getAccountByNId(nids);
     }
     
     /**
