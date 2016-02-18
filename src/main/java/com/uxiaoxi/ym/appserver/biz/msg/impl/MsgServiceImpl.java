@@ -46,6 +46,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTypeEnum;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
 import com.uxiaoxi.ym.easemob.comm.Constants;
@@ -120,6 +121,7 @@ public class MsgServiceImpl implements IMsgService {
         ListResult<MsgListVO> sr = new ListResult<MsgListVO>();
 
         sr.setList(list);
+        sr.setSize(Long.valueOf(list.size()));
 
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
 
@@ -156,6 +158,24 @@ public class MsgServiceImpl implements IMsgService {
         vo.setSum0(Long.valueOf(list.size() - sum1 - sum2));
 
         return new ResResult(vo);
+    }
+    
+    @Override
+    public ResResult getOAList(Long uid) {
+        
+        List<MsgOAListVO> list = msgDao.getoalist(uid);
+
+        if (list == null) {
+            list = new ArrayList<MsgOAListVO>();
+        }
+
+        ListResult<MsgOAListVO> sr = new ListResult<MsgOAListVO>();
+        
+        sr.setSize(Long.valueOf(list.size()));
+        sr.setList(list);
+
+        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
+
     }
 
     @Override
@@ -496,7 +516,7 @@ public class MsgServiceImpl implements IMsgService {
     
     private void sendMsgTraGroup(String gids){
         
-        Long vertion = optionLogDao.getMsgVertion();
+        //Long vertion = optionLogDao.getMsgVertion();
         
         String targetTypeus = "chatgroups";
         ObjectNode ext = factory.objectNode();
@@ -509,8 +529,9 @@ public class MsgServiceImpl implements IMsgService {
         }
      // 给群组发一条透传消息
         ObjectNode cmdmsg = factory.objectNode();
-        cmdmsg.put("vertion", String.valueOf(vertion));
+        //cmdmsg.put("vertion", String.valueOf(vertion));
         cmdmsg.put("type","cmd");
+        cmdmsg.put("action","action1");
         sendMessages(targetTypeus, targetusers, cmdmsg, ext);
     }
 }

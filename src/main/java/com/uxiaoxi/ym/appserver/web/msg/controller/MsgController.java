@@ -66,4 +66,10 @@ public class MsgController {
     public ResResult getReadState(MsgActionForm form) {
         return msgService.msgAction(form);
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/getoalist")
+    public ResResult getOAListJson(Long uid) {
+        return msgService.getOAList(uid);
+    }
 }

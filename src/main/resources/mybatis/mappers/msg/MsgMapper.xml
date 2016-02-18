@@ -387,4 +387,16 @@
   </cache>
   
   
+  <select id="getoalist" parameterType="java.lang.Long" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO">
+        SELECT DISTINCT
+             oa.`id` AS `oaid`, 
+             oa.`name` AS `name`, 
+             oa.`face` AS `face`,
+             
+        FROM official_acc_user oau, official_accounts oa , msg m 
+         WHERE oau.`off_acc_id` = oa.`id`
+           AND oau.`acc_id` = #{uid,jdbcType=BIGINT}
+           AND t.`msg_id` IN (SELECT DISTINCT(ol.`data_id`) AS `msgid` FROM option_log ol WHERE ol.`id` > #{version,jdbcType=BIGINT})
+  </select> 
+  
 </mapper>

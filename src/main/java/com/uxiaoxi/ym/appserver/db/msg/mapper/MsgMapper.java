@@ -2,7 +2,11 @@ package com.uxiaoxi.ym.appserver.db.msg.mapper;
 
 import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgExample;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface MsgMapper {
@@ -74,4 +78,7 @@ public interface MsgMapper {
      * @mbggenerated  Sat Jan 30 20:07:25 CST 2016
      */
     int updateByPrimaryKey(Msg record);
+    
+    
+    List<MsgOAListVO> getoalist(Long uid);
 }

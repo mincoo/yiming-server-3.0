@@ -76,4 +76,10 @@ public interface IMsgService {
      * @param form
      */
     public ResResult tagChange(MsgTagChangeForm form);
+    
+    /**
+     * @param uid
+     * @return
+     */
+    public ResResult getOAList(Long uid);
 }
