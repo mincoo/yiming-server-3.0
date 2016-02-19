@@ -169,6 +169,11 @@ public class MsgServiceImpl implements IMsgService {
             list = new ArrayList<MsgOAListVO>();
         }
 
+        for(MsgOAListVO vo : list){
+            
+        }
+        
+        
         ListResult<MsgOAListVO> sr = new ListResult<MsgOAListVO>();
         
         sr.setSize(Long.valueOf(list.size()));

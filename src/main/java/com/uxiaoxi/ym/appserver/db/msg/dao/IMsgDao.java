@@ -20,4 +20,10 @@ public interface IMsgDao  extends IBaseSupport<Msg> {
      * @return
      */
     public List<MsgOAListVO> getoalist(Long uid);
+    
+    /**
+     * @param uid
+     * @return
+     */
+    public List<MsgOAListVO> getnewdata(Long uid);
 }

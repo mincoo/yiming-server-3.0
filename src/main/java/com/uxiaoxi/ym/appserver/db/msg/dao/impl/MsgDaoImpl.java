@@ -28,5 +28,9 @@ public class MsgDaoImpl extends BaseSupport<Msg, MsgMapper> implements IMsgDao {
         return mapper.getoalist(uid);
     }
 
-
+    @Override
+    public List<MsgOAListVO> getnewdata(Long uid) {
+        MsgMapper mapper = this.getSqlSession().getMapper(MsgMapper.class);
+        return mapper.getnewdata(uid);
+    }
 }

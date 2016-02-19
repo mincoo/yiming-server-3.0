@@ -81,4 +81,6 @@ public interface MsgMapper {
     
     
     List<MsgOAListVO> getoalist(Long uid);
+    
+    List<MsgOAListVO> getnewdata(Long uid);
 }
