@@ -306,9 +306,10 @@
     -->
   </cache>
   
-        <!-- 自己定义方法 -->
-  <select id="selectRemark" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.RemarkExample" resultType="java.lang.String">
-        SELECT remark
+  <!-- 自己定义方法 -->
+  <select id="selectRemark" parameterType="com.uxiaoxi.ym.appserver.db.cluster.dto.RemarkExample" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
           FROM `remark` 
         <if test="_parameter != null">
           <include refid="Example_Where_Clause" />

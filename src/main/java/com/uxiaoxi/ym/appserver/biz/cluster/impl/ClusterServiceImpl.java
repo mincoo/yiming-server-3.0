@@ -383,7 +383,10 @@ public class ClusterServiceImpl implements IClusterService {
         for (ClusterUserListVO vo : tlist) {
             String remark = "";
             if(vo.getUid()!=null){
-                remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+                Remark rm = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+                if (rm != null){
+                    remark = rm.getRemark();
+                }
             }
             vo.setRemark(remark);
             lt.add(vo); 
@@ -391,7 +394,11 @@ public class ClusterServiceImpl implements IClusterService {
         
         List<ClusterUserListVO> lp = new ArrayList<ClusterUserListVO>();
         for (ClusterUserListVO vo : plist) {
-            String remark = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            String remark = "";
+            Remark rm = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            if (rm != null){
+                remark = rm.getRemark();
+            }
             String childname = clusterUserDao.selectChildName(vo.getUid(),form.getGid()); 
             vo.setRemark(remark);
             vo.setChildname(childname);
@@ -436,12 +443,14 @@ public class ClusterServiceImpl implements IClusterService {
         record.setAccIdObj(form.getNid());
         record.setCluId(form.getGid());
         record.setRemark(form.getRemark());
-        record.setCreateDt(new Date());
         
-        String remark = remarkDao.selectRemark(form.getUid(), form.getNid(), form.getGid());
-        if(remark !=null){
-            remarkDao.updateByPrimaryKeySelective(record);
+        Remark rm = remarkDao.selectRemark(form.getUid(), form.getNid(), form.getGid());
+        if(rm !=null){
+            record.setId(rm.getId());
+            record.setCreateDt(rm.getCreateDt());;
+            remarkDao.updateByPrimaryKey(record);
         }else{
+            record.setCreateDt(new Date());
             remarkDao.insert(record); 
         }
 

@@ -80,5 +80,5 @@ public interface RemarkMapper {
      * @param
      * @return
      */
-    String selectRemark(RemarkExample example);
+    Remark selectRemark(RemarkExample example);
 }

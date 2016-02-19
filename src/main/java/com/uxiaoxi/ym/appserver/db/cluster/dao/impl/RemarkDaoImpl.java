@@ -20,7 +20,7 @@ import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
 public class RemarkDaoImpl extends BaseSupport<Remark, RemarkMapper>
         implements IRemarkDao {
     
-    public String selectRemark(Long uid,Long uidobj,Long gid){
+    public Remark selectRemark(Long uid,Long uidobj,Long gid){
         RemarkMapper mapper = this.getSqlSession().getMapper(RemarkMapper.class);
         
         RemarkExample example = new RemarkExample();
