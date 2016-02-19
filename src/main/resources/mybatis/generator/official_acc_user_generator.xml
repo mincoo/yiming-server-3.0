@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration  
+PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 其中classPathEntry 是引用的jdbc的类路径 -->
+    <classPathEntry
+        location="D:\repo\mysql\mysql-connector-java\5.1.23\mysql-connector-java-5.1.23.jar" />
+    <!-- commentGenerator 是用来除去时间信息的，这在配合类似subversion的代码管理工具时使用很有效，因为可以减少没有必要的注释迁入 -->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.CachePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+        <plugin type ="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://123.57.19.82:3306/uxiaoxi3"
+            userId="root" password="sjmd">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- Bean路径设置 -->
+        <javaModelGenerator targetPackage="com.uxiaoxi.ym.appserver.db.msg.dto"
+            targetProject="yiming-server-3.0\src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!-- 映射文件XML路径设置 -->
+        <sqlMapGenerator targetPackage="mybatis.mappers.msg"
+            targetProject="yiming-server-3.0\src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- 对应的Mapper路径设置 -->
+        <javaClientGenerator type="XMLMAPPER"
+            targetPackage="com.uxiaoxi.ym.appserver.db.msg.mapper" targetProject="yiming-server-3.0\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!-- 数据库表 与对应的Bean设置 -->
+        <!-- 以上已经生成 -->
+        <!-- <table tableName="msg_type" domainObjectName="MsgType"></table> -->
+        <!-- <table tableName="msg_acc" domainObjectName="MsgAcc"></table> -->
+        <table tableName="official_acc_user" domainObjectName="OfficialAccUser">
+            <generatedKey identity="true" column="ID"  sqlStatement="SELECT LAST_INSERT_ID()" />
+        </table>
+
+    </context>
+
+</generatorConfiguration>
