@@ -14,8 +14,6 @@ public class MsgOAListVO {
 
     private Long oaid;
 
-    private Long uid;
-
     private Integer type;
 
     private String url;
@@ -54,20 +52,6 @@ public class MsgOAListVO {
      */
     public void setOaid(Long oaid) {
         this.oaid = oaid;
-    }
-
-    /**
-     * @return the uid
-     */
-    public Long getUid() {
-        return uid;
-    }
-
-    /**
-     * @param uid the uid to set
-     */
-    public void setUid(Long uid) {
-        this.uid = uid;
     }
 
     /**

@@ -11,6 +11,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
@@ -82,4 +83,10 @@ public interface IMsgService {
      * @return
      */
     public ResResult getOAList(Long uid);
+    
+    /**
+     * @param form
+     * @return
+     */
+    public ResResult getOAData(MsgOADataForm form);
 }

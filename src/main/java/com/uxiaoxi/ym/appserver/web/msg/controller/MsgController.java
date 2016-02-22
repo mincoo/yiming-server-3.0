@@ -17,6 +17,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 
 /**
@@ -71,5 +72,11 @@ public class MsgController {
     @RequestMapping(value = "/getoalist")
     public ResResult getOAListJson(Long uid) {
         return msgService.getOAList(uid);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/getoadata")
+    public ResResult getOADataJson(MsgOADataForm form) {
+        return msgService.getOAData(form);
     }
 }

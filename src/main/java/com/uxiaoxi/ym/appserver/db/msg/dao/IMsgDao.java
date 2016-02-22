@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
 
 /**
@@ -25,5 +26,13 @@ public interface IMsgDao  extends IBaseSupport<Msg> {
      * @param uid
      * @return
      */
-    public List<MsgOAListVO> getnewdata(Long uid);
+    public MsgOAListVO getnewdata(Long uid);
+    
+    /**
+     * @param form
+     * @return
+     */
+    public List<MsgOAListVO> getoadata(MsgOADataForm form);
+    
+    
 }

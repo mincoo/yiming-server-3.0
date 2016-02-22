@@ -42,6 +42,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
@@ -123,7 +124,7 @@ public class MsgServiceImpl implements IMsgService {
         sr.setList(list);
         sr.setSize(Long.valueOf(list.size()));
 
-        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
+        return new ResResult(sr);
 
     }
 
@@ -164,23 +165,55 @@ public class MsgServiceImpl implements IMsgService {
     public ResResult getOAList(Long uid) {
         
         List<MsgOAListVO> list = msgDao.getoalist(uid);
+        
+        List<MsgOAListVO> retList = new ArrayList<MsgOAListVO>();
 
         if (list == null) {
             list = new ArrayList<MsgOAListVO>();
         }
 
         for(MsgOAListVO vo : list){
-            
+            MsgOAListVO lastMsg = msgDao.getnewdata(vo.getOaid());
+            if(lastMsg!=null){
+                vo.setMid(lastMsg.getMid());
+                vo.setContent(lastMsg.getContent());
+                vo.setStime(lastMsg.getStime());
+                vo.setType(lastMsg.getType());
+                vo.setUrl(lastMsg.getUrl());
+            }
+            retList.add(vo);
         }
-        
         
         ListResult<MsgOAListVO> sr = new ListResult<MsgOAListVO>();
         
         sr.setSize(Long.valueOf(list.size()));
+        sr.setList(retList);
+
+        return new ResResult(sr);
+
+    }
+    
+    @Override
+    public ResResult getOAData(MsgOADataForm form) {
+
+        // 取数据
+        List<MsgOAListVO> list = msgDao.getoadata(form);
+
+        if(list==null || list.size()==0){
+            list = new ArrayList<MsgOAListVO>();
+        }
+        
+        ListResult<MsgOAListVO> sr = new ListResult<MsgOAListVO>();
+        
+        if(list.size() > 0) {
+            sr.setLast(list.get(list.size()-1).getMid());
+        } else {
+            sr.setLast(form.getStart());
+        }
+        
         sr.setList(list);
 
-        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
-
+        return new ResResult(sr);
     }
 
     @Override

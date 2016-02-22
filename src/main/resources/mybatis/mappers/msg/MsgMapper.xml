@@ -397,13 +397,30 @@
            AND oau.`acc_id` = #{uid,jdbcType=BIGINT}
   </select> 
   
-    <select id="getnewdata" parameterType="java.lang.Long" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO">
-
-         SELECT MAX(m.id) AS mid,m.msg_type AS type,m.url AS url,m.content AS content,DATE_FORMAT(m.`create_at`,'%Y-%m-%d %k:%i') AS
+  <select id="getnewdata" parameterType="java.lang.Long" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO">
+         SELECT m.id AS mid,m.msg_type AS type,m.url AS url,m.content AS content,DATE_FORMAT(m.`create_at`,'%Y-%m-%d %k:%i') AS
             `stime`
           FROM msg m 
           WHERE m.content_type = #{oaid,jdbcType=BIGINT}
-             
+          GROUP BY m.id DESC
+          LIMIT 1
   </select> 
+  
+    <select id="getoadata" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO">
+         SELECT m.id AS mid,m.msg_type AS type,m.url AS url,m.content AS content,DATE_FORMAT(m.`create_at`,'%Y-%m-%d %k:%i') AS
+            `stime`,oa.`id` AS `oaid`, 
+             oa.`name` AS `name`, 
+             oa.`face` AS `face`
+          FROM msg m, official_accounts oa 
+          WHERE m.content_type = oa.`id`
+          <if test="start != null and start !=0 " >
+           <![CDATA[      
+               AND m.`id` < #{start,jdbcType=BIGINT}
+           ]]>
+         </if>
+           AND m.content_type = #{oaid,jdbcType=BIGINT}
+          GROUP BY m.id DESC
+          LIMIT 0,10
+  </select>
   
 </mapper>

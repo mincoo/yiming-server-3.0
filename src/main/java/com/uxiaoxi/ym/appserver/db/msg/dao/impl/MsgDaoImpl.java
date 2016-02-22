@@ -12,6 +12,7 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.db.msg.mapper.MsgAccMapper;
 import com.uxiaoxi.ym.appserver.db.msg.mapper.MsgMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
 
 /**
@@ -29,8 +30,14 @@ public class MsgDaoImpl extends BaseSupport<Msg, MsgMapper> implements IMsgDao {
     }
 
     @Override
-    public List<MsgOAListVO> getnewdata(Long uid) {
+    public MsgOAListVO getnewdata(Long uid) {
         MsgMapper mapper = this.getSqlSession().getMapper(MsgMapper.class);
         return mapper.getnewdata(uid);
+    }
+    
+    @Override
+    public List<MsgOAListVO> getoadata(MsgOADataForm form) {
+        MsgMapper mapper = this.getSqlSession().getMapper(MsgMapper.class);
+        return mapper.getoadata(form);
     }
 }
