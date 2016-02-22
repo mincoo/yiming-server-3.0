@@ -3,6 +3,8 @@
  */
 package com.uxiaoxi.ym.appserver.web.msg.vo;
 
+import java.util.List;
+
 /**
  * @author renhao
  *
@@ -21,10 +23,24 @@ public class MsgOAListVO {
     private String content;
 
     private String name;
+    
+    private String wechat;
+    
+    private String phone;
+    
+    private String province;
+    
+    private String city;
+    
+    private String district;
 
     private String stime;
 
     private String face;
+    
+    private Long ssize;
+    
+    private List<MsgExplainInfo> slist;
 
     /**
      * @return the mid
@@ -136,6 +152,104 @@ public class MsgOAListVO {
      */
     public void setFace(String face) {
         this.face = face;
+    }
+
+    /**
+     * @return the wechat
+     */
+    public String getWechat() {
+        return wechat;
+    }
+
+    /**
+     * @param wechat the wechat to set
+     */
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
+
+    /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * @param phone the phone to set
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * @return the province
+     */
+    public String getProvince() {
+        return province;
+    }
+
+    /**
+     * @param province the province to set
+     */
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    /**
+     * @return the city
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * @param city the city to set
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * @return the district
+     */
+    public String getDistrict() {
+        return district;
+    }
+
+    /**
+     * @param district the district to set
+     */
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    /**
+     * @return the ssize
+     */
+    public Long getSsize() {
+        return ssize;
+    }
+
+    /**
+     * @param ssize the ssize to set
+     */
+    public void setSsize(Long ssize) {
+        this.ssize = ssize;
+    }
+
+    /**
+     * @return the slist
+     */
+    public List<MsgExplainInfo> getSlist() {
+        return slist;
+    }
+
+    /**
+     * @param slist the slist to set
+     */
+    public void setSlist(List<MsgExplainInfo> slist) {
+        this.slist = slist;
     }
 
 

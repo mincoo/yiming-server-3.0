@@ -6,7 +6,6 @@ package com.uxiaoxi.ym.appserver.biz.cluster.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.uxiaoxi.ym.appserver.biz.cluster.IClusterService;
@@ -383,7 +381,7 @@ public class ClusterServiceImpl implements IClusterService {
         for (ClusterUserListVO vo : tlist) {
             String remark = "";
             if(vo.getUid()!=null){
-                Remark rm = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+                Remark rm = remarkDao.selectRemark(form.getUid(),vo.getUid());
                 if (rm != null){
                     remark = rm.getRemark();
                 }
@@ -395,7 +393,7 @@ public class ClusterServiceImpl implements IClusterService {
         List<ClusterUserListVO> lp = new ArrayList<ClusterUserListVO>();
         for (ClusterUserListVO vo : plist) {
             String remark = "";
-            Remark rm = remarkDao.selectRemark(form.getUid(),vo.getUid(),form.getGid());
+            Remark rm = remarkDao.selectRemark(form.getUid(),vo.getUid());
             if (rm != null){
                 remark = rm.getRemark();
             }
@@ -441,10 +439,9 @@ public class ClusterServiceImpl implements IClusterService {
         Remark record = new Remark();
         record.setAccId(form.getUid());
         record.setAccIdObj(form.getNid());
-        record.setCluId(form.getGid());
         record.setRemark(form.getRemark());
         
-        Remark rm = remarkDao.selectRemark(form.getUid(), form.getNid(), form.getGid());
+        Remark rm = remarkDao.selectRemark(form.getUid(), form.getNid());
         if(rm !=null){
             record.setId(rm.getId());
             record.setCreateDt(rm.getCreateDt());;

@@ -13,6 +13,6 @@ import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
  */
 public interface IRemarkDao extends IBaseSupport<Remark> {
     
-    public Remark selectRemark(Long uid,Long uidobj,Long gid);
+    public Remark selectRemark(Long uid,Long uidobj);
 
 }
