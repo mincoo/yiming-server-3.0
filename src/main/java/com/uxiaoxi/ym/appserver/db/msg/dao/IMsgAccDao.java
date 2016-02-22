@@ -55,4 +55,9 @@ public interface IMsgAccDao extends IBaseSupport<MsgAcc>{
      */
     public Long getSum(Long mid,Long type);
     
+    /**
+     * @param uid
+     */
+    public Long getLastVer(Long uid);
+    
 }

@@ -388,6 +388,13 @@
            <!-- AND t.`msg_id` IN (SELECT DISTINCT(ol.`data_id`) AS `msgid` FROM option_log ol WHERE ol.`id` > #{version,jdbcType=BIGINT}) -->
   </select> 
   
+      <select id="getLastVer" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT MAX(tv.`version`) AS `version` 
+        FROM msg_acc tv 
+        WHERE tv.acc_id = #{uid,jdbcType=BIGINT}
+            AND tv.use_yn = 1  
+  </select> 
+  
 <!--      <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
         SELECT 
         <include refid="Base_Msg_List" />

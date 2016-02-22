@@ -46,6 +46,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgGetListResult;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgTypeEnum;
@@ -119,11 +120,12 @@ public class MsgServiceImpl implements IMsgService {
             l.add(md);
         }
 
-        ListResult<MsgListVO> sr = new ListResult<MsgListVO>();
-
+        //ListResult<MsgListVO> sr = new ListResult<MsgListVO>();
+        MsgGetListResult sr = new MsgGetListResult();
+        
         sr.setList(list);
         sr.setSize(Long.valueOf(list.size()));
-
+        sr.setVersion(msgAccDao.getLastVer(form.getUid()));
         return new ResResult(sr);
 
     }

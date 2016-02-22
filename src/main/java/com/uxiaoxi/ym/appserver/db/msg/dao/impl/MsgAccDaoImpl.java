@@ -72,4 +72,10 @@ public class MsgAccDaoImpl extends BaseSupport<MsgAcc, MsgAccMapper> implements 
         return mapper.getSum(map);
     };
     
+    @Override
+    public Long getLastVer(Long uid){
+        MsgAccMapper mapper = this.getSqlSession().getMapper(MsgAccMapper.class);
+        return mapper.getLastVer(uid);
+    };
+    
 }

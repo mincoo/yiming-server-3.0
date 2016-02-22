@@ -93,4 +93,6 @@ public interface MsgAccMapper {
     void msgAction(MsgActionForm form);
     
     Long getSum(Map<String,Object> map);
+    
+    Long getLastVer(Long uid);
 }

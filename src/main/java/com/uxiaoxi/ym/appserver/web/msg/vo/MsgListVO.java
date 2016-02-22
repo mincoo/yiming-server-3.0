@@ -46,8 +46,6 @@ public class MsgListVO {
     
     private String option;
     
-    private String version;
-
 
     /**
      * @return the option
@@ -306,20 +304,6 @@ public class MsgListVO {
      */
     public void setSum0(Long sum0) {
         this.sum0 = sum0;
-    }
-
-    /**
-     * @return the version
-     */
-    public String getVersion() {
-        return version;
-    }
-
-    /**
-     * @param version the version to set
-     */
-    public void setVersion(String version) {
-        this.version = version;
     }
 
 }
