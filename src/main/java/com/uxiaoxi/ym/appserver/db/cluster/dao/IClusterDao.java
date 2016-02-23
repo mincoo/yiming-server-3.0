@@ -8,8 +8,6 @@ import java.util.Map;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
 import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
-import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterByGidVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
 
 /**
@@ -19,18 +17,6 @@ import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
  */
 public interface IClusterDao extends IBaseSupport<Cluster> {
 
-//    /**
-//     * @param form
-//     * @return
-//     */
-//    public List<ClusterVO> searchByName(ClusterSearchForm form);
-//    
-    /**
-     * @param form
-     * @return
-     */
-    public ClusterByGidVO searchByGid(ClusterSearchForm form);
-    
     /**
      * @param map
      * @return

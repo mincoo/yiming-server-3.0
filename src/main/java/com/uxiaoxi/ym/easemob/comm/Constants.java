@@ -1,8 +1,5 @@
 package com.uxiaoxi.ym.easemob.comm;
 
-import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
-
-
 /**
  * Constants
  * 

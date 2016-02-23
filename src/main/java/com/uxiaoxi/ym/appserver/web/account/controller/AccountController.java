@@ -3,8 +3,6 @@
  */
 package com.uxiaoxi.ym.appserver.web.account.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
@@ -22,8 +20,6 @@ import com.uxiaoxi.ym.appserver.web.account.form.MsgSwitchForm;
 import com.uxiaoxi.ym.appserver.web.account.form.ResetPWDForm;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountUpdateVO;
 import com.uxiaoxi.ym.appserver.web.account.vo.AccountVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResult;
-import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 

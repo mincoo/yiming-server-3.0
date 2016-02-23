@@ -18,8 +18,6 @@ public class ClusterUserListForm {
     @NotNull
     private Long gid;
     
-//    private Long start;
-
     /**
      * @return the uid
      */
@@ -48,17 +46,4 @@ public class ClusterUserListForm {
         this.gid = gid;
     }
 
-//    /**
-//     * @return the start
-//     */
-//    public Long getStart() {
-//        return start;
-//    }
-//
-//    /**
-//     * @param start the start to set
-//     */
-//    public void setStart(Long start) {
-//        this.start = start;
-//    }
 }

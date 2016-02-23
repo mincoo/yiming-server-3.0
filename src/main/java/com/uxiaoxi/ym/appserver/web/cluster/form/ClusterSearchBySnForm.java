@@ -1,7 +1,9 @@
 /**
- * ClusterSearchForm.java
+ * ClusterSearchBySnForm.java
  */
 package com.uxiaoxi.ym.appserver.web.cluster.form;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author zoujy
@@ -10,36 +12,21 @@ package com.uxiaoxi.ym.appserver.web.cluster.form;
  */
 public class ClusterSearchBySnForm {
 
+    @NotNull
     private String sn;
     
-    private Long start;
-
     /**
-     * @return the start
+     * @return the sn
      */
-    public Long getStart() {
-        return start;
+    public String getSn() {
+        return sn;
     }
 
     /**
-     * @param start the start to set
+     * @param sn the sn to set
      */
-    public void setStart(Long start) {
-        this.start = start;
+    public void setSn(String sn) {
+        this.sn = sn;
     }
-
-	/**
-	 * @return the sn
-	 */
-	public String getSn() {
-		return sn;
-	}
-
-	/**
-	 * @param sn the sn to set
-	 */
-	public void setSn(String sn) {
-		this.sn = sn;
-	}
 
 }

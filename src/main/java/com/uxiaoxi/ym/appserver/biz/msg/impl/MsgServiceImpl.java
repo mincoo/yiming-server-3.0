@@ -237,29 +237,29 @@ public class MsgServiceImpl implements IMsgService {
         msgAccDao.updateByExample(record);
         
         
-        OptionLog re = new OptionLog();
-        re.setDataId(form.getMid());
-        re.setOptionType("D");
-        re.setDataAfter(record.toString());
-        re.setCreateAt(new Date());
-        optionLogDao.insert(re);
+//        OptionLog re = new OptionLog();
+//        re.setDataId(form.getMid());
+//        re.setOptionType("D");
+//        re.setDataAfter(record.toString());
+//        re.setCreateAt(new Date());
+//        optionLogDao.insert(re);
         
-        // 找出该群组的所有用户
-        List<ClusterUser> userlist = clusterUserDao.selectByGid(form.getGid());
-
-        // 插入msg_acc表
-        for (ClusterUser cu : userlist) {
-            // 插入msg_acc表
-            MsgAcc ma = new MsgAcc();
-            ma.setAccId(cu.getAccId());
-            ma.setMsgId(form.getMid());
-            ma.setVersion(re.getId());
-            ma.setCluId(form.getGid());
-            msgAccDao.updateByExample(ma);
-        }
-        
-        //发送透传消息
-        sendMsgTraGroup(String.valueOf(form.getGid()));
+//        // 找出该群组的所有用户
+//        List<ClusterUser> userlist = clusterUserDao.selectByGid(form.getGid());
+//
+//        // 插入msg_acc表
+//        for (ClusterUser cu : userlist) {
+//            // 插入msg_acc表
+//            MsgAcc ma = new MsgAcc();
+//            ma.setAccId(cu.getAccId());
+//            ma.setMsgId(form.getMid());
+//            ma.setVersion(re.getId());
+//            ma.setCluId(form.getGid());
+//            msgAccDao.updateByExample(ma);
+//        }
+//        
+//        //发送透传消息
+//        sendMsgTraGroup(String.valueOf(form.getGid()));
 
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
     }
@@ -483,7 +483,7 @@ public class MsgServiceImpl implements IMsgService {
         }
         
       //发送透传消息
-        sendMsgTraGroup(String.valueOf(form.getGid()));
+       // sendMsgTraGroup(String.valueOf(form.getGid()));
 
         return new ResResult(null);
 

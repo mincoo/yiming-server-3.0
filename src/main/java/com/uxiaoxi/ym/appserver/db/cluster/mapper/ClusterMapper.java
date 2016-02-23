@@ -3,8 +3,6 @@ package com.uxiaoxi.ym.appserver.db.cluster.mapper;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterExample;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
-import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchForm;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterByGidVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
 
 import java.util.List;
@@ -82,12 +80,6 @@ public interface ClusterMapper {
      */
     int updateByPrimaryKey(Cluster record);
 
-    /**
-     * @param form
-     * @return
-     */
-    ClusterByGidVO searchByGid(ClusterSearchForm form);
-    
     /**
      * @param map
      * @return

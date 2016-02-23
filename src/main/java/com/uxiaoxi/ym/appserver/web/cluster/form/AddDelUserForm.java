@@ -21,8 +21,6 @@ public class AddDelUserForm {
     @NotNull
     private Long nid;
     
-    private Integer type;
-
     /**
      * @return the uid
      */
@@ -64,19 +62,5 @@ public class AddDelUserForm {
     public void setNid(Long nid) {
         this.nid = nid;
     }
-
-	/**
-	 * @return the type
-	 */
-	public Integer getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(Integer type) {
-		this.type = type;
-	}
 
 }

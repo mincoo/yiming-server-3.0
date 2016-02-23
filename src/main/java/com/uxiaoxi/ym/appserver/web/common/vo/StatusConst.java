@@ -44,4 +44,14 @@ public class StatusConst {
      * 学生
      */
     public static final int STUDENT = 3;
+    
+    /**
+     * 班级人数最大值
+     */
+    public static final int MAXUSERS = 200;
+    
+    /**
+     * 班号初始值
+     */
+    public static final String SNSTART = "2046";
 }

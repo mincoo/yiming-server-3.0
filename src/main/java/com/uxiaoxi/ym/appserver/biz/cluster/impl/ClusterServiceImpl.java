@@ -103,15 +103,15 @@ public class ClusterServiceImpl implements IClusterService {
         clu.setLongitude(form.getLongitude());
         clu.setLatitude(form.getLatitude());
         clu.setFace(form.getFace());
-        clu.setMaxUser(Long.valueOf(200));
+        clu.setMaxUser(Long.valueOf(StatusConst.MAXUSERS));
         clu.setCreateDt(new Date());
 
-        // 生成班号,从2046开始
+        // 生成班号
         int maxSn = clusterDao.searchMaxSn();
         if (maxSn != 0) {
             clu.setSn(String.valueOf(maxSn + 1));
         } else {
-            clu.setSn("2046");
+            clu.setSn(StatusConst.SNSTART);
         }
 
         clusterDao.insert(clu);
@@ -148,9 +148,7 @@ public class ClusterServiceImpl implements IClusterService {
 //        dataObjectNode.put("members", arrayNode);
         creatChatGroups(dataObjectNode);
 
-        ResResult rs = new ResResult(StatusConst.SUCCESS,
-                StatusConst.STRSUCCESS, vo);
-        return rs;
+        return new ResResult(vo);
     }
 
     @Override
@@ -172,7 +170,7 @@ public class ClusterServiceImpl implements IClusterService {
 
         ClusterVO vo = new ClusterVO(clu);
 
-        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, vo);
+        return new ResResult(vo);
     }
 
     @Override
@@ -186,61 +184,14 @@ public class ClusterServiceImpl implements IClusterService {
 
         sr.setSize(new Long(list.size()));
 
-        // if( list.size()>0) {
-        // sr.setLast(list.get(list.size()-1).getId());
-        // } else {
-        // sr.setLast(form.getStart());
-        // }
-
         // TODO 是否有必要去掉id
         for (ClusterUserSearchResultVO vo : list) {
-//
-//            // 老师数
-//            Map<String, Object> param = new HashMap<String, Object>();
-//            param.put("gid", vo.getGid());
-//            param.put("type", new Long(StatusConst.TEACHER));
-//            vo.setTnum(new Long(clusterDao.countUserByType(param)));
-//
-//            // 家长数
-//            param.put("type", new Long(StatusConst.PATRIARCH));
-//            vo.setPnum(new Long(clusterDao.countUserByType(param)));
-//
-//            // 学生数
-//            // vo.setSnum(new Long(studentDao.countByGid(vo.getGid())));
-//
             l.add(vo);
         }
         sr.setList(l);
 
-        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
+        return new ResResult(sr);
     }
-
-//    @Override
-//    public ResResult searchClusterByGid(ClusterSearchForm form) {
-//
-//        ClusterByGidVO clusterByGidVO = clusterDao.searchByGid(form);
-//        if (clusterByGidVO != null) {
-//            // 老师数
-//            Map<String, Object> param = new HashMap<String, Object>();
-//            param.put("gid", form.getGid());
-//            param.put("type", new Long(StatusConst.TEACHER));
-//            clusterByGidVO.setTnum(new Long(clusterDao.countUserByType(param)));
-//
-//            // 家长数
-//            param.put("type", new Long(StatusConst.PATRIARCH));
-//            clusterByGidVO.setPnum(new Long(clusterDao.countUserByType(param)));
-//
-//            // 学生数
-//            param.put("type", new Long(StatusConst.STUDENT));
-//            clusterByGidVO.setSnum(new Long(clusterDao.countUserByType(param)));
-//
-//            return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS,
-//                    clusterByGidVO);
-//        } else {
-//            return new ResResult(StatusConst.FAILURE, "不存在班级", null);
-//        }
-//
-//    }
 
     @Override
     @Transactional
@@ -291,46 +242,46 @@ public class ClusterServiceImpl implements IClusterService {
         }
         
 
-        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
+        return new ResResult(null);
     }
 
-    @Override
-    @Transactional
-    public ResResult addUser(AddDelUserForm form) {
-
-        // 验重
-        ClusterUser cu = clusterUserDao.searchByGidAndUid(form.getGid(),
-                form.getNid());
-        if (cu != null) {
-            return new ResResult(StatusConst.SUCCESS, "已经在组里了", null);
-        }
-
-        ClusterUser record = new ClusterUser();
-        record.setAccId(form.getNid());
-        record.setCluId(form.getGid());
-        record.setCreateDt(new Date());
-        if (form.getType() != null) {
-            record.setAccType(form.getType());
-        }
-
-        // 别名不存在时，设置用户真实姓名
-        record.setAccName(accountDao.getName(form.getNid()));
-
-        clusterUserDao.insert(record);
-        log.debug(form.getUid() + "添加用户" + form.getNid() + "到组" + form.getGid());
-
-        // 增加极光 tag
-        Account account = accountDao.selectByKey(form.getNid());
-        if (StringUtils.isNotBlank(account.getRegid())) {
-            Set<String> tagsToAdd = new HashSet<String>();
-            tagsToAdd.add(CommonUtil.buildGtag(form.getGid()));
-            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
-                    null, account.getVersion());
-        }
-
-        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
-
-    }
+//    @Override
+//    @Transactional
+//    public ResResult addUser(AddDelUserForm form) {
+//
+//        // 验重
+//        ClusterUser cu = clusterUserDao.searchByGidAndUid(form.getGid(),
+//                form.getNid());
+//        if (cu != null) {
+//            return new ResResult(StatusConst.SUCCESS, "已经在组里了", null);
+//        }
+//
+//        ClusterUser record = new ClusterUser();
+//        record.setAccId(form.getNid());
+//        record.setCluId(form.getGid());
+//        record.setCreateDt(new Date());
+//        if (form.getType() != null) {
+//            record.setAccType(form.getType());
+//        }
+//
+//        // 别名不存在时，设置用户真实姓名
+//        record.setAccName(accountDao.getName(form.getNid()));
+//
+//        clusterUserDao.insert(record);
+//        log.debug(form.getUid() + "添加用户" + form.getNid() + "到组" + form.getGid());
+//
+//        // 增加极光 tag
+//        Account account = accountDao.selectByKey(form.getNid());
+//        if (StringUtils.isNotBlank(account.getRegid())) {
+//            Set<String> tagsToAdd = new HashSet<String>();
+//            tagsToAdd.add(CommonUtil.buildGtag(form.getGid()));
+//            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
+//                    null, account.getVersion());
+//        }
+//
+//        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
+//
+//    }
 
     @Override
     public ResResult deluser(AddDelUserForm form) {
