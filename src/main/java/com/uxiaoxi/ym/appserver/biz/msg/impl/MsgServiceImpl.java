@@ -46,6 +46,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgExplainInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgGetListResult;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
@@ -183,6 +184,11 @@ public class MsgServiceImpl implements IMsgService {
                 vo.setType(lastMsg.getType());
                 vo.setUrl(lastMsg.getUrl());
             }
+            
+            List<MsgExplainInfo> explainList = msgDao.getexplain(vo.getOaid());
+            vo.setSsize(Long.valueOf(explainList.size()));;
+            vo.setSlist(explainList);
+            
             retList.add(vo);
         }
         

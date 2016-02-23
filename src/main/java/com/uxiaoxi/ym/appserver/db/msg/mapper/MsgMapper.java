@@ -4,6 +4,7 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgExample;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
+import com.uxiaoxi.ym.appserver.web.msg.vo.MsgExplainInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
 
 import java.util.List;
@@ -86,4 +87,6 @@ public interface MsgMapper {
     MsgOAListVO getnewdata(Long uid);
     
     List<MsgOAListVO> getoadata(MsgOADataForm form);
+    
+    List<MsgExplainInfo> getexplain(Long oaid);
 }
