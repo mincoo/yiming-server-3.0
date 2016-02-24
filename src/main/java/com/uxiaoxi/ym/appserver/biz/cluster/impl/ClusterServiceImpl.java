@@ -42,7 +42,6 @@ import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListResultVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserListVO;
-import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResult;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterUserSearchResultVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterVO;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.SearchCNameVO;
@@ -179,16 +178,11 @@ public class ClusterServiceImpl implements IClusterService {
         if (list == null) {
             list = new ArrayList<ClusterUserSearchResultVO>();
         }
-        List<ClusterUserSearchResult> l = new ArrayList<ClusterUserSearchResult>();
-        ListResult<ClusterUserSearchResult> sr = new ListResult<ClusterUserSearchResult>();
+        
+        ListResult<ClusterUserSearchResultVO> sr = new ListResult<ClusterUserSearchResultVO>();
 
-        sr.setSize(new Long(list.size()));
-
-        // TODO 是否有必要去掉id
-        for (ClusterUserSearchResultVO vo : list) {
-            l.add(vo);
-        }
-        sr.setList(l);
+        sr.setSize(Long.valueOf(list.size()));
+        sr.setList(list);
 
         return new ResResult(sr);
     }
@@ -241,47 +235,8 @@ public class ClusterServiceImpl implements IClusterService {
                     null, account.getVersion());
         }
         
-
         return new ResResult(null);
     }
-
-//    @Override
-//    @Transactional
-//    public ResResult addUser(AddDelUserForm form) {
-//
-//        // 验重
-//        ClusterUser cu = clusterUserDao.searchByGidAndUid(form.getGid(),
-//                form.getNid());
-//        if (cu != null) {
-//            return new ResResult(StatusConst.SUCCESS, "已经在组里了", null);
-//        }
-//
-//        ClusterUser record = new ClusterUser();
-//        record.setAccId(form.getNid());
-//        record.setCluId(form.getGid());
-//        record.setCreateDt(new Date());
-//        if (form.getType() != null) {
-//            record.setAccType(form.getType());
-//        }
-//
-//        // 别名不存在时，设置用户真实姓名
-//        record.setAccName(accountDao.getName(form.getNid()));
-//
-//        clusterUserDao.insert(record);
-//        log.debug(form.getUid() + "添加用户" + form.getNid() + "到组" + form.getGid());
-//
-//        // 增加极光 tag
-//        Account account = accountDao.selectByKey(form.getNid());
-//        if (StringUtils.isNotBlank(account.getRegid())) {
-//            Set<String> tagsToAdd = new HashSet<String>();
-//            tagsToAdd.add(CommonUtil.buildGtag(form.getGid()));
-//            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
-//                    null, account.getVersion());
-//        }
-//
-//        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
-//
-//    }
 
     @Override
     public ResResult deluser(AddDelUserForm form) {
@@ -328,6 +283,7 @@ public class ClusterServiceImpl implements IClusterService {
         
         ClusterUserListResultVO<ClusterUserListVO> sr = new ClusterUserListResultVO<ClusterUserListVO>();
         
+        //老师list：备注追加
         List<ClusterUserListVO> lt = new ArrayList<ClusterUserListVO>();
         for (ClusterUserListVO vo : tlist) {
             String remark = "";
@@ -341,6 +297,7 @@ public class ClusterServiceImpl implements IClusterService {
             lt.add(vo); 
         }
         
+        //家长list：备注&学生姓名追加
         List<ClusterUserListVO> lp = new ArrayList<ClusterUserListVO>();
         for (ClusterUserListVO vo : plist) {
             String remark = "";
@@ -360,7 +317,7 @@ public class ClusterServiceImpl implements IClusterService {
         sr.setPlist(lp);
         sr.setPsize(new Long(lp.size()));
         
-        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, sr);
+        return new ResResult(sr);
 
     }
 
@@ -371,6 +328,7 @@ public class ClusterServiceImpl implements IClusterService {
         if (clusterBySnResult != null) {
             clusterBySnVO = new ClusterBySnVO(clusterBySnResult);
 
+            //创建者姓名：在班级里有昵称时取昵称，否则取用户姓名
             if (clusterBySnResult.getUnamef() != null
                     && "".equals(clusterBySnResult.getUnamef())) {
                 clusterBySnVO.setUname(clusterBySnResult.getUnamef());
@@ -393,10 +351,14 @@ public class ClusterServiceImpl implements IClusterService {
         record.setRemark(form.getRemark());
         
         Remark rm = remarkDao.selectRemark(form.getUid(), form.getNid());
+        
+        //更新
         if(rm !=null){
             record.setId(rm.getId());
             record.setCreateDt(rm.getCreateDt());;
             remarkDao.updateByPrimaryKey(record);
+            
+        //插入
         }else{
             record.setCreateDt(new Date());
             remarkDao.insert(record); 
@@ -411,6 +373,7 @@ public class ClusterServiceImpl implements IClusterService {
         String cname = null;
         List<ClusterUser>  culist = clusterUserDao.getAllByUid(uid);
         
+        //取用户关联的任意一个孩子姓名
         for(ClusterUser cu : culist) {
             if(cu.getChildName()!=null && !"".equals(cu.getChildName())){
                 cname = cu.getChildName();

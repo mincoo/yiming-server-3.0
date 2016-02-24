@@ -11,7 +11,6 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO;
-import com.uxiaoxi.ym.appserver.web.msg.vo.MsgOAListVO;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgVO;
 
 /**

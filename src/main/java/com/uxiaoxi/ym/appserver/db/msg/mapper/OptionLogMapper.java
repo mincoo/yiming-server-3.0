@@ -94,6 +94,4 @@ public interface OptionLogMapper {
      */
     int updateByPrimaryKey(OptionLog record);
     
-    //自定义方法：取消息版本
-    Long getMsgVertion();
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgDao;
 import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
-import com.uxiaoxi.ym.appserver.db.msg.mapper.MsgAccMapper;
 import com.uxiaoxi.ym.appserver.db.msg.mapper.MsgMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;

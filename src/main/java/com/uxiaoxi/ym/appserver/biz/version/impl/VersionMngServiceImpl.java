@@ -10,7 +10,6 @@ import com.uxiaoxi.ym.appserver.biz.version.IVersionMngService;
 import com.uxiaoxi.ym.appserver.db.version.dao.IVersionMngDao;
 import com.uxiaoxi.ym.appserver.db.version.dto.VersionMng;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
-import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 import com.uxiaoxi.ym.appserver.web.version.form.VersionMngForm;
 import com.uxiaoxi.ym.appserver.web.version.vo.VersionVO;
 
@@ -31,6 +30,6 @@ public class VersionMngServiceImpl implements IVersionMngService {
         VersionMng version = versionMngDao.getLastVersion(form);
         VersionVO vo = new VersionVO(version);
         
-        return new ResResult(StatusConst.SUCCESS,StatusConst.STRSUCCESS,vo);
+        return new ResResult(vo);
     }
 }

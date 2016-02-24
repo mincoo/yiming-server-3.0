@@ -356,9 +356,4 @@
     -->
   </cache>
   
-  <!-- 自定义方法 -->
-  <select id="getMsgVertion" resultType="java.lang.Long">
-      SELECT MAX(ol.ID) 
-        FROM `option_log` ol 
-  </select> 
 </mapper>

@@ -13,9 +13,5 @@ import com.uxiaoxi.ym.appserver.framework.db.IBaseSupport;
  */
 public interface IOptionLogDao  extends IBaseSupport<OptionLog> {
     
-    /**
-     * 取消息版本
-     */
-    public Long getMsgVertion();
 
 }

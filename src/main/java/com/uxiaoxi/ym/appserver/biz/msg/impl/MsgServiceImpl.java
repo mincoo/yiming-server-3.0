@@ -109,11 +109,11 @@ public class MsgServiceImpl implements IMsgService {
 
         List<MsgListVO> l = new ArrayList<MsgListVO>();
 
-        // 计算sum1、sum2
+        // 计算sum1、sum2、sum0
         for (MsgListVO md : list) {
-            Long sum1 = msgAccDao.getSum(md.getMid(), Long.valueOf(1));
-            Long sum2 = msgAccDao.getSum(md.getMid(), Long.valueOf(2));
-            Long sum0 = msgAccDao.getSum(md.getMid(), Long.valueOf(0));
+            Long sum1 = msgAccDao.getSum(md.getMid(), Long.valueOf(StatusConst.SELECT1));
+            Long sum2 = msgAccDao.getSum(md.getMid(), Long.valueOf(StatusConst.SELECT2));
+            Long sum0 = msgAccDao.getSum(md.getMid(), Long.valueOf(StatusConst.NOSELECT));
 
             md.setSum1(sum1);
             md.setSum2(sum2);
@@ -121,20 +121,19 @@ public class MsgServiceImpl implements IMsgService {
             l.add(md);
         }
 
-        //ListResult<MsgListVO> sr = new ListResult<MsgListVO>();
         MsgGetListResult sr = new MsgGetListResult();
         
         sr.setList(list);
         sr.setSize(Long.valueOf(list.size()));
         sr.setVersion(msgAccDao.getLastVer(form.getUid()));
+        
         return new ResResult(sr);
-
     }
 
     @Override
     public ResResult getdata(MsgDataForm form) {
 
-        // 取数据
+        // 取详细数据
         MsgVO vo = msgAccDao.getdata(form);
 
         List<MsgDataPatInfo> list = msgAccDao.getDataAcc(form.getMid());
@@ -147,9 +146,9 @@ public class MsgServiceImpl implements IMsgService {
         int sum2 = 0;
         // 计算sum1、sum2
         for (MsgDataPatInfo md : list) {
-            if (md.getSelected().intValue() == 1) {
+            if (md.getSelected().intValue() == StatusConst.SELECT1) {
                 sum1 ++;
-            } else if (md.getSelected().intValue() == 2) {
+            } else if (md.getSelected().intValue() == StatusConst.SELECT2) {
                 sum2 ++;
             } else {
 
@@ -176,6 +175,7 @@ public class MsgServiceImpl implements IMsgService {
         }
 
         for(MsgOAListVO vo : list){
+            //取最后一条信息详情
             MsgOAListVO lastMsg = msgDao.getnewdata(vo.getOaid());
             if(lastMsg!=null){
                 vo.setMid(lastMsg.getMid());
@@ -185,6 +185,7 @@ public class MsgServiceImpl implements IMsgService {
                 vo.setUrl(lastMsg.getUrl());
             }
             
+            //取公众号说明图片信息
             List<MsgExplainInfo> explainList = msgDao.getexplain(vo.getOaid());
             vo.setSsize(Long.valueOf(explainList.size()));;
             vo.setSlist(explainList);
@@ -204,7 +205,7 @@ public class MsgServiceImpl implements IMsgService {
     @Override
     public ResResult getOAData(MsgOADataForm form) {
 
-        // 取数据
+        // 分页获取某公众号信息List
         List<MsgOAListVO> list = msgDao.getoadata(form);
 
         if(list==null || list.size()==0){
@@ -213,6 +214,7 @@ public class MsgServiceImpl implements IMsgService {
         
         ListResult<MsgOAListVO> sr = new ListResult<MsgOAListVO>();
         
+        //设置分页last
         if(list.size() > 0) {
             sr.setLast(list.get(list.size()-1).getMid());
         } else {
@@ -312,7 +314,7 @@ public class MsgServiceImpl implements IMsgService {
             Msg msg = new Msg();
             msg.setSenderId(form.getUid());
             msg.setContent(form.getContent());
-            msg.setContentType(new Long(0)); //0为班级消息
+            msg.setContentType(new Long(StatusConst.CONTENT_TYPE_CLUSTER)); //班级消息
             msg.setCreateAt(new Date());
             msg.setMsgType(Long.valueOf(form.getMsgType()));
             msg.setStype(form.getRetype());
@@ -341,7 +343,7 @@ public class MsgServiceImpl implements IMsgService {
                 ma.setMsgId(msg.getId());
                 ma.setVersion(re.getId());
                 ma.setCluId(Long.valueOf(gidList[i]));
-                ma.setSelected(0);//未选择状态
+                ma.setSelected(StatusConst.NOSELECT);//未选择状态
                 ma.setUseYn(true);
                 msgAccDao.insert(ma);
             }
@@ -374,7 +376,7 @@ public class MsgServiceImpl implements IMsgService {
             // TODO 发送者设置为0了
             //msg.setSenderId(0l);
             msg.setContent(od.getMessage());
-            msg.setContentType(new Long(1)); //1为校信消息
+            msg.setContentType(new Long(StatusConst.CONTENT_TYPE_SAFE)); //校安消息
             msg.setCreateAt(new Date());
             msg.setMsgType(Long.valueOf(MsgTypeEnum.TXT.getCode()));
             // 获得学校的cluster
@@ -413,31 +415,15 @@ public class MsgServiceImpl implements IMsgService {
         // 取得用户
         Account account = accountDao.selectByKey(form.getUid());
         Set<String> tagsToAdd = new HashSet<String>();
-        // Set<String> tagsToRemove = new HashSet<String>();
 
-        // //请求恢复推送
-        // if(form.getStatus() == 0) {
-        //
-        // List<ClusterUser> culist =
-        // clusterUserDao.getAllByUid(account.getId());
-        // for(ClusterUser cu : culist) {
-        // tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
-        // }
-        //
-        // JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
-        // null, account.getVersion());
-        //
-        // //请求解除推送
-        // }else if(form.getStatus() == 1){
-        //
-        // }else{
-        // return new ResResult(StatusConst.FAILURE,"请求不明",null);
-        // }
-
+        //更新用户的推送设置
         clusterUserDao.updateMsgFlg(form);
 
+        //注销jpush推送
         JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
 
+        //重新设置jpush推送
+        //取得需要推送的所有用户
         List<ClusterUser> culist = clusterUserDao.getAllByUid(account.getId());
         for (ClusterUser cu : culist) {
             tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
@@ -461,6 +447,7 @@ public class MsgServiceImpl implements IMsgService {
 
         msgAccDao.updateByExample(record);
         
+        //OptionLog中记录
         OptionLog re = new OptionLog();
         re.setDataId(form.getMid());
         re.setOptionType("U");
@@ -482,7 +469,7 @@ public class MsgServiceImpl implements IMsgService {
             msgAccDao.updateByExample(ma);
         }
         
-      //发送透传消息
+      //发送透传消息 TODO暂时不做透传
        // sendMsgTraGroup(String.valueOf(form.getGid()));
 
         return new ResResult(null);
@@ -561,8 +548,6 @@ public class MsgServiceImpl implements IMsgService {
     }
     
     private void sendMsgTraGroup(String gids){
-        
-        //Long vertion = optionLogDao.getMsgVertion();
         
         String targetTypeus = "chatgroups";
         ObjectNode ext = factory.objectNode();

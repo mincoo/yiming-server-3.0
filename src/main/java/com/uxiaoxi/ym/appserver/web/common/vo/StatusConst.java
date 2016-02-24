@@ -54,4 +54,30 @@ public class StatusConst {
      * 班号初始值
      */
     public static final String SNSTART = "2046";
+    
+    /**
+     * 选项1
+     */
+    public static final int SELECT1 = 1;
+    
+    /**
+     * 选项2
+     */
+    public static final int SELECT2 = 2;
+    
+    /**
+     * 未选择
+     */
+    public static final int NOSELECT = 0;
+    
+    /**
+     * 班级消息
+     */
+    public static final int CONTENT_TYPE_CLUSTER = 0;
+    
+    /**
+     * 校安消息
+     */
+    public static final int CONTENT_TYPE_SAFE = 1;
+    
 }
