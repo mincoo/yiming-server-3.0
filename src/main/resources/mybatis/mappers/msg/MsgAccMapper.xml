@@ -361,7 +361,7 @@
     AS `type`, m.`url` AS `url`, c.`id` AS `gid`,
     c.`title` AS `gname`,
     a.`name` AS `uname`, a.`face` AS `face`,
-    DATE_FORMAT(m.`create_at`,'%Y-%m-%d %k:%i') AS
+    DATE_FORMAT(m.`create_at`,'%Y-%m-%d %H:%i') AS
     `stime`,m.`stype` AS
     `stype`,m.`select1` AS `select1`,m.`select2` AS
     `select2`,t.`selected` AS `selected`,m.`content` AS `content`

@@ -547,6 +547,12 @@ public class MsgServiceImpl implements IMsgService {
         return objectNode;
     }
     
+    /**
+     * 
+     * 发送群组透传
+     * 
+     * @param gids
+     */
     private void sendMsgTraGroup(String gids){
         
         String targetTypeus = "chatgroups";
