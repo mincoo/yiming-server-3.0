@@ -82,7 +82,7 @@ public class CheckAuthorityInterceptor implements HandlerInterceptor {
                 };
                 
                 Account account = accountService.getAccountById(Long.valueOf(uid));
-                if(token.equals(account.getToken())) {
+                if(account != null && token.equals(account.getToken())) {
                     return true;
                 } else {
                     ResResult rs = new ResResult();
