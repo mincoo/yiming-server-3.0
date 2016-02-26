@@ -114,8 +114,8 @@ public class MsgServiceImpl implements IMsgService {
 
         List<MsgListVO> l = new ArrayList<MsgListVO>();
 
-        // 计算sum1、sum2、sum0
         for (MsgListVO md : list) {
+            // 计算sum1、sum2、sum0
             Long sum1 = msgAccDao.getSum(md.getMid(), Long.valueOf(StatusConst.SELECT1));
             Long sum2 = msgAccDao.getSum(md.getMid(), Long.valueOf(StatusConst.SELECT2));
             Long sum0 = msgAccDao.getSum(md.getMid(), Long.valueOf(StatusConst.NOSELECT));
@@ -124,6 +124,14 @@ public class MsgServiceImpl implements IMsgService {
             md.setSum2(sum2);
             md.setSum0(sum0);
             l.add(md);
+            
+            //更新已读标识received
+            MsgAcc record = new MsgAcc();
+            record.setMsgId(md.getMid());
+            record.setAccId(form.getUid());
+            record.setReceived(Long.valueOf(StatusConst.RECEIVED));
+            msgAccDao.updateByExample(record);
+            
         }
 
         MsgGetListResult sr = new MsgGetListResult();
@@ -349,6 +357,7 @@ public class MsgServiceImpl implements IMsgService {
                 ma.setVersion(re.getId());
                 ma.setCluId(Long.valueOf(gidList[i]));
                 ma.setSelected(StatusConst.NOSELECT);//未选择状态
+                ma.setReceived(Long.valueOf(StatusConst.NORECEIVED));//设置通知读取状态为未读
                 ma.setUseYn(true);
                 msgAccDao.insert(ma);
             }
@@ -417,24 +426,24 @@ public class MsgServiceImpl implements IMsgService {
     @Override
     public ResResult tagChange(MsgTagChangeForm form) {
 
-        // 取得用户
-        Account account = accountDao.selectByKey(form.getUid());
-        Set<String> tagsToAdd = new HashSet<String>();
+//        // 取得用户
+//        Account account = accountDao.selectByKey(form.getUid());
+//        Set<String> tagsToAdd = new HashSet<String>();
 
         //更新用户的推送设置
         clusterUserDao.updateMsgFlg(form);
 
-        //注销jpush推送
-        JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
-
-        //重新设置jpush推送
-        //取得需要推送的所有用户
-        List<ClusterUser> culist = clusterUserDao.getAllByUid(account.getId());
-        for (ClusterUser cu : culist) {
-            tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
-        }
-        JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
-                null, account.getVersion());
+//        //注销jpush推送
+//        JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
+//
+//        //重新设置jpush推送
+//        //取得需要推送的所有用户
+//        List<ClusterUser> culist = clusterUserDao.getAllByUid(account.getId());
+//        for (ClusterUser cu : culist) {
+//            tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
+//        }
+//        JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
+//                null, account.getVersion());
 
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
 

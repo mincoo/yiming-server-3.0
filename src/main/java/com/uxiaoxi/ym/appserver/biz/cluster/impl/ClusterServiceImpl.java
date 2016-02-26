@@ -126,14 +126,14 @@ public class ClusterServiceImpl implements IClusterService {
         cu.setCreateDt(new Date());
         clusterUserDao.insert(cu);
 
-        // 增加极光 tag
-        Account account = accountDao.selectByKey(form.getUid());
-        if (StringUtils.isNotBlank(account.getRegid())) {
-            Set<String> tagsToAdd = new HashSet<String>();
-            tagsToAdd.add(CommonUtil.buildGtag(clu.getId()));
-            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
-                    null, account.getVersion());
-        }
+//        // 增加极光 tag
+//        Account account = accountDao.selectByKey(form.getUid());
+//        if (StringUtils.isNotBlank(account.getRegid())) {
+//            Set<String> tagsToAdd = new HashSet<String>();
+//            tagsToAdd.add(CommonUtil.buildGtag(clu.getId()));
+//            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
+//                    null, account.getVersion());
+//        }
         
         // IM中创建群组 
         ObjectNode dataObjectNode = JsonNodeFactory.instance.objectNode();
@@ -226,14 +226,14 @@ public class ClusterServiceImpl implements IClusterService {
 
         clusterUserDao.insert(record);
 
-        // 增加极光 tag
-        Account account = accountDao.selectByKey(form.getUid());
-        if (StringUtils.isNotBlank(account.getRegid())) {
-            Set<String> tagsToAdd = new HashSet<String>();
-            tagsToAdd.add(CommonUtil.buildGtag(form.getGid()));
-            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
-                    null, account.getVersion());
-        }
+//        // 增加极光 tag
+//        Account account = accountDao.selectByKey(form.getUid());
+//        if (StringUtils.isNotBlank(account.getRegid())) {
+//            Set<String> tagsToAdd = new HashSet<String>();
+//            tagsToAdd.add(CommonUtil.buildGtag(form.getGid()));
+//            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
+//                    null, account.getVersion());
+//        }
         
         return new ResResult(null);
     }

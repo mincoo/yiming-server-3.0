@@ -272,17 +272,17 @@ public class AccountServiceImpl implements IAccountService {
                 if((StringUtils.isNotBlank(loginForm.getRegid()) && !loginForm.getRegid().equals(account.getRegid())) || !loginForm.getVersion().equals(account.getVersion())) {
                     account.setRegid(loginForm.getRegid());
                     
-                    // 设置极光tag
-                    if(StringUtils.isNotBlank(loginForm.getRegid())){
-                        Set<String> tagsToAdd = new HashSet<String>();
-                        
-                        List<ClusterUser>  culist = cluserUserDao.getAllByUid(account.getId());
-                        for(ClusterUser cu : culist) {
-                            tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
-                        }
-                  
-                        JpushUtil.updateDeviceTagAlias(loginForm.getRegid(), null, tagsToAdd, null, loginForm.getVersion());
-                    }
+//                    // 设置极光tag
+//                    if(StringUtils.isNotBlank(loginForm.getRegid())){
+//                        Set<String> tagsToAdd = new HashSet<String>();
+//                        
+//                        List<ClusterUser>  culist = cluserUserDao.getAllByUid(account.getId());
+//                        for(ClusterUser cu : culist) {
+//                            tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
+//                        }
+//                  
+//                        JpushUtil.updateDeviceTagAlias(loginForm.getRegid(), null, tagsToAdd, null, loginForm.getVersion());
+//                    }
                     
                 }
                 account.setVersion(loginForm.getVersion());
@@ -436,22 +436,22 @@ public class AccountServiceImpl implements IAccountService {
         accountDao.updateByPrimaryKeySelective(record);
         
         
-        // 取得用户
-        Account account = accountDao.selectByKey(form.getUid());
-        Set<String> tagsToAdd = new HashSet<String>();
+//        // 取得用户
+//        Account account = accountDao.selectByKey(form.getUid());
+//        Set<String> tagsToAdd = new HashSet<String>();
         
-        //Jpush推送
-        if(form.getStatus()==1){
-            JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
-        }else{
-
-            List<ClusterUser> culist = cluserUserDao.getAllByUid(account.getId());
-            for (ClusterUser cu : culist) {
-                tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
-            }
-            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
-                    null, account.getVersion());
-        }
+//        //Jpush推送
+//        if(form.getStatus()==1){
+//            JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
+//        }else{
+//
+//            List<ClusterUser> culist = cluserUserDao.getAllByUid(account.getId());
+//            for (ClusterUser cu : culist) {
+//                tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
+//            }
+//            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
+//                    null, account.getVersion());
+//        }
         return new ResResult(null);
     }
     

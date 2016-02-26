@@ -378,14 +378,19 @@
     <select id="getlist" parameterType="com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm" resultType="com.uxiaoxi.ym.appserver.web.msg.vo.MsgListVO">
         SELECT DISTINCT
         <include refid="Base_Msg_List" />
-        ,(SELECT MAX(tv.`version`) FROM msg_acc tv WHERE tv.acc_id = t.acc_id AND tv.use_yn = t.use_yn) AS `version` 
+        ,t.`received` AS `received`
         FROM msg_acc t, msg m , cluster c, `account` a
          WHERE t.`msg_id` = m.`id`
            AND t.`clu_id` = c.`id`
            AND m.`sender_id` = a.`id`
            AND t.`use_yn` = 1
            AND t.`acc_id` = #{uid,jdbcType=BIGINT}
-           AND t.`version` > #{version,jdbcType=BIGINT}
+           <if test="version != null and version !=0">
+                AND t.`version` > #{version,jdbcType=BIGINT}
+           </if>
+           <if test="version ==0">
+                AND t.`received` = 0
+           </if>
            <!-- AND t.`msg_id` IN (SELECT DISTINCT(ol.`data_id`) AS `msgid` FROM option_log ol WHERE ol.`id` > #{version,jdbcType=BIGINT}) -->
   </select> 
   

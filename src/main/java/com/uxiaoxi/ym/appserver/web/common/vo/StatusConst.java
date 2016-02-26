@@ -80,4 +80,14 @@ public class StatusConst {
      */
     public static final int CONTENT_TYPE_SAFE = 1;
     
+    /**
+     * 未读
+     */
+    public static final int NORECEIVED = 0;
+    
+    /**
+     * 已读
+     */
+    public static final int RECEIVED = 1;
+    
 }

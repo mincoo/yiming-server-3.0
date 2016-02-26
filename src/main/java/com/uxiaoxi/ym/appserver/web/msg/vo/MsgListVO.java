@@ -46,6 +46,8 @@ public class MsgListVO {
 
     private Integer selected;
     
+    private Long received;
+    
     private String option;
     
 
@@ -320,6 +322,20 @@ public class MsgListVO {
      */
     public void setSum0(Long sum0) {
         this.sum0 = sum0;
+    }
+
+    /**
+     * @return the received
+     */
+    public Long getReceived() {
+        return received;
+    }
+
+    /**
+     * @param received the received to set
+     */
+    public void setReceived(Long received) {
+        this.received = received;
     }
 
 }
