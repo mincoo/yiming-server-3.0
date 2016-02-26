@@ -30,6 +30,7 @@ import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterUserDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgAccDao;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgDao;
+import com.uxiaoxi.ym.appserver.db.msg.dao.IOfficialAccUserDao;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IOptionLogDao;
 import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
@@ -43,6 +44,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgGSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgListForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgOaTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
@@ -97,6 +99,9 @@ public class MsgServiceImpl implements IMsgService {
 
     @Autowired
     private MsgProducer producer;
+    
+    @Autowired
+    private IOfficialAccUserDao officialAccUserDao;
 
     @Override
     public ResResult getlist(MsgListForm form) {
@@ -473,6 +478,32 @@ public class MsgServiceImpl implements IMsgService {
        // sendMsgTraGroup(String.valueOf(form.getGid()));
 
         return new ResResult(null);
+
+    }
+    
+    @Override
+    public ResResult oatagChange(MsgOaTagChangeForm form) {
+
+//        // 取得用户
+//        Account account = accountDao.selectByKey(form.getUid());
+//        Set<String> tagsToAdd = new HashSet<String>();
+
+        //更新用户的推送设置
+        officialAccUserDao.updateMsgOaFlg(form);
+        
+//        //注销jpush推送
+//        JpushUtil.updateDeviceTagAlias(account.getRegid(), false, true);
+//
+//        //重新设置jpush推送
+//        //取得需要推送的所有用户
+//        List<ClusterUser> culist = clusterUserDao.getAllByUid(account.getId());
+//        for (ClusterUser cu : culist) {
+//            tagsToAdd.add(CommonUtil.buildGtag(cu.getCluId()));
+//        }
+//        JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
+//                null, account.getVersion());
+
+        return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
 
     }
     

@@ -23,6 +23,8 @@ public class MsgListVO {
     private String content;
 
     private String gname;
+    
+    private String gface;
 
     private String uname;
 
@@ -119,6 +121,20 @@ public class MsgListVO {
      */
     public void setGname(String gname) {
         this.gname = gname;
+    }
+
+    /**
+     * @return the gface
+     */
+    public String getGface() {
+        return gface;
+    }
+
+    /**
+     * @param gface the gface to set
+     */
+    public void setGface(String gface) {
+        this.gface = gface;
     }
 
     /**

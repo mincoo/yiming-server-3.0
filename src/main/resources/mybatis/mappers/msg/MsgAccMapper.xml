@@ -360,6 +360,7 @@
     m.`msg_type`
     AS `type`, m.`url` AS `url`, c.`id` AS `gid`,
     c.`title` AS `gname`,
+    c.`face` AS `gface`,
     a.`name` AS `uname`, a.`face` AS `face`,
     DATE_FORMAT(m.`create_at`,'%Y-%m-%d %H:%i') AS
     `stime`,m.`stype` AS
