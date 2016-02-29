@@ -363,7 +363,7 @@ public class MsgServiceImpl implements IMsgService {
             }
             
             //发送透传消息
-            sendMsgTraGroup(gids);
+            sendMsgTraGroup(gids,"1");
     
           /*  // 极光推送
              PushParam param = new PushParam();
@@ -406,6 +406,8 @@ public class MsgServiceImpl implements IMsgService {
             //ma.setCluId(0L);
             ma.setUseYn(true);
             msgAccDao.insert(ma);
+            
+            
 
 /*            // 极光推送
             PushParam param = new PushParam();
@@ -593,7 +595,7 @@ public class MsgServiceImpl implements IMsgService {
      * 
      * @param gids
      */
-    private void sendMsgTraGroup(String gids){
+    private void sendMsgTraGroup(String gids,String action){
         
         String targetTypeus = "chatgroups";
         ObjectNode ext = factory.objectNode();
@@ -608,7 +610,7 @@ public class MsgServiceImpl implements IMsgService {
         ObjectNode cmdmsg = factory.objectNode();
         //cmdmsg.put("vertion", String.valueOf(vertion));
         cmdmsg.put("type","cmd");
-        cmdmsg.put("action","action1");
+        cmdmsg.put("action",action);
         sendMessages(targetTypeus, targetusers, cmdmsg, ext);
     }
 }

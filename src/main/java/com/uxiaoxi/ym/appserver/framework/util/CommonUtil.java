@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.uxiaoxi.ym.easemob.comm.Constants;
+
 /**
  * @author renh
  * 
@@ -81,9 +83,12 @@ public class CommonUtil {
 //        list.add("passwd=123456");
 //        list.add("callback=123");
         
-        list.add("uid=6");
-        list.add("gid=4");
-        list.add("sid=4");
+        list.add("imgUrl=http://imgsrc.baidu.com/forum/pic/item/33235343fbf2b211ab4bbab6ca8065380dd78eff.jpg");
+        list.add("phone=18610640856");
+        list.add("message=万");
+//        list.add("status=0");
+//        list.add("gid=4");
+//        list.add("sid=4");
 //        list.add("name=小红");
 //        list.add("province=北京 ");
 //        list.add("city=北京市");
@@ -107,6 +112,9 @@ public class CommonUtil {
         buffer.append(sign);
         
         System.out.println(buffer.toString());
+        
+        
+        //System.out.println(StringUtil.md5(Constants.DEFAULT_PASSWORD+String.valueOf(14)));
         
         
         

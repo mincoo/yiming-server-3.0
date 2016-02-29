@@ -56,8 +56,8 @@ public class RegisterController {
             return rs;
         }
         
-        // 如果type=1时，手机号已经注册时不发短信
-        if(type == 1) {
+        // 如果type=1或3时，手机号已经注册时不发短信
+        if(type == 1 || type == 3) {
             Account account = accountService.getAccountByMobile(phone);
             if(account != null) {
                 rs.setMsg("手机号已注册");

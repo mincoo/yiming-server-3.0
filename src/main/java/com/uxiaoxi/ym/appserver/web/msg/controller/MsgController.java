@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.uxiaoxi.ym.aliyun.bean.TDMsgOnsDTO;
 import com.uxiaoxi.ym.appserver.biz.msg.IMsgService;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
@@ -85,5 +86,11 @@ public class MsgController {
     @RequestMapping(value = "/oatagchange")
     public ResResult msgOaTagChangeJson(@Valid MsgOaTagChangeForm form) {
         return msgService.oatagChange(form);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/tdsend")
+    public void msgTDSendJson(TDMsgOnsDTO form ) {
+        msgService.sendMsg(form);
     }
 }
