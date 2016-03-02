@@ -90,4 +90,14 @@ public class StatusConst {
      */
     public static final int RECEIVED = 1;
     
+    /**
+     * 班级
+     */
+    public static final String MSG_TYPE_CLUSTER = "1";
+    
+    /**
+     * 公众号
+     */
+    public static final String MSG_TYPE_OPEN = "2";
+    
 }

@@ -363,7 +363,7 @@ public class MsgServiceImpl implements IMsgService {
             }
             
             //发送透传消息
-            sendMsgTraGroup(gids,"1");
+            sendMsgTraGroup(gids,StatusConst.MSG_TYPE_CLUSTER);
     
           /*  // 极光推送
              PushParam param = new PushParam();
@@ -408,6 +408,9 @@ public class MsgServiceImpl implements IMsgService {
             msgAccDao.insert(ma);
             
             
+            
+          //发送透传消息
+            sendMsgTra(String.valueOf(account.getId()),StatusConst.MSG_TYPE_OPEN,String.valueOf(StatusConst.CONTENT_TYPE_SAFE));
 
 /*            // 极光推送
             PushParam param = new PushParam();
@@ -594,6 +597,7 @@ public class MsgServiceImpl implements IMsgService {
      * 发送群组透传
      * 
      * @param gids
+     * @param action
      */
     private void sendMsgTraGroup(String gids,String action){
         
@@ -607,6 +611,35 @@ public class MsgServiceImpl implements IMsgService {
             targetusers.add(gid);
         }
      // 给群组发一条透传消息
+        ObjectNode cmdmsg = factory.objectNode();
+        //cmdmsg.put("vertion", String.valueOf(vertion));
+        cmdmsg.put("type","cmd");
+        cmdmsg.put("action",action);
+        sendMessages(targetTypeus, targetusers, cmdmsg, ext);
+    }
+    
+    /**
+     * 
+     * 发送个人用户透传
+     * 
+     * @param gids
+     * @param action
+     */
+    private void sendMsgTra(String uid,String action,String attr){
+        
+        String targetTypeus = "users";
+        ObjectNode ext = factory.objectNode();
+        ArrayNode targetusers = factory.arrayNode();
+        
+    //TODO 暂时不对应多人的   ，待用户基数上去的时候处理
+//        for (int i = 0; i < uids.length; i++) {
+//            String gid = ClusterServiceImpl.getGroupId(Long.valueOf(uids[i]));
+//            targetusers.add(gid);
+//        }
+        targetusers.add(uid);
+        ext.put("attr", attr);
+        
+     // 给个人发一条透传消息
         ObjectNode cmdmsg = factory.objectNode();
         //cmdmsg.put("vertion", String.valueOf(vertion));
         cmdmsg.put("type","cmd");
