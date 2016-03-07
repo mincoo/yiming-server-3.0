@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
+import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterExample;
 import com.uxiaoxi.ym.appserver.db.cluster.mapper.ClusterMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
+import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
 
 /**
@@ -43,5 +45,19 @@ public class ClusterDaoImpl extends BaseSupport<Cluster, ClusterMapper>
 
         return mapper.searchMaxSn();
     }
+    
+    @Override
+    public boolean isCreateBy(ExitForm form) {
+        ClusterMapper mapper = this.getSqlSession().getMapper(ClusterMapper.class);
+        
+        ClusterExample example = new ClusterExample();
+        example.createCriteria().andCreateByEqualTo(form.getUid())
+                .andIdEqualTo(form.getGid());
+        
+        if(mapper.countByExample(example)>0){
+            return true;
+        }
 
+        return false;
+    }
 }

@@ -255,15 +255,29 @@ public class ClusterServiceImpl implements IClusterService {
 
     @Override
     public ResResult exitgroup(ExitForm form) {
-
-        clusterUserDao.exitgroup(form);
-        // 增加log部分
-        log.info(form.getUid() + "从组" + form.getGid() + "退出");
         
-        //IM组中减人
-        String delFromChatgroupid = getGroupId(form.getGid());
-        String toRemoveUsername = "u"+form.getUid();
-        deleteUserFromGroup(delFromChatgroupid, toRemoveUsername);
+        //创建者删除班级
+        if(clusterDao.isCreateBy(form)){
+            
+            clusterUserDao.exitgroupAll(form);
+            // 增加log部分
+            log.info("组" + form.getGid() + "解散");
+            
+            //IM中删除群组
+            String toDelChatgroupid = getGroupId(form.getGid());
+            deleteChatGroups(toDelChatgroupid) ;
+            
+            //普通成员退出班级
+        }else{
+            clusterUserDao.exitgroup(form);
+            // 增加log部分
+            log.info(form.getUid() + "从组" + form.getGid() + "退出");
+            
+            //IM组中减人
+            String delFromChatgroupid = getGroupId(form.getGid());
+            String toRemoveUsername = "u"+form.getUid();
+            deleteUserFromGroup(delFromChatgroupid, toRemoveUsername);            
+        }
 
         return new ResResult(StatusConst.SUCCESS, StatusConst.STRSUCCESS, null);
     }
@@ -515,6 +529,36 @@ public class ClusterServiceImpl implements IClusterService {
             JerseyWebTarget webTarget = EndPoints.CHATGROUPS_TARGET.resolveTemplate("org_name", APPKEY.split("#")[0])
                     .resolveTemplate("app_name", APPKEY.split("#")[1]).path(chatgroupid).path("users")
                     .path(userName);
+
+            objectNode = JerseyUtils.sendRequest(webTarget, null, credential, HTTPMethod.METHOD_DELETE, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return objectNode;
+    }
+    
+    /**
+     * 删除群组
+     * 
+     */
+    public static ObjectNode deleteChatGroups(String chatgroupid) {
+        ObjectNode objectNode = factory.objectNode();
+
+        // check appKey format
+        if (!JerseyUtils.match("^(?!-)[0-9a-zA-Z\\-]+#[0-9a-zA-Z]+", APPKEY)) {
+            log.error("Bad format of Appkey: " + APPKEY);
+
+            objectNode.put("message", "Bad format of Appkey");
+
+            return objectNode;
+        }
+
+        try {
+
+            JerseyWebTarget webTarget = EndPoints.CHATGROUPS_TARGET.resolveTemplate("org_name", APPKEY.split("#")[0])
+                    .resolveTemplate("app_name", APPKEY.split("#")[1]).path(chatgroupid);
 
             objectNode = JerseyUtils.sendRequest(webTarget, null, credential, HTTPMethod.METHOD_DELETE, null);
 

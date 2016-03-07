@@ -37,6 +37,11 @@ public interface IClusterUserDao extends IBaseSupport<ClusterUser> {
      * @param form
      */
     public int exitgroup(ExitForm form);
+    
+    /**
+     * @param form
+     */
+    public int exitgroupAll(ExitForm form);
 
     /**
      * @param form

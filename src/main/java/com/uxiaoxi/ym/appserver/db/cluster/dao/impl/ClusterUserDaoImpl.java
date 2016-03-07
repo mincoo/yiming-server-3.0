@@ -63,6 +63,17 @@ public class ClusterUserDaoImpl extends
 
         return mapper.deleteByExample(example);
     }
+    
+    @Override
+    public int exitgroupAll(ExitForm form) {
+        ClusterUserMapper mapper = this.getSqlSession().getMapper(
+                ClusterUserMapper.class);
+
+        ClusterUserExample example = new ClusterUserExample();
+        example.createCriteria().andCluIdEqualTo(form.getGid());
+
+        return mapper.deleteByExample(example);
+    }
 
     @Override
     public List<ClusterUserListVO> searchByGidT(ClusterUserListForm form) {
