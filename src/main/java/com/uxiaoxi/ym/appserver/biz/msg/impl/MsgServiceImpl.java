@@ -410,7 +410,7 @@ public class MsgServiceImpl implements IMsgService {
             
             
           //发送透传消息
-            sendMsgTra(String.valueOf(account.getId()),StatusConst.MSG_TYPE_OPEN,String.valueOf(StatusConst.CONTENT_TYPE_SAFE));
+            sendMsgTra("u"+account.getId(),StatusConst.MSG_TYPE_OPEN,String.valueOf(StatusConst.CONTENT_TYPE_SAFE));
 
 /*            // 极光推送
             PushParam param = new PushParam();
