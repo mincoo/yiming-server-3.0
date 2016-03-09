@@ -710,9 +710,8 @@ public class MsgServiceImpl implements IMsgService {
         }
         
         //更新数据库
-        Account record = new Account();
-        record.setIosPushSum(sum);
-        accountDao.updateByPrimaryKeySelective(record);
+        account.setIosPushSum(sum);
+        accountDao.updateByPrimaryKeySelective(account);
         
         ApnsService service =
                 APNS.newService()
