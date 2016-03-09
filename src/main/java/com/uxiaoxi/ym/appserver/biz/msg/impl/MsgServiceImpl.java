@@ -691,7 +691,7 @@ public class MsgServiceImpl implements IMsgService {
         }
         
         //免打扰时不推送。
-        if(account.getMsgSwitch()==1||clusterUserDao.searchByGidAndUid(gid,uid).getMsgFlg().intValue()==1){
+        if(account.getMsgSwitch()==1||clusterUserDao.searchByGidAndUid(gid,uid).getMsgFlg()==1){
             return;
         }
         

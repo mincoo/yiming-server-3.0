@@ -19,7 +19,7 @@ public class MsgTagChangeForm {
     private Long gid;
     
     @NotNull
-    private Long status;
+    private int status;
     
     /**
      * @return the uid
@@ -49,19 +49,20 @@ public class MsgTagChangeForm {
         this.gid = gid;
     }
 
-	/**
-	 * @return the status
-	 */
-	public Long getStatus() {
-		return status;
-	}
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
 
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(Long status) {
-		this.status = status;
-	}
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
 
 
 }
