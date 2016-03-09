@@ -20,6 +20,8 @@ import org.springframework.validation.BindingResult;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.notnoop.apns.APNS;
+import com.notnoop.apns.ApnsService;
 import com.uxiaoxi.ym.aliyun.bean.TDMsgOnsDTO;
 import com.uxiaoxi.ym.aliyun.producer.MsgProducer;
 import com.uxiaoxi.ym.appserver.biz.cluster.impl.ClusterServiceImpl;
@@ -38,6 +40,7 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.OptionLog;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
+import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
 import com.uxiaoxi.ym.appserver.web.common.vo.StatusConst;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgDataForm;
@@ -47,6 +50,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgOaTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgUpdatePushSumForm;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgDataPatInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgExplainInfo;
 import com.uxiaoxi.ym.appserver.web.msg.vo.MsgGetListResult;
@@ -360,6 +364,9 @@ public class MsgServiceImpl implements IMsgService {
                 ma.setReceived(Long.valueOf(StatusConst.NORECEIVED));//设置通知读取状态为未读
                 ma.setUseYn(true);
                 msgAccDao.insert(ma);
+                
+                //ios推送处理
+                iosPush(cu.getAccId(),Long.valueOf(gidList[i]));
             }
             
             //发送透传消息
@@ -521,6 +528,25 @@ public class MsgServiceImpl implements IMsgService {
 
     }
     
+    
+    @Override
+    public ResResult updatePushSum(MsgUpdatePushSumForm form) {
+        
+        Account account = accountDao.selectByKey(form.getUid());
+        
+         
+        Account record = account;
+        record.setIosPushSum(account.getIosPushSum()- form.getNum());
+        
+        ResultBean rt = accountDao.updateByPrimaryKey(record);
+        if(rt != null && rt.getCode() == 1) {
+            return new ResResult(null);
+        } else {
+            return new ResResult(StatusConst.FAILURE, "更新失败",null);
+        }
+
+    }
+    
     /**
      * 发送消息
      * 
@@ -645,5 +671,49 @@ public class MsgServiceImpl implements IMsgService {
         cmdmsg.put("type","cmd");
         cmdmsg.put("action",action);
         sendMessages(targetTypeus, targetusers, cmdmsg, ext);
+    }
+    
+    
+    /**
+     * 
+     * ios推送处理
+     * 
+     * @param uid
+     * @param gid
+     */
+    private void iosPush(Long uid,Long gid){
+        
+        Account account = accountDao.selectByKey(uid);
+        
+        //android的设备时不推送。android的regid小于64
+        if(account.getRegid().length()<=64){
+            return;
+        }
+        
+        //免打扰时不推送。
+        if(account.getMsgSwitch()==1||clusterUserDao.searchByGidAndUid(gid,uid).getMsgFlg().intValue()==1){
+            return;
+        }
+        
+        int sum = 1;
+        if(account.getIosPushSum()!=null){
+            sum= account.getIosPushSum().intValue()+1;
+        }
+                
+        
+        ApnsService service =
+                APNS.newService()
+                .withCert("src/main/resources/com.uxiaoxi.mp_developement.p12", "123")
+                .withSandboxDestination()
+                .build();
+        
+        String payload = APNS.newPayload()
+                .badge(sum)
+                .alertBody("收到来自"+gid+"的一条通知。")
+                .sound("default").build();
+        
+        //String regid = "e33e1e5f b5b75839 0959c8e5 40304cc4 2d483fe5 0212a2d2 166de2e1 fac9351f";
+        String regid = account.getRegid();
+        service.push(regid, payload);
     }
 }

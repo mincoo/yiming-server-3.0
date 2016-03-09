@@ -21,6 +21,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgActionForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgOaTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgUpdatePushSumForm;
 
 /**
  * @author renhao
@@ -86,6 +87,12 @@ public class MsgController {
     @RequestMapping(value = "/oatagchange")
     public ResResult msgOaTagChangeJson(@Valid MsgOaTagChangeForm form) {
         return msgService.oatagChange(form);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/updatepushsum")
+    public ResResult msgUpdatePushSum(@Valid MsgUpdatePushSumForm form) {
+        return msgService.updatePushSum(form);
     }
     
     @ResponseBody

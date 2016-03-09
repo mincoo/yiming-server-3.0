@@ -15,6 +15,7 @@ import com.uxiaoxi.ym.appserver.web.msg.form.MsgOADataForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgOaTagChangeForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgSendForm;
 import com.uxiaoxi.ym.appserver.web.msg.form.MsgTagChangeForm;
+import com.uxiaoxi.ym.appserver.web.msg.form.MsgUpdatePushSumForm;
 
 /**
  * @author renhao
@@ -78,6 +79,11 @@ public interface IMsgService {
      * @param form
      */
     public ResResult tagChange(MsgTagChangeForm form);
+    
+    /**
+     * @param form
+     */
+    public ResResult updatePushSum(MsgUpdatePushSumForm form);
     
     /**
      * @param uid

@@ -269,6 +269,14 @@ public class AccountServiceImpl implements IAccountService {
                 // 设置token
                 account.setToken(token);
                 
+                //Regid改变时，推送未读计数清零
+                if(!loginForm.getRegid().equals(account.getRegid())){
+                    Account record = account;
+                    record.setIosPushSum(0l);
+                    
+                    accountDao.updateByPrimaryKey(record);
+                }
+                
                 if((StringUtils.isNotBlank(loginForm.getRegid()) && !loginForm.getRegid().equals(account.getRegid())) || !loginForm.getVersion().equals(account.getVersion())) {
                     account.setRegid(loginForm.getRegid());
                     
