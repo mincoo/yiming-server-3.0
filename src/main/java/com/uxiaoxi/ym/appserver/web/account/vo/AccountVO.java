@@ -22,6 +22,8 @@ public class AccountVO {
     
     private Integer sex;
     
+    private Integer msg_switch;
+    
     /**
 	 * @return the sex
 	 */
@@ -138,6 +140,21 @@ public class AccountVO {
         this.uid = uid;
     }
     
+    
+    /**
+     * @return the msg_switch
+     */
+    public Integer getMsg_switch() {
+        return msg_switch;
+    }
+
+    /**
+     * @param msg_switch the msg_switch to set
+     */
+    public void setMsg_switch(Integer msg_switch) {
+        this.msg_switch = msg_switch;
+    }
+
     /**
      * 转化为Account
      * 
@@ -155,6 +172,7 @@ public class AccountVO {
         account.setFace(this.face);
         account.setToken(this.token);
         account.setSex(this.sex);
+        account.setMsgSwitch(this.msg_switch);
         return account;
     }
     
