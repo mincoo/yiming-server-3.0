@@ -719,8 +719,18 @@ public class MsgServiceImpl implements IMsgService {
                 .withSandboxDestination()
                 .build();
         
+        
+//        //Production证书用于正式发布版
+//        ApnsService service =
+//                APNS.newService()
+//                .withCert(StringUtil.getRootPath("com.uxiaoxi.mp_production.p12"), "123")
+//                .withProductionDestination()
+//                .build();
+       
+        
         String payload = APNS.newPayload()
                 .badge(sum)
+                .customField("gid",gid)
                 .localizedKey("收到来自"+cluster.getTitle()+"的一条通知。")
                 .sound("default").build();
         
