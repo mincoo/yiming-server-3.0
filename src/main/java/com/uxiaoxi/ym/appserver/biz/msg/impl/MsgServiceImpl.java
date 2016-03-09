@@ -28,7 +28,9 @@ import com.uxiaoxi.ym.appserver.biz.cluster.impl.ClusterServiceImpl;
 import com.uxiaoxi.ym.appserver.biz.msg.IMsgService;
 import com.uxiaoxi.ym.appserver.db.account.dao.IAccountDao;
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
+import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterUserDao;
+import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgAccDao;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgDao;
@@ -38,6 +40,7 @@ import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
 import com.uxiaoxi.ym.appserver.db.msg.dto.OptionLog;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
+import com.uxiaoxi.ym.appserver.framework.util.StringUtil;
 import com.uxiaoxi.ym.appserver.web.common.vo.ListResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResResult;
 import com.uxiaoxi.ym.appserver.web.common.vo.ResultBean;
@@ -94,6 +97,9 @@ public class MsgServiceImpl implements IMsgService {
 
     @Autowired
     private IClusterUserDao clusterUserDao;
+    
+    @Autowired
+    private IClusterDao clusterDao;
 
     @Autowired
     private IAccountDao accountDao;
@@ -684,6 +690,7 @@ public class MsgServiceImpl implements IMsgService {
     private void iosPush(Long uid,Long gid){
         
         Account account = accountDao.selectByKey(uid);
+        Cluster cluster = clusterDao.selectByKey(gid);
         
         //android的设备时不推送。android的regid小于64
         if(account.getRegid().length()<=64){
@@ -691,25 +698,27 @@ public class MsgServiceImpl implements IMsgService {
         }
         
         //免打扰时不推送。
-        if(account.getMsgSwitch()==1||clusterUserDao.searchByGidAndUid(gid,uid).getMsgFlg()==1){
+        ClusterUser clusterUser =clusterUserDao.searchByGidAndUid(gid,uid);
+        
+        if((account.getMsgSwitch()!=null&&account.getMsgSwitch()==1)||(clusterUser!=null&&clusterUser.getMsgFlg()!=null&&clusterUser.getMsgFlg()==1)){
             return;
         }
         
         int sum = 1;
         if(account.getIosPushSum()!=null){
-            sum= account.getIosPushSum().intValue()+1;
+            sum= account.getIosPushSum()+1;
         }
                 
         
         ApnsService service =
                 APNS.newService()
-                .withCert("src/main/resources/com.uxiaoxi.mp_developement.p12", "123")
+                .withCert(StringUtil.getRootPath("com.uxiaoxi.mp_developement.p12"), "123")
                 .withSandboxDestination()
                 .build();
         
         String payload = APNS.newPayload()
                 .badge(sum)
-                .alertBody("收到来自"+gid+"的一条通知。")
+                .localizedKey("收到来自"+cluster.getTitle()+"的一条通知。")
                 .sound("default").build();
         
         //String regid = "e33e1e5f b5b75839 0959c8e5 40304cc4 2d483fe5 0212a2d2 166de2e1 fac9351f";

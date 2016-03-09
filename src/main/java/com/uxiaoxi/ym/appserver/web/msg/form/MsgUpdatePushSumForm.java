@@ -16,7 +16,7 @@ public class MsgUpdatePushSumForm {
     private Long uid;
     
     @NotNull
-    private Long num;
+    private int num;
     
     /**
      * @return the uid
@@ -35,16 +35,17 @@ public class MsgUpdatePushSumForm {
     /**
      * @return the num
      */
-    public Long getNum() {
+    public int getNum() {
         return num;
     }
 
     /**
      * @param num the num to set
      */
-    public void setNum(Long num) {
+    public void setNum(int num) {
         this.num = num;
     }
+
 
 
 

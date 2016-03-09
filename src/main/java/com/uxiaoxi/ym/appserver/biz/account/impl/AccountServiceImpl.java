@@ -272,7 +272,7 @@ public class AccountServiceImpl implements IAccountService {
                 //Regid改变时，推送未读计数清零
                 if(!loginForm.getRegid().equals(account.getRegid())){
                     Account record = account;
-                    record.setIosPushSum(0l);
+                    record.setIosPushSum(0);
                     
                     accountDao.updateByPrimaryKey(record);
                 }
