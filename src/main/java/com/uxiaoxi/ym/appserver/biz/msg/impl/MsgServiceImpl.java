@@ -708,7 +708,11 @@ public class MsgServiceImpl implements IMsgService {
         if(account.getIosPushSum()!=null){
             sum= account.getIosPushSum()+1;
         }
-                
+        
+        //更新数据库
+        Account record = new Account();
+        record.setIosPushSum(sum);
+        accountDao.updateByPrimaryKeySelective(record);
         
         ApnsService service =
                 APNS.newService()
