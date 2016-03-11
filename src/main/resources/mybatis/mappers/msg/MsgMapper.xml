@@ -396,7 +396,8 @@
              oa.`phone` AS `phone`,
              oa.`province` AS `province`,
              oa.`city` AS `city`,
-             oa.`district` AS `district` 
+             oa.`district` AS `district`,
+             oau. `msg_flg` AS `msgflg`
         FROM official_acc_user oau, official_accounts oa 
          WHERE oau.`off_acc_id` = oa.`id`
            AND oau.`acc_id` = #{uid,jdbcType=BIGINT}

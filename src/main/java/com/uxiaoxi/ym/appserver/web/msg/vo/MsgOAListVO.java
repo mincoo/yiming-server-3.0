@@ -21,6 +21,8 @@ public class MsgOAListVO {
     private String url;
     
     private String content;
+    
+    private Long msgflg;
 
     private String name;
     
@@ -250,6 +252,20 @@ public class MsgOAListVO {
      */
     public void setSlist(List<MsgExplainInfo> slist) {
         this.slist = slist;
+    }
+
+    /**
+     * @return the msgflg
+     */
+    public Long getMsgflg() {
+        return msgflg;
+    }
+
+    /**
+     * @param msgflg the msgflg to set
+     */
+    public void setMsgflg(Long msgflg) {
+        this.msgflg = msgflg;
     }
 
 
