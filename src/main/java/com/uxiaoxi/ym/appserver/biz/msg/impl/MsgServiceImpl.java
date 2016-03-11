@@ -556,9 +556,14 @@ public class MsgServiceImpl implements IMsgService {
         
         Account account = accountDao.selectByKey(form.getUid());
         
-         
         Account record = account;
-        record.setIosPushSum(account.getIosPushSum()- form.getNum());
+        
+        int sum = account.getIosPushSum()- form.getNum();
+        
+        if (sum < 0) {
+            sum = 0;
+        }
+        record.setIosPushSum(sum);
         
         ResultBean rt = accountDao.updateByPrimaryKey(record);
         if(rt != null && rt.getCode() == 1) {
