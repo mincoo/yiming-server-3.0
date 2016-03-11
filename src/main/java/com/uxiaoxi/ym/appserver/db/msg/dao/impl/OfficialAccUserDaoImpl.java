@@ -3,6 +3,8 @@
  */
 package com.uxiaoxi.ym.appserver.db.msg.dao.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.uxiaoxi.ym.appserver.db.msg.dao.IOfficialAccUserDao;
@@ -33,6 +35,23 @@ public class OfficialAccUserDaoImpl extends BaseSupport<OfficialAccUser, Officia
         example.createCriteria().andOffAccIdEqualTo(form.getOaid())
                 .andAccIdEqualTo(form.getUid());
         return mapper.updateByExampleSelective(record, example);
+    }
+    
+    @Override
+    public OfficialAccUser searchByOaidAndUid(Long oaid,Long uid) {
+
+        OfficialAccUserMapper mapper = this.getSqlSession().getMapper(
+                OfficialAccUserMapper.class);
+        OfficialAccUserExample example = new OfficialAccUserExample();
+        example.createCriteria().andOffAccIdEqualTo(oaid)
+                .andAccIdEqualTo(uid);
+        
+        List<OfficialAccUser> list = mapper.selectByExample(example);
+        if(list.size()>0){
+            return list.get(0);
+        }else{
+            return null;
+        }
     }
 
 }

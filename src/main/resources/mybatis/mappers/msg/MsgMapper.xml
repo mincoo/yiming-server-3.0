@@ -427,6 +427,11 @@
              oa.`face` AS `face`
           FROM msg m, official_accounts oa 
           WHERE m.content_type = oa.`id`
+         <if test="oaid == 1 " >
+           <![CDATA[      
+               AND m.`select1` = #{uid,jdbcType=VARCHAR}
+           ]]>
+         </if>
           <if test="start != null and start !=0 " >
            <![CDATA[      
                AND m.`id` < #{start,jdbcType=BIGINT}

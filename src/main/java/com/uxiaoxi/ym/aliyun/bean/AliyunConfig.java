@@ -33,6 +33,12 @@ public class AliyunConfig {
     @Value("${td_consumer_id}")
     private String TDConsumerId;
     
+    @Value("${open_topic}")
+    private String OPENTopic;
+    
+    @Value("${open_consumer_id}")
+    private String OPENConsumerId;
+    
 
     /**
      * @return the topic
@@ -130,6 +136,34 @@ public class AliyunConfig {
      */
     public void setTDConsumerId(String tDConsumerId) {
         TDConsumerId = tDConsumerId;
+    }
+
+    /**
+     * @return the oPENTopic
+     */
+    public String getOPENTopic() {
+        return OPENTopic;
+    }
+
+    /**
+     * @param oPENTopic the oPENTopic to set
+     */
+    public void setOPENTopic(String oPENTopic) {
+        OPENTopic = oPENTopic;
+    }
+
+    /**
+     * @return the oPENConsumerId
+     */
+    public String getOPENConsumerId() {
+        return OPENConsumerId;
+    }
+
+    /**
+     * @param oPENConsumerId the oPENConsumerId to set
+     */
+    public void setOPENConsumerId(String oPENConsumerId) {
+        OPENConsumerId = oPENConsumerId;
     }
     
     

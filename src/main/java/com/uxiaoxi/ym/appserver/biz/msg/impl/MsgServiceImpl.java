@@ -13,6 +13,7 @@ import org.glassfish.jersey.client.JerseyWebTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -35,9 +36,12 @@ import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterUser;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgAccDao;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IMsgDao;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IOfficialAccUserDao;
+import com.uxiaoxi.ym.appserver.db.msg.dao.IOfficialAccountsDao;
 import com.uxiaoxi.ym.appserver.db.msg.dao.IOptionLogDao;
 import com.uxiaoxi.ym.appserver.db.msg.dto.Msg;
 import com.uxiaoxi.ym.appserver.db.msg.dto.MsgAcc;
+import com.uxiaoxi.ym.appserver.db.msg.dto.OfficialAccUser;
+import com.uxiaoxi.ym.appserver.db.msg.dto.OfficialAccounts;
 import com.uxiaoxi.ym.appserver.db.msg.dto.OptionLog;
 import com.uxiaoxi.ym.appserver.framework.util.CommonUtil;
 import com.uxiaoxi.ym.appserver.framework.util.StringUtil;
@@ -88,6 +92,9 @@ public class MsgServiceImpl implements IMsgService {
     private static Credential credential = new ClientSecretCredential(
             Constants.APP_CLIENT_ID, Constants.APP_CLIENT_SECRET,
             Roles.USER_ROLE_APPADMIN);
+    
+    @Value("${p12}")
+    private String p12;
 
     @Autowired
     private IMsgDao msgDao;
@@ -112,6 +119,9 @@ public class MsgServiceImpl implements IMsgService {
     
     @Autowired
     private IOfficialAccUserDao officialAccUserDao;
+    
+    @Autowired
+    private IOfficialAccountsDao officialAccountsDao;
 
     @Override
     public ResResult getlist(MsgListForm form) {
@@ -227,7 +237,7 @@ public class MsgServiceImpl implements IMsgService {
     
     @Override
     public ResResult getOAData(MsgOADataForm form) {
-
+        
         // 分页获取某公众号信息List
         List<MsgOAListVO> list = msgDao.getoadata(form);
 
@@ -372,7 +382,7 @@ public class MsgServiceImpl implements IMsgService {
                 msgAccDao.insert(ma);
                 
                 //ios推送处理
-                iosPush(cu.getAccId(),Long.valueOf(gidList[i]));
+                iosPush(cu.getAccId(),Long.valueOf(gidList[i]),true);
             }
             
             //发送透传消息
@@ -408,6 +418,9 @@ public class MsgServiceImpl implements IMsgService {
             msg.setMsgType(Long.valueOf(MsgTypeEnum.TXT.getCode()));
             // 获得学校的cluster
             //msg.setCluId(0l);
+            
+            //暂时用Select1来存储校安消息对象的uid
+            msg.setSelect1(String.valueOf(account.getId()));
             msg.setUrl(od.getImgUrl());
             msgDao.insert(msg);
 
@@ -424,6 +437,9 @@ public class MsgServiceImpl implements IMsgService {
             
           //发送透传消息
             sendMsgTra("u"+account.getId(),StatusConst.MSG_TYPE_OPEN,String.valueOf(StatusConst.CONTENT_TYPE_SAFE));
+            
+          //ios推送处理
+            iosPush(account.getId(),new Long(StatusConst.CONTENT_TYPE_SAFE),false);
 
 /*            // 极光推送
             PushParam param = new PushParam();
@@ -686,23 +702,50 @@ public class MsgServiceImpl implements IMsgService {
      * 
      * @param uid
      * @param gid
+     * @param isCluMsg
      */
-    private void iosPush(Long uid,Long gid){
+    private void iosPush(Long uid, Long id, boolean isCluMsg) {
         
         Account account = accountDao.selectByKey(uid);
-        Cluster cluster = clusterDao.selectByKey(gid);
+        
+        String toName = "";
+        String pushFieldKey = "";
         
         //android的设备时不推送。android的regid小于64
         if(account.getRegid().length()<=64){
             return;
         }
         
-        //免打扰时不推送。
-        ClusterUser clusterUser =clusterUserDao.searchByGidAndUid(gid,uid);
-        
-        if((account.getMsgSwitch()!=null&&account.getMsgSwitch()==1)||(clusterUser!=null&&clusterUser.getMsgFlg()!=null&&clusterUser.getMsgFlg()==1)){
-            return;
+        //班级消息
+        if(isCluMsg){
+            //免打扰时不推送。
+            ClusterUser clusterUser =clusterUserDao.searchByGidAndUid(id,uid);
+            
+            if((account.getMsgSwitch()!=null&&account.getMsgSwitch()==1)||(clusterUser!=null&&clusterUser.getMsgFlg()!=null&&clusterUser.getMsgFlg()==1)){
+                return;
+            }
+            
+            Cluster cluster = clusterDao.selectByKey(id);
+            pushFieldKey = "gid";
+            toName = cluster.getTitle();
+            
+        //公众号消息    
+        }else{
+            
+            
+          //免打扰时不推送。
+            OfficialAccUser officialAccUser =officialAccUserDao.searchByOaidAndUid(id,uid);
+            
+            if((account.getMsgSwitch()!=null&&account.getMsgSwitch()==1)||(officialAccUser!=null&&officialAccUser.getMsgFlg()!=null&&officialAccUser.getMsgFlg()==1)){
+                return;
+            }
+            
+            OfficialAccounts officialAccount = officialAccountsDao.selectByKey(id);
+            
+            pushFieldKey = "oaid";
+            toName = officialAccount.getName();
         }
+        
         
         int sum = 1;
         if(account.getIosPushSum()!=null){
@@ -715,7 +758,7 @@ public class MsgServiceImpl implements IMsgService {
         
         ApnsService service =
                 APNS.newService()
-                .withCert(StringUtil.getRootPath("com.uxiaoxi.mp_developement.p12"), "123")
+                .withCert(StringUtil.getRootPath(p12), "123")
                 .withSandboxDestination()
                 .build();
         
@@ -730,12 +773,12 @@ public class MsgServiceImpl implements IMsgService {
         
         String payload = APNS.newPayload()
                 .badge(sum)
-                .customField("gid",gid)
-                .localizedKey("收到来自"+cluster.getTitle()+"的一条通知。")
+                .customField(pushFieldKey,id)
+                .localizedKey("收到来自"+toName+"的一条通知。")
                 .sound("default").build();
         
-        //String regid = "e33e1e5f b5b75839 0959c8e5 40304cc4 2d483fe5 0212a2d2 166de2e1 fac9351f";
         String regid = account.getRegid();
         service.push(regid, payload);
     }
+    
 }

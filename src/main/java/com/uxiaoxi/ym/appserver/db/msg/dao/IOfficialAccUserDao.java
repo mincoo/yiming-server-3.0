@@ -19,4 +19,12 @@ public interface IOfficialAccUserDao  extends IBaseSupport<OfficialAccUser> {
      * @return
      */
     public int updateMsgOaFlg(MsgOaTagChangeForm from);
+    
+    
+    /**
+     * @param oaid
+     * @param uid
+     * @return
+     */
+    public OfficialAccUser searchByOaidAndUid(Long oaid,Long uid);
 }
