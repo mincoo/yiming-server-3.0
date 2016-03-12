@@ -415,7 +415,7 @@ public class MsgServiceImpl implements IMsgService {
 //        }
 
         // 通过阿里云ons服务发送消息和推送
-        producer1.sendTDMsg(od);
+//        producer1.sendTDMsg(od);
 
     }
 
