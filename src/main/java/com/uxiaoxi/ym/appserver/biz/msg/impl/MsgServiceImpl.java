@@ -118,8 +118,8 @@ public class MsgServiceImpl implements IMsgService {
     @Autowired
     private MsgProducer producer;
     
-    @Autowired
-    private TDMsgProducer producer1;
+//    @Autowired
+//    private TDMsgProducer producer1;
     
     @Autowired
     private IOfficialAccUserDao officialAccUserDao;
