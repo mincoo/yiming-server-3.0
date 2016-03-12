@@ -90,6 +90,8 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" >
     <bean class="com.uxiaoxi.ym.aliyun.bean.AliyunConfig"></bean>
     <!-- 初始化生产者 -->
     <bean class="com.uxiaoxi.ym.aliyun.producer.MsgProducer" init-method="init" ></bean>
+    <bean class="com.uxiaoxi.ym.aliyun.producer.TDMsgProducer" init-method="init" ></bean>
+    <bean class="com.uxiaoxi.ym.aliyun.producer.OpenMsgProducer" init-method="init" ></bean>
     <!-- 初始化消费者 -->
     <bean class="com.uxiaoxi.ym.aliyun.consumer.MsgConsumer" init-method="init" ></bean>
     <bean class="com.uxiaoxi.ym.aliyun.consumer.TDMsgConsumer" init-method="init" ></bean>

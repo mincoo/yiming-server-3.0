@@ -25,6 +25,7 @@ import com.notnoop.apns.APNS;
 import com.notnoop.apns.ApnsService;
 import com.uxiaoxi.ym.aliyun.bean.TDMsgOnsDTO;
 import com.uxiaoxi.ym.aliyun.producer.MsgProducer;
+import com.uxiaoxi.ym.aliyun.producer.TDMsgProducer;
 import com.uxiaoxi.ym.appserver.biz.cluster.impl.ClusterServiceImpl;
 import com.uxiaoxi.ym.appserver.biz.msg.IMsgService;
 import com.uxiaoxi.ym.appserver.db.account.dao.IAccountDao;
@@ -116,6 +117,9 @@ public class MsgServiceImpl implements IMsgService {
 
     @Autowired
     private MsgProducer producer;
+    
+    @Autowired
+    private TDMsgProducer producer1;
     
     @Autowired
     private IOfficialAccUserDao officialAccUserDao;
@@ -399,6 +403,20 @@ public class MsgServiceImpl implements IMsgService {
              param.setUrl(msg.getUrl());
              JpushUtil.gSendPush(param);*/
         }
+    }
+    
+    @Override
+    public void sendMsg(TDMsgOnsDTO od, BindingResult errors) {
+
+//        // 表单验证出错则返回登录页面
+//        if (errors != null && errors.hasErrors()) {
+//            return new ResResult(StatusConst.FAILURE, "输入信息格式错误",
+//                    errors.getAllErrors());
+//        }
+
+        // 通过阿里云ons服务发送消息和推送
+        producer1.sendTDMsg(od);
+
     }
 
     @Override

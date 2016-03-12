@@ -97,7 +97,7 @@ public class MsgController {
     
     @ResponseBody
     @RequestMapping(value = "/tdsend")
-    public void msgTDSendJson(TDMsgOnsDTO form ) {
-        msgService.sendMsg(form);
+    public void msgTDSendJson(TDMsgOnsDTO form ,BindingResult errors) {
+        msgService.sendMsg(form, errors);
     }
 }

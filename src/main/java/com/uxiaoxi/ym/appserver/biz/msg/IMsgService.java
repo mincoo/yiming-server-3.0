@@ -76,6 +76,12 @@ public interface IMsgService {
     public void sendMsg(TDMsgOnsDTO od);
     
     /**
+     * @param od
+     * @param errors
+     */
+    public void sendMsg(TDMsgOnsDTO od, BindingResult errors);
+    
+    /**
      * @param form
      */
     public ResResult tagChange(MsgTagChangeForm form);

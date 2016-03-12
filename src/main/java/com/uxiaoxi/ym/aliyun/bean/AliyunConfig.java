@@ -18,6 +18,12 @@ public class AliyunConfig {
     @Value("${producer_id}")
     private String ProducerId;
     
+    @Value("${open_producer_id}")
+    private String OPENProducerId;
+    
+    @Value("${td_producer_id}")
+    private String TDProducerId;
+    
     @Value("${consumer_id}")
     private String ConsumerId;
     
@@ -36,8 +42,6 @@ public class AliyunConfig {
     @Value("${open_topic}")
     private String OPENTopic;
     
-    @Value("${open_consumer_id}")
-    private String OPENConsumerId;
     
 
     /**
@@ -153,18 +157,33 @@ public class AliyunConfig {
     }
 
     /**
-     * @return the oPENConsumerId
+     * @return the oPENProducerId
      */
-    public String getOPENConsumerId() {
-        return OPENConsumerId;
+    public String getOPENProducerId() {
+        return OPENProducerId;
     }
 
     /**
-     * @param oPENConsumerId the oPENConsumerId to set
+     * @param oPENProducerId the oPENProducerId to set
      */
-    public void setOPENConsumerId(String oPENConsumerId) {
-        OPENConsumerId = oPENConsumerId;
+    public void setOPENProducerId(String oPENProducerId) {
+        OPENProducerId = oPENProducerId;
     }
+
+    /**
+     * @return the tDProducerId
+     */
+    public String getTDProducerId() {
+        return TDProducerId;
+    }
+
+    /**
+     * @param tDProducerId the tDProducerId to set
+     */
+    public void setTDProducerId(String tDProducerId) {
+        TDProducerId = tDProducerId;
+    }
+
     
     
 }
