@@ -12,6 +12,8 @@ import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.db.account.dto.AccountExample;
 import com.uxiaoxi.ym.appserver.db.account.mapper.AccountMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
+import com.uxiaoxi.ym.appserver.framework.page.model.Page;
+import com.uxiaoxi.ym.appserver.web.common.vo.SqlBean;
 
 /**
  * @author renhao
@@ -21,6 +23,18 @@ import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
 @Repository
 public class AccountDaoImpl extends BaseSupport<Account, AccountMapper> implements IAccountDao {
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Page<Account> getData(SqlBean sqlBean, Integer page_no, Integer page_size) {
+        Page<Account> page = null;
+        try {
+            page = this.selectPage("com.uxiaoxi.ym.appserver.db.account.mapper.AccountMapper.getData",sqlBean, page_no, page_size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return page;
+    }
+    
     @Override
     public Account getAccountByMobile(String phone) {
         

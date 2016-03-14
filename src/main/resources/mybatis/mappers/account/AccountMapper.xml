@@ -433,4 +433,14 @@
     -->
   </cache>
   
+  
+    <!-- 自己定义方法 -->
+  <select id="getData" parameterType="com.uxiaoxi.ym.appserver.web.common.vo.SqlBean" resultMap="BaseResultMap">
+      SELECT * 
+        FROM account t
+       WHERE (1=1) 
+             ${condition}
+       order by ${orderby}
+  </select>
+  
 </mapper>
