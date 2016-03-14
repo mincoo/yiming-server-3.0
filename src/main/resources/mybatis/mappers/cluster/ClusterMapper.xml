@@ -521,4 +521,13 @@
         SELECT IFNULL(MAX(`sn`),0)
           FROM `cluster` 
   </select>
+  
+      <!-- 自己定义方法 -->
+  <select id="getData" parameterType="com.uxiaoxi.ym.appserver.web.common.vo.SqlBean" resultMap="BaseResultMap">
+      SELECT * 
+        FROM cluster t
+       WHERE (1=1) 
+             ${condition}
+       order by ${orderby}
+  </select>
 </mapper>

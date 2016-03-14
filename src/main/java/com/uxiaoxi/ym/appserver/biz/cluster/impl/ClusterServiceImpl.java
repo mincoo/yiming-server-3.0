@@ -611,6 +611,43 @@ public class ClusterServiceImpl implements IClusterService {
     }
     
     /**
+     * 群组批量添加成员
+     * 
+     * @param toAddBacthChatgroupid
+     * @param usernames
+     * @return
+     */
+    public static ObjectNode addUsersToGroupBatch(String toAddBacthChatgroupid, ObjectNode usernames) {
+        ObjectNode objectNode = factory.objectNode();
+        // check appKey format
+        if (!JerseyUtils.match("^(?!-)[0-9a-zA-Z\\-]+#[0-9a-zA-Z]+", APPKEY)) {
+            log.error("Bad format of Appkey: " + APPKEY);
+            objectNode.put("message", "Bad format of Appkey");
+            return objectNode;
+        }
+        if (StringUtils.isBlank(toAddBacthChatgroupid.trim())) {
+            log.error("Property that named toAddBacthChatgroupid must be provided .");
+            objectNode.put("message", "Property that named toAddBacthChatgroupid must be provided .");
+            return objectNode;
+        }
+        // check properties that must be provided
+        if (null != usernames && !usernames.has("usernames")) {
+            log.error("Property that named usernames must be provided .");
+            objectNode.put("message", "Property that named usernames must be provided .");
+            return objectNode;
+        }
+
+        try {
+            objectNode = JerseyUtils.sendRequest(EndPoints.CHATGROUPS_TARGET.path(toAddBacthChatgroupid).path("users"), usernames,
+                    credential, HTTPMethod.METHOD_POST, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return objectNode;
+    }
+    
+    /**
      * 通过服务器gid，获取群组ID
      * 
      * 

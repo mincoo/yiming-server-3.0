@@ -7,14 +7,17 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.uxiaoxi.ym.appserver.db.account.dto.Account;
 import com.uxiaoxi.ym.appserver.db.cluster.dao.IClusterDao;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.Cluster;
 import com.uxiaoxi.ym.appserver.db.cluster.dto.ClusterExample;
 import com.uxiaoxi.ym.appserver.db.cluster.mapper.ClusterMapper;
 import com.uxiaoxi.ym.appserver.framework.db.impl.BaseSupport;
+import com.uxiaoxi.ym.appserver.framework.page.model.Page;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ClusterSearchBySnForm;
 import com.uxiaoxi.ym.appserver.web.cluster.form.ExitForm;
 import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
+import com.uxiaoxi.ym.appserver.web.common.vo.SqlBean;
 
 /**
  * @author renhao
@@ -24,6 +27,18 @@ import com.uxiaoxi.ym.appserver.web.cluster.vo.ClusterBySnResult;
 @Repository
 public class ClusterDaoImpl extends BaseSupport<Cluster, ClusterMapper>
         implements IClusterDao {
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public Page<Cluster> getData(SqlBean sqlBean, Integer page_no, Integer page_size) {
+        Page<Cluster> page = null;
+        try {
+            page = this.selectPage("com.uxiaoxi.ym.appserver.db.cluster.mapper.ClusterMapper.getData",sqlBean, page_no, page_size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return page;
+    }
     
     @Override
     public int countUserByType(Map<String,Object> map) {
