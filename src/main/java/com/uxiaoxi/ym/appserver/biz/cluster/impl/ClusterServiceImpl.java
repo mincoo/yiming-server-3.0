@@ -174,6 +174,14 @@ public class ClusterServiceImpl implements IClusterService {
 
     @Override
     public ResResult getlist(ClusterUserSearchForm form) {
+        
+        ObjectNode chatgroupidsNode = getAllChatgroupids();
+        if ("404".equals(chatgroupidsNode.get("statusCode").toString())) {
+//            Cluster cluster = clusterDao.selectByKey(id);
+            
+        }
+        
+        
         List<ClusterUserSearchResultVO> list = clusterUserDao.searchByUid(form);
         if (list == null) {
             list = new ArrayList<ClusterUserSearchResultVO>();
