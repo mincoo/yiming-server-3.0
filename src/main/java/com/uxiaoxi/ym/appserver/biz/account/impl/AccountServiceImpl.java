@@ -297,6 +297,19 @@ public class AccountServiceImpl implements IAccountService {
                 
                 // 更新数据库
                 accountDao.updateByPrimaryKeySelective(account);
+               
+                
+                //查找IM用户
+                String userName = "u"+account.getId();
+                ObjectNode getIMUsersByUserNameNode = getIMUsersByUserName(userName);
+                
+                if ("404".equals(getIMUsersByUserNameNode.get("statusCode").toString())) {
+                    //环信注册IM用户
+                    ObjectNode datanode = JsonNodeFactory.instance.objectNode();
+                    datanode.put("username","u"+account.getId());
+                    datanode.put("password", StringUtil.md5(Constants.DEFAULT_PASSWORD+String.valueOf(account.getId())));
+                    createNewIMUserSingle(datanode);
+                }
                 
                 AccountVO avo = new AccountVO(account);
                 rs.setMsg(StatusConst.STRSUCCESS);
@@ -510,6 +523,53 @@ public class AccountServiceImpl implements IAccountService {
                     APPKEY.split("#")[1]);
 
             objectNode = JerseyUtils.sendRequest(webTarget, dataNode, credential, HTTPMethod.METHOD_POST, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return objectNode;
+    }
+    
+    /**
+     * 获取IM用户
+     * 
+     * @param userName
+     *            用户主键：username或者uuid
+     * @return
+     */
+    public static ObjectNode getIMUsersByUserName(String userName) {
+        ObjectNode objectNode = factory.objectNode();
+
+        // check appKey format
+        if (!JerseyUtils.match("^(?!-)[0-9a-zA-Z\\-]+#[0-9a-zA-Z]+", APPKEY)) {
+            log.error("Bad format of Appkey: " + APPKEY);
+
+            objectNode.put("message", "Bad format of Appkey");
+
+            return objectNode;
+        }
+
+        // check properties that must be provided
+        if (StringUtils.isEmpty(userName)) {
+            log.error("The primaryKey that will be useed to query must be provided .");
+
+            objectNode
+                    .put("message",
+                            "The primaryKey that will be useed to query must be provided .");
+
+            return objectNode;
+        }
+
+        try {
+
+            JerseyWebTarget webTarget = EndPoints.USERS_TARGET
+                    .resolveTemplate("org_name", APPKEY.split("#")[0])
+                    .resolveTemplate("app_name", APPKEY.split("#")[1])
+                    .path(userName);
+
+            objectNode = JerseyUtils.sendRequest(webTarget, null, credential,
+                    HTTPMethod.METHOD_GET, null);
 
         } catch (Exception e) {
             e.printStackTrace();
