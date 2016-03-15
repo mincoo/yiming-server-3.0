@@ -95,9 +95,15 @@ public class MsgController {
         return msgService.updatePushSum(form);
     }
     
+//    @ResponseBody
+//    @RequestMapping(value = "/tdsend")
+//    public void msgTDSendJson(TDMsgOnsDTO form ,BindingResult errors) {
+//        msgService.sendMsg(form, errors);
+//    }
+    
     @ResponseBody
     @RequestMapping(value = "/tdsend")
     public void msgTDSendJson(TDMsgOnsDTO form ,BindingResult errors) {
-        msgService.sendMsg(form, errors);
+        msgService.sendMsg(form);
     }
 }
