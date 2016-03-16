@@ -3,6 +3,7 @@
  */
 package com.uxiaoxi.ym.appserver.db.cluster.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.uxiaoxi.ym.appserver.db.account.dto.Account;
@@ -47,4 +48,5 @@ public interface IClusterDao extends IBaseSupport<Cluster> {
     
     public Page<Cluster> getData(SqlBean sqlBean, Integer page_no, Integer page_size);
 
+    public List<Cluster> getData();
 }

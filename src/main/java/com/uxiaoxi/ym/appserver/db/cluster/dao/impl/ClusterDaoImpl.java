@@ -3,6 +3,7 @@
  */
 package com.uxiaoxi.ym.appserver.db.cluster.dao.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -38,6 +39,13 @@ public class ClusterDaoImpl extends BaseSupport<Cluster, ClusterMapper>
             e.printStackTrace();
         }
         return page;
+    }
+    
+    @Override
+    public List<Cluster> getData() {
+        ClusterMapper mapper = this.getSqlSession().getMapper(ClusterMapper.class);
+
+        return mapper.getAllData();
     }
     
     @Override

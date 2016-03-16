@@ -176,5 +176,18 @@ public class AccountController {
     public ResResult msgSwitchJson(MsgSwitchForm form) {
         return accountService.msgSwitch(form);
     }
+    
+    /**
+     * 
+     * logout
+     * 
+     * @param form
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/logout")
+    public ResResult logoutJson(Long uid) {
+        return accountService.logout(uid);
+    }
 
 }

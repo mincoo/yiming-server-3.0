@@ -121,6 +121,14 @@ public interface IAccountService {
      */
     public ResResult msgSwitch(MsgSwitchForm form);
     
+    /**
+     * logout
+     * 
+     * @param uid
+     * @return
+     */
+    public ResResult logout(Long uid);
+    
     
 
 }

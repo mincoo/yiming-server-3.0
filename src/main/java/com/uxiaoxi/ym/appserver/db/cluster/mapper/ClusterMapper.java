@@ -97,4 +97,10 @@ public interface ClusterMapper {
      * @return
      */
     int searchMaxSn();
+    
+    /**
+     * @param
+     * @return
+     */
+    List<Cluster> getAllData();
 }

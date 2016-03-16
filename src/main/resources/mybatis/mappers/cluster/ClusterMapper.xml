@@ -530,4 +530,11 @@
              ${condition}
        order by ${orderby}
   </select>
+  
+        <!-- 自己定义方法 -->
+  <select id="getAllData" resultMap="BaseResultMap">
+      SELECT * 
+        FROM cluster
+        order by id
+  </select>
 </mapper>

@@ -452,7 +452,7 @@ public class AccountServiceImpl implements IAccountService {
         
         Account record = new Account();
         record.setId(form.getUid());
-        record.setMsgSwitch(form.getStatus());;
+        record.setMsgSwitch(form.getStatus());
         
         accountDao.updateByPrimaryKeySelective(record);
         
@@ -473,6 +473,16 @@ public class AccountServiceImpl implements IAccountService {
 //            JpushUtil.updateDeviceTagAlias(account.getRegid(), null, tagsToAdd,
 //                    null, account.getVersion());
 //        }
+        return new ResResult(null);
+    }
+    
+    @Override
+    public ResResult logout(Long uid) {
+        
+        Account record = accountDao.selectByKey(uid);
+        record.setRegid(null);
+        accountDao.updateByPrimaryKey(record);
+        
         return new ResResult(null);
     }
     
