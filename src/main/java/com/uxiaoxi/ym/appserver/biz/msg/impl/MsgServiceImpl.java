@@ -735,7 +735,7 @@ public class MsgServiceImpl implements IMsgService {
         String pushFieldKey = "";
         
         //android的设备时不推送。android的regid小于64
-        if(account.getRegid().length()<=64){
+        if(account.getRegid()==null || account.getRegid().length()<=64){
             return;
         }
         
