@@ -779,19 +779,19 @@ public class MsgServiceImpl implements IMsgService {
         account.setIosPushSum(sum);
         accountDao.updateByPrimaryKeySelective(account);
         
+//        ApnsService service =
+//                APNS.newService()
+//                .withCert(StringUtil.getRootPath(p12), "123")
+//                .withSandboxDestination()
+//                .build();
+        
+        
+        //Production证书用于正式发布版
         ApnsService service =
                 APNS.newService()
                 .withCert(StringUtil.getRootPath(p12), "123")
-                .withSandboxDestination()
+                .withProductionDestination()
                 .build();
-        
-        
-//        //Production证书用于正式发布版
-//        ApnsService service =
-//                APNS.newService()
-//                .withCert(StringUtil.getRootPath("com.uxiaoxi.mp_production.p12"), "123")
-//                .withProductionDestination()
-//                .build();
        
         
         String payload = APNS.newPayload()
